@@ -1,0 +1,11 @@
+[package]
+name = "brrrsynth"
+version = "0.1.0"
+authors = ["stefan"]
+
+[dependencies]
+libc = "*"
+
+[lib]
+name = "brrrsynth"
+crate-type = ["dylib"] # ?
