@@ -1,5 +1,5 @@
 [package]
-name = "brrrsynth"
+name = "yassy"
 version = "0.1.0"
 authors = ["stefan"]
 
@@ -7,5 +7,5 @@ authors = ["stefan"]
 libc = "*"
 
 [lib]
-name = "brrrsynth"
+name = "yassy"
 crate-type = ["dylib"] # ?

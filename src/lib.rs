@@ -231,7 +231,7 @@ impl lv2::LV2Descriptor {
     }
 }
 
-static S: &'static [u8] = b"http://example.org/brrrsynth\0";
+static S: &'static [u8] = b"http://example.org/yassy\0";
 static mut desc: lv2::LV2Descriptor = lv2::LV2Descriptor {
     uri: 0 as *const libc::c_char, // ptr::null() isn't const fn (yet)
     instantiate: lv2::LV2Descriptor::instantiate,

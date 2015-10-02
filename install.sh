@@ -1,7 +1,7 @@
 LV2DIR=~/.lv2/
 BACKUPDIR=~/programs/backup_lv2/
-BUNDLE=brrrsynth.lv2
-SONAME=libbrrrsynth.so
+BUNDLE=yassy.lv2
+SONAME=libyassy.so
 DEST=$LV2DIR$BUNDLE
 if [ -d "$DEST" ]; then
     if [ -d "$BACKUPDIR/$BUNDLE" ]; then

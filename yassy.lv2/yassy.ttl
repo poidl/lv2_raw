@@ -4,13 +4,13 @@
 @prefix urid:  <http://lv2plug.in/ns/ext/urid#> .
 @prefix midi:  <http://lv2plug.in/ns/ext/midi#> .
 
-<http://example.org/brrrsynth>
+<http://example.org/yassy>
 	a lv2:Plugin ,
 		lv2:Synthesizer ;
 
 	lv2:project <http://example.org> ;
 
-	doap:name "Little synth" ;
+	doap:name "yassy (simple synth)" ;
 	doap:license <http://opensource.org/licenses/isc> ;
 	lv2:requiredFeature urid:map ;
 	lv2:optionalFeature lv2:hardRTCapable ;
