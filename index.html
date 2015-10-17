@@ -1,1 +1,84 @@
-Hello World
+<html>
+
+<head>
+  <meta name=viewport content="width=device-width, initial-scale=1">
+  <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+  </script>
+  <script type="text/javascript"
+    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+
+<style>
+  * {
+    font-family: Arial, sans-;
+  }
+</style>
+</head>
+
+  <body>
+    References:
+    <ul>
+      <li>Frei, B.: <a href="https://www.zhdk.ch/fileadmin/data_subsites/data_icst/Downloads/Digital_Sound/Digital_Sound_Generation_1.pdf"><i>Digital sound generation</i></a>. Institute for Computer Music and Sound Technology (ICST) Zurich University of the Arts.</li>
+      <li>Wikipedia:
+        <a href="https://en.wikipedia.org/wiki/Sinc_filter"><i>Sinc filter</i></a>
+        <a href="https://en.wikipedia.org/wiki/Rectangular_function"><i>Rectangular Function</i></a>
+        .</li>
+    </ul>
+
+    <h3>Frequency response of a brick-wall filter</h3>
+    <p>
+      [Widipedia:] The frequency response \(H\) of a "brick-wall filter" is the rectangular function:
+
+      \begin{equation}
+        H(f)=rect\left(\frac{f}{2B}\right),
+      \end{equation}
+
+      where \(f\) denotes frequency, \(B\) is the cutoff frequency ("bandwidth") and the rectangular function \(rect\) is defined as
+
+      \begin{equation}
+        rect(x)=\left\{\begin{aligned}
+        1&\quad\text{if}\quad|x|\lt \frac{1}{2}\\
+        \frac{1}{2}&\quad\text{if}\quad|x|= \frac{1}{2}\\
+        0&\quad\text{if}\quad|x|\gt \frac{1}{2}.\\
+        \end{aligned}
+        \right.
+￼      \end{equation}
+
+    </p>
+
+    <h3>Impulse response of a brick-wall filter</h3>
+    <p>
+      [Wikipedia:] The Fourier transform of the \(rect\) function is
+      \begin{equation}
+        \mathcal{F}(rect(f))=\int_{-\infty}^{\infty}rect(f)\,e^{-i2\pi ft}\,df=sinc(t),
+      \end{equation}
+      where \(sinc\) is the normalized sinc function defined as
+      \begin{equation}
+        sinc(x)=\frac{sin(\pi x)}{\pi x}.
+      \end{equation}
+
+      <p>
+        <b>Lemma.</b> Let \(\mathcal{F}(g(f))=h(t)\) and \(g'(f)\equiv g(cf)\). Then \(\mathcal{F}(g'(f))=\frac{1}{c}h\left(\frac{t}{c}\right)\).
+      </p>
+      <p>
+        <i>Argument: </i>
+        \begin{equation}
+          \mathcal{F}(g'(f))=\int_{-\infty}^{\infty}g(cf)\,e^{-i2\pi ft}\,df=
+          \int_{-\infty}^{\infty}g(cf)\,e^{-i2\pi fc\frac{t}{c}}\frac{1}{c}\,d(cf)=\frac{1}{c}h\left(\frac{t}{c}\right)
+        \end{equation}
+      </p>
+
+      Applying the lemma to the frequency response of the brick-wall filter yields the impulse response \(h(t)\) of the brick-wall filter [c.f. Wikipedia]
+
+      \begin{equation}
+        h(t)\equiv\mathcal{F}(H(f))=2B\frac{\sin(2B\pi t)}{2B\pi t}=2B\,sinc(2B t)
+      \end{equation}
+
+
+
+    </p>
+  </body>
+</html>
