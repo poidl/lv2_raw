@@ -9,3 +9,8 @@ libc = "*"
 [lib]
 name = "yassy"
 crate-type = ["dylib"] # ?
+
+[dev-dependencies] # for testing/documentation
+GSL = "*"
+gnuplot = "*"
+getopts = "=0.2.14" # gnuplot dependency
