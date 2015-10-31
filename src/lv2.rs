@@ -7,21 +7,21 @@ pub type Lv2handle = *mut libc::c_void;
 #[repr(C)]
 pub struct LV2_Atom {
 	pub size: u32,  // Size in bytes, not including type and size.
-	pub mytype: u32  // Type of this atom (mapped URI).
+	pub mytype: u32  // Type of this atom (mapped uri).
 }
 
 // compare with
 //http://lv2plug.in/git/cgit.cgi/lv2.git/tree/lv2/lv2plug.in/ns/ext/atom/atom.h
-// LV2_Atom_Event has a union "time", which can be beat or frames. Not implemented
+// Lv2AtomEvent has a union "time", which can be beat or frames. Not implemented
 // doesn't need #[repr(C)]
-pub struct LV2_Atom_Event {
+pub struct Lv2AtomEvent {
 	pub time_in_frames: i64,
 	pub body: LV2_Atom
 }
 
 #[repr(C)]
 pub struct LV2_Atom_Sequence_Body {
-	unit: u32,  // URID of unit of event time stamps.
+	unit: u32,  // uriD of unit of event time stamps.
 	pad: u32   // Currently unused.
 	/* Contents (a series of events) follow here. */
 }
@@ -41,47 +41,47 @@ pub fn lv2_atom_pad_size(size: u32) -> (u32) {
 }
 
 /** Get an iterator pointing to the first event in a Sequence body. */
-pub fn lv2_atom_sequence_begin(body: *const LV2_Atom_Sequence_Body) ->  (*const LV2_Atom_Event) {
+pub fn lv2_atom_sequence_begin(body: *const LV2_Atom_Sequence_Body) ->  (*const Lv2AtomEvent) {
 	unsafe{
-		return body.offset(1) as *const LV2_Atom_Event
+		return body.offset(1) as *const Lv2AtomEvent
 	}
 }
 
 /** Return an iterator to the element following `i`. */
-pub fn lv2_atom_sequence_next(i: *const LV2_Atom_Event) -> (*const LV2_Atom_Event)
+pub fn lv2_atom_sequence_next(i: *const Lv2AtomEvent) -> (*const Lv2AtomEvent)
 {
 	unsafe{
 		let addr_of_first_byte = i as *const u8;
-		let size_in_bytes_1 = mem::size_of::<LV2_Atom_Event>() as isize;
+		let size_in_bytes_1 = mem::size_of::<Lv2AtomEvent>() as isize;
 		let size_in_bytes_2 = lv2_atom_pad_size((*i).body.size) as isize;
 		let j = addr_of_first_byte.offset(size_in_bytes_1 + size_in_bytes_2);
-		return j as *const LV2_Atom_Event
+		return j as *const Lv2AtomEvent
 	}
 }
 
 /** Return true iff `i` has reached the end of `body`. */
-pub fn lv2_atom_sequence_is_end(body: *const LV2_Atom_Sequence_Body, size: u32, i: *const LV2_Atom_Event) -> (bool) {
+pub fn lv2_atom_sequence_is_end(body: *const LV2_Atom_Sequence_Body, size: u32, i: *const Lv2AtomEvent) -> (bool) {
 	let addr_of_first_byte = body as *const u8;
 	unsafe{
 		return (i as *const u8) >= addr_of_first_byte.offset(size as isize)
 	}
 }
 
-pub type Lv2UridMapHandle = *mut libc::c_void;
-pub type Lv2Urid = u32;
+pub type Lv2uridMapHandle = *mut libc::c_void;
+pub type Lv2urid = u32;
 
 #[repr(C)]
-pub struct Lv2UridMap {
-	pub handle: Lv2UridMapHandle, // Opaque pointer to host data.
+pub struct Lv2uridMap {
+	pub handle: Lv2uridMapHandle, // Opaque pointer to host data.
 	   //@param handle Must be the callback_data member of this struct.
-	   //@param uri The URI to be mapped to an integer ID.
-	pub map: extern fn(handle: Lv2UridMapHandle, uri: *const libc::c_char)-> Lv2Urid
+	   //@param uri The uri to be mapped to an integer ID.
+	pub map: extern fn(handle: Lv2uridMapHandle, uri: *const libc::c_char)-> Lv2urid
 }
 
 #[repr(C)]
 pub struct LV2Feature {
-    pub URI: *const libc::c_char,
-    pub data: *mut Lv2UridMap
+    pub uri: *const libc::c_char,
+    pub data: *mut Lv2uridMap
 }
 
 #[repr(C)]
@@ -98,9 +98,9 @@ pub struct LV2Descriptor {
 }
 
 // typedef enum {
-// 	LV2_MIDI_MSG_INVALID          = 0,     /**< Invalid Message */
-// 	LV2_MIDI_MSG_NOTE_OFF         = 0x80,  /**< Note Off */
-// 	LV2_MIDI_MSG_NOTE_ON          = 0x90,  /**< Note On */
+// 	Lv2MidiMsgInvalid          = 0,     /**< Invalid Message */
+// 	Lv2MidiMsgNoteOff         = 0x80,  /**< Note Off */
+// 	Lv2MidiMsgNoteOn          = 0x90,  /**< Note On */
 // 	LV2_MIDI_MSG_NOTE_PRESSURE    = 0xA0,  /**< Note Pressure */
 // 	LV2_MIDI_MSG_CONTROLLER       = 0xB0,  /**< Controller */
 // 	LV2_MIDI_MSG_PGM_CHANGE       = 0xC0,  /**< Program Change */
@@ -117,7 +117,7 @@ pub struct LV2Descriptor {
 // 	LV2_MIDI_MSG_STOP             = 0xFC,  /**< Stop */
 // 	LV2_MIDI_MSG_ACTIVE_SENSE     = 0xFE,  /**< Active Sensing */
 // 	LV2_MIDI_MSG_RESET            = 0xFF   /**< Reset */
-// } LV2_Midi_Message_Type;
+// } Lv2MidiMessageType;
 
 /**
    Return true iff `msg` is a MIDI voice message (which has a channel).
@@ -132,33 +132,33 @@ pub fn lv2_midi_is_voice_message(msg: *const u8) -> (bool) {
    Return the type of a MIDI message.
    @param msg Pointer to the start (status byte) of a MIDI message.
 */
-pub fn lv2_midi_message_type(msg: *const u8) -> (LV2_Midi_Message_Type) {
-	if (lv2_midi_is_voice_message(msg)) {
+pub fn lv2_midi_message_type(msg: *const u8) -> (Lv2MidiMessageType) {
+	if lv2_midi_is_voice_message(msg) {
 		unsafe{
-			return LV2_Midi_Message_Type::from_int((*msg) & 0xF0);
+			return Lv2MidiMessageType::from_int((*msg) & 0xF0);
 		}
 	// } else if (lv2_midi_is_system_message(msg)) {
-	// 	return (LV2_Midi_Message_Type)msg[0];
+	// 	return (Lv2MidiMessageType)msg[0];
 	} else {
-		return LV2_Midi_Message_Type::LV2_MIDI_MSG_INVALID;
+		return Lv2MidiMessageType::Lv2MidiMsgInvalid;
 	}
 }
 
-pub enum LV2_Midi_Message_Type {
-	LV2_MIDI_MSG_INVALID          = 0,    // Invalid Message
-	LV2_MIDI_MSG_NOTE_OFF         = 0x80, // Note Off
-	LV2_MIDI_MSG_NOTE_ON          = 0x90,  // Note On
-	LV2_MIDI_MSG_NOT_IMPLEMENTED  = 9999999999999  //
+pub enum Lv2MidiMessageType {
+	Lv2MidiMsgInvalid          = 0,    // Invalid Message
+	Lv2MidiMsgNoteOff         = 0x80, // Note Off
+	Lv2MidiMsgNoteOn          = 0x90,  // Note On
+	Lv2MidiMsgNotImplemented  = 9999999999999  //
 }
 
 // Unnecessary?
-impl LV2_Midi_Message_Type {
-    fn from_int(x: u8) -> LV2_Midi_Message_Type {
+impl Lv2MidiMessageType {
+    fn from_int(x: u8) -> Lv2MidiMessageType {
         match x {
-            0 => LV2_Midi_Message_Type::LV2_MIDI_MSG_INVALID,
-            0x80 => LV2_Midi_Message_Type::LV2_MIDI_MSG_NOTE_OFF,
-			0x90 => LV2_Midi_Message_Type::LV2_MIDI_MSG_NOTE_ON,
-            _ => LV2_Midi_Message_Type::LV2_MIDI_MSG_NOT_IMPLEMENTED
+            0 => Lv2MidiMessageType::Lv2MidiMsgInvalid,
+            0x80 => Lv2MidiMessageType::Lv2MidiMsgNoteOff,
+			0x90 => Lv2MidiMessageType::Lv2MidiMsgNoteOn,
+            _ => Lv2MidiMessageType::Lv2MidiMsgNotImplemented
         }
     }
 }

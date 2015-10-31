@@ -1,3 +1,7 @@
+#![allow(unused_imports)]
+#![allow(dead_code)]
+#![allow(unused_variables)]
+
 extern crate libc;
 use std::ptr;
 use std::mem;
@@ -35,10 +39,10 @@ impl PortIndex {
 
 #[repr(C)]
 struct Synth {
-    map: *const lv2::Lv2UridMap,
+    map: *const lv2::Lv2uridMap,
     in_port: *const lv2::LV2_Atom_Sequence,
     output: *mut f32,
-    uris: SynthURIs,
+    uris: Synthuris,
     rate: f64,
     currentfreq: f64,
     currentmidivel: u8,
@@ -51,7 +55,7 @@ struct Synth {
 impl lv2::LV2Descriptor {
     pub extern fn instantiate( _descriptor: *const lv2::LV2Descriptor , rate: f64, bundle_path: *const libc::c_char , features: *const (*const lv2::LV2Feature),) -> lv2::Lv2handle {
         unsafe{
-        let mut ptr = libc::calloc(1,mem::size_of::<Synth>() as libc::size_t);
+        let ptr = libc::calloc(1,mem::size_of::<Synth>() as libc::size_t);
         if ptr.is_null() {
             panic!("failed to allocate memory");
         }
@@ -72,7 +76,7 @@ impl lv2::LV2Descriptor {
                     //return ptr
                     return std::ptr::null_mut();
                 }
-                let uriptr = (*fptr).URI;
+                let uriptr = (*fptr).uri;
                 let buf = CStr::from_ptr(uriptr).to_bytes();
                 let s: &str = str::from_utf8(buf).unwrap();
                 println!("uri: {}", s);
@@ -93,10 +97,9 @@ impl lv2::LV2Descriptor {
         (*(ptr  as *mut Synth)).noteison = false;
         (*(ptr  as *mut Synth)).makesilence = false;
         (*(ptr  as *mut Synth)).osc = Osc { phase: 0, dphase: 0 };
-        unsafe{
-            (*(ptr  as *mut Synth)).osc.set_dphase(440.0,(*(ptr  as *mut Synth)).rate);
+        (*(ptr  as *mut Synth)).osc.set_dphase(440.0,(*(ptr  as *mut Synth)).rate);
             println!("self.dphase: {}",(*(ptr  as *mut Synth)).osc.dphase);
-        }
+
         return ptr;
         }
     }
@@ -120,7 +123,7 @@ impl lv2::LV2Descriptor {
             let uris = &mut (*synth).uris;
             // Struct for a 3 byte MIDI event, used for writing notes
             struct MIDINoteEvent {
-                event: lv2::LV2_Atom_Event,
+                event: lv2::Lv2AtomEvent,
                 msg: [u8; 3]
             }
             // Initially self->out_port contains a Chunk with size set to capacity
@@ -128,7 +131,7 @@ impl lv2::LV2Descriptor {
             //let out_capacity: u32 = (*synth).out_port->atom.size;
             let seq = (*synth).in_port;
             let output = (*synth).output;
-            let mut iter: *const lv2::LV2_Atom_Event  = lv2::lv2_atom_sequence_begin(&(*seq).body);
+            let mut iter: *const lv2::Lv2AtomEvent  = lv2::lv2_atom_sequence_begin(&(*seq).body);
             while !lv2::lv2_atom_sequence_is_end(&(*seq).body, (*seq).atom.size, iter) {
                 println!("next");
                 let ev = iter;
@@ -141,7 +144,7 @@ impl lv2::LV2Descriptor {
                     // println!("message is voice:     = {}", isvoice);
                     let istart = (*ev).time_in_frames as u32;
                     match lv2::lv2_midi_message_type(msg) {
-                        lv2::LV2_Midi_Message_Type::LV2_MIDI_MSG_NOTE_ON => {
+                        lv2::Lv2MidiMessageType::Lv2MidiMsgNoteOn => {
                             println!("NOTEON AT FRAME {}", istart);
                             (*synth).noteison = true;
                             (*synth).waveoffset = n_samples-istart;
@@ -166,14 +169,14 @@ impl lv2::LV2Descriptor {
                         }
 
 
-                        lv2::LV2_Midi_Message_Type::LV2_MIDI_MSG_NOTE_OFF => {
+                        lv2::Lv2MidiMessageType::Lv2MidiMsgNoteOff => {
                             println!("NOTEOFFFF AT FRAME {}", istart);
                             (*synth).noteison = false;
                             (*synth).makesilence = true;
                             for i in istart..n_samples-1 {
                                 let amp = 0.0 as f32;
                                 println!("noteoff silence: output amp {}", amp);
-                                *output.offset(i as isize) = (amp as f32);
+                                *output.offset(i as isize) = amp as f32;
                             }
 
 
@@ -257,11 +260,11 @@ pub extern fn lv2_descriptor(index:i32) -> *const lv2::LV2Descriptor {
     }
 }
 
-struct SynthURIs {
-    midi_event: lv2::Lv2Urid
+struct Synthuris {
+    midi_event: lv2::Lv2urid
 }
 
-fn map_synth_uris(map: *const lv2::Lv2UridMap, uris: &mut SynthURIs) {
+fn map_synth_uris(map: *const lv2::Lv2uridMap, uris: &mut Synthuris) {
     let s = "http://lv2plug.in/ns/ext/midi#MidiEvent";
     let cstr = CString::new(s).unwrap();
     let lv2_midi_midi_event = cstr.as_ptr();
