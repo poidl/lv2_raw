@@ -134,7 +134,6 @@ fn example(c: Common)
 	c.show(&mut fg, "fg1.7.gnuplot");
 }
 
-#[test]
 fn main()
 {
 	Common::new().map(|c| example(c));

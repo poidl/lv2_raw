@@ -1,7 +1,7 @@
 // This file is released into Public Domain.
 extern crate gnuplot;
 extern crate getopts;
-
+ 
 use self::getopts::*;
 use std::env;
 use gnuplot::*;
