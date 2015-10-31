@@ -1,6 +1,9 @@
 #![allow(unused_imports)]
 #![allow(dead_code)]
 #![allow(unused_variables)]
+mod tests;
+pub mod utils;
+
 
 extern crate libc;
 use std::ptr;

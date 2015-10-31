@@ -1,16 +1,8 @@
-#![allow(unused_imports)]
-#![allow(dead_code)]
-#![allow(unused_variables)]
-
-#![feature(test)]
-
-extern crate test; // for bench
 extern crate num;
 
-use num::NumCast;
-use num::Float;
+use self::num::NumCast;
+use self::num::Float;
 use std::mem;
-use test::Bencher;
 
 
 
@@ -21,7 +13,7 @@ pub fn make_arr_unsafe<'a, T: 'a>(start: T, stop: T, num: usize)
 
 }
 
-fn linspace_vec<'a, T: 'a>(start: T, stop: T, num: usize) ->
+pub fn linspace_vec<'a, T: 'a>(start: T, stop: T, num: usize) ->
 Vec<T>
 //Box<[T]>
     where T: Float {
@@ -44,7 +36,7 @@ Vec<T>
     return bx
 }
 
-fn linspace_box<'a, T: 'a>(start: T, stop: T, num: usize) ->
+pub fn linspace_box<'a, T: 'a>(start: T, stop: T, num: usize) ->
 // Vec<T>
 Box<[T]>
     where T: Float {
@@ -65,29 +57,4 @@ Box<[T]>
     }
 
     return bx
-}
-
-#[test]
-fn mytest()
-{
-    let ar1 = linspace_box(1f64, 5f64, 6);
-    for x in ar1.iter() {
-        println!("x: {}", x);
-    }
-    let ptr: *const f64 = &(ar1[0]);
-    unsafe {
-        for i in 0..5 {
-            println!("x: {}", *ptr.offset(i))
-        }
-    }
-
-    // let y = make_array_unsafe::<f64>(1f64, 5f64, 5);
-    println!("ar1: {:?}",ar1);
-    // println!("y: {:?}",y);
-//transform(data: &mut [f64], stride: u64, n: u64)
-}
-
-#[bench]
-fn mybench(b: &mut Bencher) {
-    b.iter(|| linspace_box(1f64, 5f64, 6));
 }
