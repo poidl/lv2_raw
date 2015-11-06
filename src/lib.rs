@@ -1,6 +1,12 @@
 #![allow(unused_imports)]
 #![allow(dead_code)]
 #![allow(unused_variables)]
+
+#![feature(alloc)]
+#![feature(heap_api)]
+#![feature(core_intrinsics)]
+#![feature(raw)]
+
 mod tests;
 pub mod utils;
 
