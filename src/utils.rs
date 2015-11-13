@@ -11,44 +11,59 @@ use std::intrinsics;
 use std::raw::Slice;
 use std::i32;
 use std::slice;
+use std::marker;
 
 
-pub fn linspace_vec<'a, T: 'a>(start: T, stop: T, num: usize) ->
+pub fn linspace_vec<'a, T: 'a>(start: T, stop: T, len: usize) ->
 Vec<T>
-//Box<[T]>
     where T: Float {
 
     let zero: T = num::cast(0).unwrap();
-    let num_t: T = num::cast(num).unwrap();
+    let len_t: T = num::cast(len).unwrap();
     let one: T = num::cast(1).unwrap();
     let diff = stop - start;
-    let dx = diff/(num_t-one);
+    let dx = diff/(len_t-one);
 
-    // let mut bx  = vec![zero; num].into_boxed_slice();
-    let mut bx = vec![zero; num];
-    let mut c = zero;
+    let mut v = Vec::<T>::with_capacity(len);
 
-    for x in bx.iter_mut() {
-        *x = start + c*dx;
-        c = c + one;
+    for i in 0..len {
+        v.push(zero);
     }
 
-    return bx
+    let mut c = zero;
+
+    //**** SLOW ****
+    // for x in v.iter_mut() {
+    //     *x = start + c*dx;
+    //     c = c + one;
+    // }
+
+    //**** FAST ****
+    let ptr: *mut T = v.as_mut_ptr();
+    unsafe {
+        for ii in 0..len {
+            let x = ptr.offset((ii as isize));
+            *x = start + c*dx;
+            c = c + one;
+        }
+    }
+
+    return v
 }
 
-pub fn linspace_vec2box<'a, T: 'a>(start: T, stop: T, num: usize) ->
+pub fn linspace_vec2box<'a, T: 'a>(start: T, stop: T, len: usize) ->
 // Vec<T>
 Box<[T]>
     where T: Float {
 
     let zero: T = num::cast(0).unwrap();
-    let num_t: T = num::cast(num).unwrap();
+    let len_t: T = num::cast(len).unwrap();
     let one: T = num::cast(1).unwrap();
     let diff = stop - start;
-    let dx = diff/(num_t-one);
+    let dx = diff/(len_t-one);
 
-    let mut bx  = vec![zero; num].into_boxed_slice();
-    // let mut bx = vec![zero; num];
+    let mut bx  = vec![zero; len].into_boxed_slice();
+    // let mut bx = vec![zero; len];
     let mut c = zero;
 
     for x in bx.iter_mut() {
@@ -62,7 +77,7 @@ Box<[T]>
 pub fn make_arr_unsafe<'a, T>(len: usize) -> &'a mut [T] {
 
     let size = len * mem::size_of::<T>();
-    // println!("size: {}", size);
+
     unsafe {
         let ptr = heap::allocate(size, align_of::<T>());
         intrinsics::volatile_set_memory(ptr, 0, size);
@@ -71,33 +86,23 @@ pub fn make_arr_unsafe<'a, T>(len: usize) -> &'a mut [T] {
     }
 }
 
-pub fn linspace_slice<'a, T: 'a>(start: T, stop: T, num: usize) ->
-// Vec<T>
-&'a [T]
+pub fn linspace_slice<'a, T: 'a>(start: T, stop: T, len: usize) -> &'a [T]
     where T: Float {
 
     let zero: T = num::cast(0).unwrap();
-    let num_t: T = num::cast(num).unwrap();
+    let len_t: T = num::cast(len).unwrap();
     let one: T = num::cast(1).unwrap();
     let diff = stop - start;
-    let dx = diff/(num_t-one);
+    let dx = diff/(len_t-one);
 
-    // let bx = make_arr_unsafe::<T>(num) ;
-    ////////////
-    let size = num * mem::size_of::<T>();
-    // println!("size: {}", size);
+    let size = len * mem::size_of::<T>();
+
     unsafe {
         let ptr = heap::allocate(size, align_of::<T>());
-        //intrinsics::volatile_set_memory(ptr, 0, size);
-        let bx = slice::from_raw_parts_mut(ptr as *mut T, num);
+        let bx = slice::from_raw_parts_mut(ptr as *mut T, len);
 
         let mut c = zero;
 
-        // for ii in 0..num {
-        //     let x = bx.get_unchecked_mut(ii);
-        //     *x = start + c*dx;
-        //     c = c + one;
-        // }
         for x in bx.iter_mut() {
             *x = start + c*dx;
             c = c + one;
@@ -107,9 +112,34 @@ pub fn linspace_slice<'a, T: 'a>(start: T, stop: T, num: usize) ->
     }
 }
 
-pub fn linspace_ptr<'a, T: 'a>(start: T, stop: T, num: usize) ->
-// Vec<T>
-*mut T
+pub fn linspace_slice_unchecked<'a, T: 'a>(start: T, stop: T, len: usize) -> &'a [T]
+    where T: Float {
+
+    let zero: T = num::cast(0).unwrap();
+    let len_t: T = num::cast(len).unwrap();
+    let one: T = num::cast(1).unwrap();
+    let diff = stop - start;
+    let dx = diff/(len_t-one);
+
+    let size = len * mem::size_of::<T>();
+
+    unsafe {
+        let ptr = heap::allocate(size, align_of::<T>());
+        let bx = slice::from_raw_parts_mut(ptr as *mut T, len);
+
+        let mut c = zero;
+
+        for ii in 0..len {
+            let x = bx.get_unchecked_mut(ii);
+            *x = start + c*dx;
+            c = c + one;
+        }
+
+        return bx
+    }
+}
+
+pub fn linspace_ptr<'a, T: 'a>(start: T, stop: T, num: usize) -> *mut T
     where T: Float {
 
     let zero: T = num::cast(0).unwrap();
@@ -118,14 +148,10 @@ pub fn linspace_ptr<'a, T: 'a>(start: T, stop: T, num: usize) ->
     let diff = stop - start;
     let dx = diff/(num_t-one);
 
-    // let bx = make_arr_unsafe::<T>(num) ;
-    ////////////
     let size = num * mem::size_of::<T>();
-    // println!("size: {}", size);
+
     unsafe {
         let ptr = heap::allocate(size, align_of::<T>()) as *mut T;
-        //intrinsics::volatile_set_memory(ptr, 0, size);
-        //let bx = slice::from_raw_parts_mut(ptr as *mut T, num);
 
         let mut c = zero;
 
@@ -134,11 +160,101 @@ pub fn linspace_ptr<'a, T: 'a>(start: T, stop: T, num: usize) ->
             *x = start + c*dx;
             c = c + one;
         }
-        // for x in bx.iter_mut() {
-        //     *x = start + c*dx;
-        //     c = c + one;
-        // }
 
         return ptr as *mut T
+    }
+}
+
+// Similar to IntermediateBox
+pub struct FastBox<T> {
+    pub ptr: *mut T,
+    pub length: usize,
+    typesize: usize,
+    arraysize: usize,
+    align: usize,
+    // marker: marker::PhantomData<*mut T>,
+}
+
+// Similar to an make_place for IntermediateBox
+fn alloc_fastbox<T>(length: usize) -> FastBox<T> {
+    let typesize = mem::size_of::<T>();
+    let arraysize = length * typesize;
+    let align = mem::align_of::<T>();
+
+    let p = if typesize == 0 || length == 0 {
+        heap::EMPTY as *mut T
+    } else {
+        let p = unsafe {
+            heap::allocate(arraysize, align) as *mut T
+        };
+        if p.is_null() {
+            panic!("FastBox make_place allocation failure.");
+        }
+        p
+    };
+
+    FastBox { ptr: p, length: length, typesize: typesize, arraysize: arraysize, align: align }
+}
+
+impl<T: Sized> Drop for FastBox<T> {
+    fn drop(&mut self) {
+        if self.typesize > 0 && self.length > 0 {
+            unsafe {
+                heap::deallocate(self.ptr as *mut u8, self.arraysize, self.align)
+            }
+        }
+    }
+}
+
+
+pub fn linspace_fastbox<'a, T: 'a>(start: T, stop: T, len: usize) -> FastBox<T>
+    where T: Float {
+
+    let zero: T = num::cast(0).unwrap();
+    let len_t: T = num::cast(len).unwrap();
+    let one: T = num::cast(1).unwrap();
+    let diff = stop - start;
+    let dx = diff/(len_t-one);
+
+    let fb: FastBox<T> = alloc_fastbox::<T>(len);
+    let ptr = fb.ptr as *mut T;
+    unsafe {
+        let mut c = zero;
+
+        for ii in 0..len {
+            let x = ptr.offset((ii as isize));
+            *x = start + c*dx;
+            c = c + one;
+        }
+
+        return fb
+    }
+}
+
+
+pub fn linspace_boxed_slice<'a, T: 'a>(start: T, stop: T, len: usize) -> Box<&'a mut [T]>
+    where T: Float {
+
+    let zero: T = num::cast(0).unwrap();
+    let len_t: T = num::cast(len).unwrap();
+    let one: T = num::cast(1).unwrap();
+    let diff = stop - start;
+    let dx = diff/(len_t-one);
+
+    let size = len * mem::size_of::<T>();
+
+    unsafe {
+        let ptr = heap::allocate(size, align_of::<T>()) as *mut T;
+
+        let mut c = zero;
+
+        for ii in 0..len {
+            let x = ptr.offset((ii as isize));
+            *x = start + c*dx;
+            c = c + one;
+        }
+
+        let sl = slice::from_raw_parts_mut(ptr, len);
+        return Box::new(sl);
     }
 }
