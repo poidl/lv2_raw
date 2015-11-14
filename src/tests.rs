@@ -48,11 +48,11 @@ fn mytest()
     //         println!("x: {}", *ptr.offset(i))
     //     }
     // }
-    //
-    // let boxed_slice = utils::linspace_boxed_slice(1f64, 5f64, 6);
-    // for x in boxed_slice.iter() {
-    //     println!("x: {}", x);
-    // }
+    
+    let boxed_slice = utils::linspace_boxed_slice(1f64, 5f64, 6);
+    for x in boxed_slice.iter() {
+        println!("x: {}", x);
+    }
 
 //
 //     // let y = make_array_unsafe::<f64>(1f64, 5f64, 5);

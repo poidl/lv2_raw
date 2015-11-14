@@ -11,17 +11,17 @@ use test::Bencher;
 use yassy::utils;
 // use alloc::heap;
 
-const  LENGTH: usize = 1000000;
+const  LENGTH: usize = 4000000;
 
 #[bench]
 fn bench1(b: &mut Bencher) {
     b.iter(|| utils::linspace_vec(1f64, 5f64, LENGTH));
 }
 //
-#[bench]
-fn bench2(b: &mut Bencher) {
-    b.iter(|| utils::linspace_vec2box(1f64, 5f64, LENGTH));
-}
+// #[bench]
+// fn bench2(b: &mut Bencher) {
+//     b.iter(|| utils::linspace_vec2box(1f64, 5f64, LENGTH));
+// }
 
 //
 // #[bench]
@@ -42,12 +42,12 @@ fn bench2(b: &mut Bencher) {
 //     b.iter(|| utils::linspace_ptr(1f64, 5f64, LENGTH));
 // }
 
-#[bench]
-fn bench6(b: &mut Bencher) {
-    b.iter(|| utils::linspace_fastbox(1f64, 5f64, LENGTH));
-}
-
 // #[bench]
-// fn bench7(b: &mut Bencher) {
-//     b.iter(|| utils::linspace_boxed_slice(1f64, 5f64, LENGTH));
+// fn bench6(b: &mut Bencher) {
+//     b.iter(|| utils::linspace_fastbox(1f64, 5f64, LENGTH));
 // }
+
+#[bench]
+fn bench7(b: &mut Bencher) {
+    b.iter(|| utils::linspace_boxed_slice(1f64, 5f64, LENGTH));
+}

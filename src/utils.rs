@@ -13,22 +13,29 @@ use std::i32;
 use std::slice;
 use std::marker;
 
-
-pub fn linspace_vec<'a, T: 'a>(start: T, stop: T, len: usize) ->
-Vec<T>
+fn get_values_as_type_t<T>(start: T, stop: T, len: usize) -> (T, T, T)
     where T: Float {
-
     let zero: T = num::cast(0).unwrap();
     let len_t: T = num::cast(len).unwrap();
     let one: T = num::cast(1).unwrap();
     let diff = stop - start;
     let dx = diff/(len_t-one);
+    return (one, zero, dx)
+}
 
-    let mut v = Vec::<T>::with_capacity(len);
+pub fn linspace_vec<'a, T: 'a>(start: T, stop: T, len: usize) ->
+Vec<T>
+    where T: Float {
 
-    for i in 0..len {
-        v.push(zero);
-    }
+    let (one, zero, dx) = get_values_as_type_t::<T>(start, stop, len);
+
+    // let mut v = Vec::<T>::with_capacity(len);
+    //
+    // for i in 0..len {
+    //     v.push(zero);
+    // }
+
+    let mut v = vec![zero; len];
 
     let mut c = zero;
 
@@ -51,16 +58,13 @@ Vec<T>
     return v
 }
 
+
 pub fn linspace_vec2box<'a, T: 'a>(start: T, stop: T, len: usize) ->
 // Vec<T>
 Box<[T]>
     where T: Float {
 
-    let zero: T = num::cast(0).unwrap();
-    let len_t: T = num::cast(len).unwrap();
-    let one: T = num::cast(1).unwrap();
-    let diff = stop - start;
-    let dx = diff/(len_t-one);
+    let (one, zero, dx) = get_values_as_type_t::<T>(start, stop, len);
 
     let mut bx  = vec![zero; len].into_boxed_slice();
     // let mut bx = vec![zero; len];
@@ -89,11 +93,7 @@ pub fn make_arr_unsafe<'a, T>(len: usize) -> &'a mut [T] {
 pub fn linspace_slice<'a, T: 'a>(start: T, stop: T, len: usize) -> &'a [T]
     where T: Float {
 
-    let zero: T = num::cast(0).unwrap();
-    let len_t: T = num::cast(len).unwrap();
-    let one: T = num::cast(1).unwrap();
-    let diff = stop - start;
-    let dx = diff/(len_t-one);
+    let (one, zero, dx) = get_values_as_type_t::<T>(start, stop, len);
 
     let size = len * mem::size_of::<T>();
 
@@ -112,14 +112,12 @@ pub fn linspace_slice<'a, T: 'a>(start: T, stop: T, len: usize) -> &'a [T]
     }
 }
 
+
+
 pub fn linspace_slice_unchecked<'a, T: 'a>(start: T, stop: T, len: usize) -> &'a [T]
     where T: Float {
 
-    let zero: T = num::cast(0).unwrap();
-    let len_t: T = num::cast(len).unwrap();
-    let one: T = num::cast(1).unwrap();
-    let diff = stop - start;
-    let dx = diff/(len_t-one);
+    let (one, zero, dx) = get_values_as_type_t::<T>(start, stop, len);
 
     let size = len * mem::size_of::<T>();
 
@@ -139,23 +137,19 @@ pub fn linspace_slice_unchecked<'a, T: 'a>(start: T, stop: T, len: usize) -> &'a
     }
 }
 
-pub fn linspace_ptr<'a, T: 'a>(start: T, stop: T, num: usize) -> *mut T
+pub fn linspace_ptr<'a, T: 'a>(start: T, stop: T, len: usize) -> *mut T
     where T: Float {
 
-    let zero: T = num::cast(0).unwrap();
-    let num_t: T = num::cast(num).unwrap();
-    let one: T = num::cast(1).unwrap();
-    let diff = stop - start;
-    let dx = diff/(num_t-one);
+let (one, zero, dx) = get_values_as_type_t::<T>(start, stop, len);
 
-    let size = num * mem::size_of::<T>();
+    let size = len * mem::size_of::<T>();
 
     unsafe {
         let ptr = heap::allocate(size, align_of::<T>()) as *mut T;
 
         let mut c = zero;
 
-        for ii in 0..num {
+        for ii in 0..len {
             let x = ptr.offset((ii as isize));
             *x = start + c*dx;
             c = c + one;
@@ -210,14 +204,11 @@ impl<T: Sized> Drop for FastBox<T> {
 pub fn linspace_fastbox<'a, T: 'a>(start: T, stop: T, len: usize) -> FastBox<T>
     where T: Float {
 
-    let zero: T = num::cast(0).unwrap();
-    let len_t: T = num::cast(len).unwrap();
-    let one: T = num::cast(1).unwrap();
-    let diff = stop - start;
-    let dx = diff/(len_t-one);
+    let (one, zero, dx) = get_values_as_type_t::<T>(start, stop, len);
 
     let fb: FastBox<T> = alloc_fastbox::<T>(len);
     let ptr = fb.ptr as *mut T;
+
     unsafe {
         let mut c = zero;
 
@@ -235,11 +226,7 @@ pub fn linspace_fastbox<'a, T: 'a>(start: T, stop: T, len: usize) -> FastBox<T>
 pub fn linspace_boxed_slice<'a, T: 'a>(start: T, stop: T, len: usize) -> Box<&'a mut [T]>
     where T: Float {
 
-    let zero: T = num::cast(0).unwrap();
-    let len_t: T = num::cast(len).unwrap();
-    let one: T = num::cast(1).unwrap();
-    let diff = stop - start;
-    let dx = diff/(len_t-one);
+    let (one, zero, dx) = get_values_as_type_t::<T>(start, stop, len);
 
     let size = len * mem::size_of::<T>();
 
