@@ -18,10 +18,10 @@ fn bench1(b: &mut Bencher) {
     b.iter(|| utils::linspace_vec(1f64, 5f64, LENGTH));
 }
 //
-// #[bench]
-// fn bench2(b: &mut Bencher) {
-//     b.iter(|| utils::linspace_vec2box(1f64, 5f64, LENGTH));
-// }
+#[bench]
+fn bench2(b: &mut Bencher) {
+    b.iter(|| utils::linspace_vec2boxed_slice(1f64, 5f64, LENGTH));
+}
 
 //
 // #[bench]
@@ -46,8 +46,34 @@ fn bench1(b: &mut Bencher) {
 // fn bench6(b: &mut Bencher) {
 //     b.iter(|| utils::linspace_fastbox(1f64, 5f64, LENGTH));
 // }
+//
+// #[bench]
+// fn bench7(b: &mut Bencher) {
+//     b.iter(|| utils::linspace_boxed_slice(1f64, 5f64, LENGTH));
+// }
 
 #[bench]
-fn bench7(b: &mut Bencher) {
-    b.iter(|| utils::linspace_boxed_slice(1f64, 5f64, LENGTH));
+fn access1(b: &mut Bencher) {
+    b.iter(|| {
+        let fastbox = utils::linspace_fastbox(1f64, 5f64, LENGTH);
+        let mut s = 0f64;
+        for x in fastbox.iter() {
+            s = s + x;
+        }
+        println!("s: {}", s)
+    });
 }
+
+// #[bench]
+// fn access2(b: &mut Bencher) {
+//     b.iter(|| {
+//         let fastbox = utils::linspace_fastbox(1f64, 5f64, LENGTH);
+//         let mut s = 0f64;
+//         for ii in 0..fastbox.len() {
+//             unsafe {
+//                 s = s + fastbox.get_unchecked(ii);
+//             }
+//         }
+//         println!("s: {}", s)
+//     });
+// }

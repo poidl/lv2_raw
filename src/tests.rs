@@ -3,12 +3,12 @@ use utils;
 #[test]
 fn mytest()
 {
-    let v = utils::linspace_vec(1f64, 5f64, 6);
-
-    for x in v.iter() {
-        println!("x: {}", x);
-    }
-    let ar1 = utils::linspace_slice(1f64, 5f64, 6);
+    // let v = utils::linspace_vec(1f64, 5f64, 6);
+    //
+    // for x in v.iter() {
+    //     println!("x: {}", x);
+    // }
+    // let ar1 = utils::linspace_slice(1f64, 5f64, 6);
     // for x in ar1.iter() {
     //     println!("x: {}", x);
     // }
@@ -38,21 +38,27 @@ fn mytest()
     //     }
     // }
 
-    // let fastbox = utils::linspace_fastbox(1f64, 5f64, 1000);
-    // // for x in ar1.iter() {
-    // //     println!("x: {}", x);
-    // // }
+    let fastbox = utils::linspace_fastbox(1f64, 5f64, 6);
+    // for x in fastbox.iter() {
+    //     println!("x: {}", x);
+    // }
+    for ii in 0..fastbox.len()+3 {
+        unsafe {
+            println!("x: {}", fastbox.get_unchecked(ii));
+            println!("x: {}", fastbox[ii]);
+        }
+    }
     // let ptr = fastbox.ptr;
     // unsafe {
     //     for i in 0..fastbox.length as isize {
     //         println!("x: {}", *ptr.offset(i))
     //     }
     // }
-    
-    let boxed_slice = utils::linspace_boxed_slice(1f64, 5f64, 6);
-    for x in boxed_slice.iter() {
-        println!("x: {}", x);
-    }
+
+    // let boxed_slice = utils::linspace_boxed_slice(1f64, 5f64, 6);
+    // for x in boxed_slice.iter() {
+    //     println!("x: {}", x);
+    // }
 
 //
 //     // let y = make_array_unsafe::<f64>(1f64, 5f64, 5);

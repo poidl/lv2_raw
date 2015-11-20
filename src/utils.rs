@@ -12,6 +12,8 @@ use std::raw::Slice;
 use std::i32;
 use std::slice;
 use std::marker;
+use std::ops::Deref;
+use std::ops::DerefMut;
 
 fn get_values_as_type_t<T>(start: T, stop: T, len: usize) -> (T, T, T)
     where T: Float {
@@ -59,23 +61,22 @@ Vec<T>
 }
 
 
-pub fn linspace_vec2box<'a, T: 'a>(start: T, stop: T, len: usize) ->
-// Vec<T>
-Box<[T]>
+pub fn linspace_vec2boxed_slice<'a, T: 'a>(start: T, stop: T, len: usize) -> Box<[T]>
     where T: Float {
-
+    // get 0, 1 and the increment dx as T
     let (one, zero, dx) = get_values_as_type_t::<T>(start, stop, len);
-
-    let mut bx  = vec![zero; len].into_boxed_slice();
-    // let mut bx = vec![zero; len];
+    let mut v = vec![zero; len].into_boxed_slice();
     let mut c = zero;
-
-    for x in bx.iter_mut() {
-        *x = start + c*dx;
-        c = c + one;
+    let ptr: *mut T = v.as_mut_ptr();
+    unsafe {
+        for ii in 0..len {
+            let x = ptr.offset((ii as isize));
+            *x = start + c*dx;
+            c = c + one;
+        }
     }
 
-    return bx
+    v
 }
 
 pub fn make_arr_unsafe<'a, T>(len: usize) -> &'a mut [T] {
@@ -161,10 +162,10 @@ let (one, zero, dx) = get_values_as_type_t::<T>(start, stop, len);
 
 // Similar to IntermediateBox
 pub struct FastBox<T> {
-    pub ptr: *mut T,
-    pub length: usize,
+    ptr: *mut T,
+    length: usize,
     typesize: usize,
-    arraysize: usize,
+    size: usize,
     align: usize,
     // marker: marker::PhantomData<*mut T>,
 }
@@ -172,14 +173,14 @@ pub struct FastBox<T> {
 // Similar to an make_place for IntermediateBox
 fn alloc_fastbox<T>(length: usize) -> FastBox<T> {
     let typesize = mem::size_of::<T>();
-    let arraysize = length * typesize;
+    let size = length * typesize;
     let align = mem::align_of::<T>();
 
     let p = if typesize == 0 || length == 0 {
         heap::EMPTY as *mut T
     } else {
         let p = unsafe {
-            heap::allocate(arraysize, align) as *mut T
+            heap::allocate(size, align) as *mut T
         };
         if p.is_null() {
             panic!("FastBox make_place allocation failure.");
@@ -187,15 +188,32 @@ fn alloc_fastbox<T>(length: usize) -> FastBox<T> {
         p
     };
 
-    FastBox { ptr: p, length: length, typesize: typesize, arraysize: arraysize, align: align }
+    FastBox { ptr: p, length: length, typesize: typesize, size: size, align: align }
 }
 
 impl<T: Sized> Drop for FastBox<T> {
     fn drop(&mut self) {
         if self.typesize > 0 && self.length > 0 {
             unsafe {
-                heap::deallocate(self.ptr as *mut u8, self.arraysize, self.align)
+                heap::deallocate(self.ptr as *mut u8, self.size, self.align)
             }
+        }
+    }
+}
+
+impl<T> Deref for FastBox<T> {
+    type Target = [T];
+    fn deref(&self) -> &[T] {
+        unsafe {
+            slice::from_raw_parts(self.ptr, self.length)
+        }
+    }
+}
+
+impl<T> DerefMut for FastBox<T> {
+    fn deref_mut(&mut self) -> &mut [T] {
+        unsafe {
+            slice::from_raw_parts_mut(self.ptr, self.length)
         }
     }
 }
