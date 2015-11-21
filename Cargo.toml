@@ -13,6 +13,6 @@ crate-type = ["rlib","dylib"] # ?
 # test = false # disable unit tests for this target unit. annoying output
 
 [dev-dependencies] # for testing/documentation
-# GSL = "*"
+GSL = "*"
 gnuplot = "*"
 getopts = "=0.2.14" # gnuplot dependency

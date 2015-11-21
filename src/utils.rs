@@ -14,6 +14,7 @@ use std::slice;
 use std::marker;
 use std::ops::Deref;
 use std::ops::DerefMut;
+use std::ops;
 
 fn get_values_as_type_t<T>(start: T, stop: T, len: usize) -> (T, T, T)
     where T: Float {
@@ -215,6 +216,17 @@ impl<T> DerefMut for FastBox<T> {
         unsafe {
             slice::from_raw_parts_mut(self.ptr, self.length)
         }
+    }
+}
+
+impl ops::Mul<f64> for FastBox<f64> {
+    type Output = FastBox<f64>;
+    fn mul(self, f: f64) -> FastBox<f64> {
+        let mut fb: FastBox<f64> = alloc_fastbox::<f64>(self.length);
+        for (xout,xin) in &mut fb.iter_mut().zip(self.iter()) {
+            *xout = f*(*xin);
+        }
+        fb
     }
 }
 

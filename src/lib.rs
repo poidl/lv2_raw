@@ -9,7 +9,7 @@
 
 mod tests;
 pub mod utils;
-
+mod lv2;
 
 extern crate libc;
 use std::ptr;
@@ -19,7 +19,6 @@ use std::ffi::CString;
 use std::ffi::CStr;
 use std::io::Write;
 
-mod lv2;
 
 macro_rules! println_stderr(
     ($($arg:tt)*) => (

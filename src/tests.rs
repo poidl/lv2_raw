@@ -42,7 +42,7 @@ fn mytest()
     // for x in fastbox.iter() {
     //     println!("x: {}", x);
     // }
-    for ii in 0..fastbox.len()+3 {
+    for ii in 0..fastbox.len() {
         unsafe {
             println!("x: {}", fastbox.get_unchecked(ii));
             println!("x: {}", fastbox[ii]);
