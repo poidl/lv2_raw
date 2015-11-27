@@ -7,20 +7,17 @@ use yassy::utils;
 
 fn main() {
     let pi = std::f64::consts::PI;
-    let mut v1 = utils::linspace_vec(-1f64, 1f64, 100);
-    for x in &mut v1 {
-        *x = *x*pi
-    }
-    println!("Hello, world!");
+    let x = utils::linspace_fastbox(-1f64, 1f64, 100);
+    let x = x*2f64*pi;
+    let y = x.sinc();
 
-    let v2 = utils::linspace_fastbox(-1f64, 1f64, 10);
-    for ii in v2.iter() {
-        println!("v2: {}", ii);
+    for ii in x.iter() {
+        println!("ii: {}",ii)
     }
 
-    let hoi = v2*3f64;
-    for ii in hoi.iter() {
-        println!("v3: {}", ii);
-    }
-
+    let mut fg = gnuplot::Figure::new();
+    fg.set_terminal("svg","./examples/hoit.svg");
+    fg.axes2d()
+    .lines(x.iter(), y.iter(), &[]);
+    fg.show();
 }

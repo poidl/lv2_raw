@@ -202,6 +202,7 @@ impl<T: Sized> Drop for FastBox<T> {
     }
 }
 
+
 impl<T> Deref for FastBox<T> {
     type Target = [T];
     fn deref(&self) -> &[T] {
@@ -219,10 +220,10 @@ impl<T> DerefMut for FastBox<T> {
     }
 }
 
-impl ops::Mul<f64> for FastBox<f64> {
-    type Output = FastBox<f64>;
-    fn mul(self, f: f64) -> FastBox<f64> {
-        let mut fb: FastBox<f64> = alloc_fastbox::<f64>(self.length);
+impl<T> ops::Mul<T> for FastBox<T> where T: Float {
+    type Output = FastBox<T>;
+    fn mul(self, f: T) -> FastBox<T> {
+        let mut fb: FastBox<T> = alloc_fastbox::<T>(self.length);
         for (xout,xin) in &mut fb.iter_mut().zip(self.iter()) {
             *xout = f*(*xin);
         }
@@ -230,6 +231,29 @@ impl ops::Mul<f64> for FastBox<f64> {
     }
 }
 
+impl<T> FastBox<T> where T: Float {
+    pub fn sin(&self) -> FastBox<T> {
+        let mut fb: FastBox<T> = alloc_fastbox::<T>(self.length);
+        for (xout,xin) in &mut fb.iter_mut().zip(self.iter()) {
+            *xout = (*xin).sin();
+        }
+        fb
+    }
+}
+
+impl<T> FastBox<T> where T: Float {
+    pub fn sinc(&self) -> FastBox<T> {
+        let mut fb: FastBox<T> = alloc_fastbox::<T>(self.length);
+        for (xout,xin) in &mut fb.iter_mut().zip(self.iter()) {
+            if *xin != T::zero() {
+                *xout = (*xin).sin()/(*xin);
+            } else {
+                *xout = T::one()
+            }
+        }
+        fb
+    }
+}
 
 pub fn linspace_fastbox<'a, T: 'a>(start: T, stop: T, len: usize) -> FastBox<T>
     where T: Float {
