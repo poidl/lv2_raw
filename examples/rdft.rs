@@ -7,7 +7,7 @@ use yassy::utils;
 
 fn main() {
     let pi = std::f64::consts::PI;
-    let x = utils::linspace_fastbox(-1f64, 1f64, 100);
+    let x = utils::linspace_heapslice(-1f64, 1f64, 100);
     let x = x*2f64*pi;
     let y = x.sinc();
 

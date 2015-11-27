@@ -38,19 +38,19 @@ fn mytest()
     //     }
     // }
 
-    let fastbox = utils::linspace_fastbox(1f64, 5f64, 6);
-    // for x in fastbox.iter() {
+    let heapslice = utils::linspace_heapslice(1f64, 5f64, 6);
+    // for x in heapslice.iter() {
     //     println!("x: {}", x);
     // }
-    for ii in 0..fastbox.len() {
+    for ii in 0..heapslice.len() {
         unsafe {
-            println!("x: {}", fastbox.get_unchecked(ii));
-            println!("x: {}", fastbox[ii]);
+            println!("x: {}", heapslice.get_unchecked(ii));
+            println!("x: {}", heapslice[ii]);
         }
     }
-    // let ptr = fastbox.ptr;
+    // let ptr = heapslice.ptr;
     // unsafe {
-    //     for i in 0..fastbox.length as isize {
+    //     for i in 0..heapslice.length as isize {
     //         println!("x: {}", *ptr.offset(i))
     //     }
     // }

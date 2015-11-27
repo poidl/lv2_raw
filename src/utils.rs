@@ -162,7 +162,7 @@ let (one, zero, dx) = get_values_as_type_t::<T>(start, stop, len);
 }
 
 // Similar to IntermediateBox
-pub struct FastBox<T> {
+pub struct HeapSlice<T> {
     ptr: *mut T,
     length: usize,
     typesize: usize,
@@ -172,7 +172,7 @@ pub struct FastBox<T> {
 }
 
 // Similar to an make_place for IntermediateBox
-fn alloc_fastbox<T>(length: usize) -> FastBox<T> {
+fn alloc_heapslice<T>(length: usize) -> HeapSlice<T> {
     let typesize = mem::size_of::<T>();
     let size = length * typesize;
     let align = mem::align_of::<T>();
@@ -184,15 +184,15 @@ fn alloc_fastbox<T>(length: usize) -> FastBox<T> {
             heap::allocate(size, align) as *mut T
         };
         if p.is_null() {
-            panic!("FastBox make_place allocation failure.");
+            panic!("HeapSlice make_place allocation failure.");
         }
         p
     };
 
-    FastBox { ptr: p, length: length, typesize: typesize, size: size, align: align }
+    HeapSlice { ptr: p, length: length, typesize: typesize, size: size, align: align }
 }
 
-impl<T: Sized> Drop for FastBox<T> {
+impl<T: Sized> Drop for HeapSlice<T> {
     fn drop(&mut self) {
         if self.typesize > 0 && self.length > 0 {
             unsafe {
@@ -203,7 +203,7 @@ impl<T: Sized> Drop for FastBox<T> {
 }
 
 
-impl<T> Deref for FastBox<T> {
+impl<T> Deref for HeapSlice<T> {
     type Target = [T];
     fn deref(&self) -> &[T] {
         unsafe {
@@ -212,7 +212,7 @@ impl<T> Deref for FastBox<T> {
     }
 }
 
-impl<T> DerefMut for FastBox<T> {
+impl<T> DerefMut for HeapSlice<T> {
     fn deref_mut(&mut self) -> &mut [T] {
         unsafe {
             slice::from_raw_parts_mut(self.ptr, self.length)
@@ -220,10 +220,10 @@ impl<T> DerefMut for FastBox<T> {
     }
 }
 
-impl<T> ops::Mul<T> for FastBox<T> where T: Float {
-    type Output = FastBox<T>;
-    fn mul(self, f: T) -> FastBox<T> {
-        let mut fb: FastBox<T> = alloc_fastbox::<T>(self.length);
+impl<T> ops::Mul<T> for HeapSlice<T> where T: Float {
+    type Output = HeapSlice<T>;
+    fn mul(self, f: T) -> HeapSlice<T> {
+        let mut fb: HeapSlice<T> = alloc_heapslice::<T>(self.length);
         for (xout,xin) in &mut fb.iter_mut().zip(self.iter()) {
             *xout = f*(*xin);
         }
@@ -231,9 +231,9 @@ impl<T> ops::Mul<T> for FastBox<T> where T: Float {
     }
 }
 
-impl<T> FastBox<T> where T: Float {
-    pub fn sin(&self) -> FastBox<T> {
-        let mut fb: FastBox<T> = alloc_fastbox::<T>(self.length);
+impl<T> HeapSlice<T> where T: Float {
+    pub fn sin(&self) -> HeapSlice<T> {
+        let mut fb: HeapSlice<T> = alloc_heapslice::<T>(self.length);
         for (xout,xin) in &mut fb.iter_mut().zip(self.iter()) {
             *xout = (*xin).sin();
         }
@@ -241,9 +241,9 @@ impl<T> FastBox<T> where T: Float {
     }
 }
 
-impl<T> FastBox<T> where T: Float {
-    pub fn sinc(&self) -> FastBox<T> {
-        let mut fb: FastBox<T> = alloc_fastbox::<T>(self.length);
+impl<T> HeapSlice<T> where T: Float {
+    pub fn sinc(&self) -> HeapSlice<T> {
+        let mut fb: HeapSlice<T> = alloc_heapslice::<T>(self.length);
         for (xout,xin) in &mut fb.iter_mut().zip(self.iter()) {
             if *xin != T::zero() {
                 *xout = (*xin).sin()/(*xin);
@@ -255,12 +255,12 @@ impl<T> FastBox<T> where T: Float {
     }
 }
 
-pub fn linspace_fastbox<'a, T: 'a>(start: T, stop: T, len: usize) -> FastBox<T>
+pub fn linspace_heapslice<'a, T: 'a>(start: T, stop: T, len: usize) -> HeapSlice<T>
     where T: Float {
 
     let (one, zero, dx) = get_values_as_type_t::<T>(start, stop, len);
 
-    let fb: FastBox<T> = alloc_fastbox::<T>(len);
+    let fb: HeapSlice<T> = alloc_heapslice::<T>(len);
     let ptr = fb.ptr as *mut T;
 
     unsafe {

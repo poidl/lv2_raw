@@ -44,7 +44,7 @@ fn bench2(b: &mut Bencher) {
 
 // #[bench]
 // fn bench6(b: &mut Bencher) {
-//     b.iter(|| utils::linspace_fastbox(1f64, 5f64, LENGTH));
+//     b.iter(|| utils::linspace_heapslice(1f64, 5f64, LENGTH));
 // }
 //
 // #[bench]
@@ -55,9 +55,9 @@ fn bench2(b: &mut Bencher) {
 #[bench]
 fn access1(b: &mut Bencher) {
     b.iter(|| {
-        let fastbox = utils::linspace_fastbox(1f64, 5f64, LENGTH);
+        let heapslice = utils::linspace_heapslice(1f64, 5f64, LENGTH);
         let mut s = 0f64;
-        for x in fastbox.iter() {
+        for x in heapslice.iter() {
             s = s + x;
         }
         println!("s: {}", s)
@@ -67,11 +67,11 @@ fn access1(b: &mut Bencher) {
 // #[bench]
 // fn access2(b: &mut Bencher) {
 //     b.iter(|| {
-//         let fastbox = utils::linspace_fastbox(1f64, 5f64, LENGTH);
+//         let heapslice = utils::linspace_heapslice(1f64, 5f64, LENGTH);
 //         let mut s = 0f64;
-//         for ii in 0..fastbox.len() {
+//         for ii in 0..heapslice.len() {
 //             unsafe {
-//                 s = s + fastbox.get_unchecked(ii);
+//                 s = s + heapslice.get_unchecked(ii);
 //             }
 //         }
 //         println!("s: {}", s)
