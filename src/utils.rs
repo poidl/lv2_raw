@@ -15,7 +15,7 @@ use std::marker;
 use std::ops::Deref;
 use std::ops::DerefMut;
 use std::ops;
-// use std::ptr::{Unique, self};
+use std::ptr::{Unique, self};
 
 fn get_values_as_type_t<T>(start: T, stop: T, len: usize) -> (T, T, T)
     where T: Float {
@@ -164,41 +164,77 @@ let (one, zero, dx) = get_values_as_type_t::<T>(start, stop, len);
 
 // Similar to IntermediateBox
 pub struct HeapSlice<T> {
-    ptr: *mut T,
-    // ptr: Unique<T>,
+    // ptr: *mut T,
+    ptr: Unique<T>,
     length: usize,
-    typesize: usize,
-    size: usize,
-    align: usize,
     // marker: marker::PhantomData<*mut T>,
 }
 
-// Similar to an make_place for IntermediateBox
-fn alloc_heapslice<T>(length: usize) -> HeapSlice<T> {
-    let typesize = mem::size_of::<T>();
-    let size = length * typesize;
-    let align = mem::align_of::<T>();
-
-    let p = if typesize == 0 || length == 0 {
-        heap::EMPTY as *mut T
-    } else {
-        let p = unsafe {
-            heap::allocate(size, align) as *mut T
-        };
-        if p.is_null() {
-            panic!("HeapSlice make_place allocation failure.");
-        }
-        p
-    };
-
-    HeapSlice { ptr: p, length: length, typesize: typesize, size: size, align: align }
+fn oom() {
+    ::std::process::exit(-9999);
 }
 
-impl<T: Sized> Drop for HeapSlice<T> {
+// #![feature(alloc, heap_api)]
+
+impl<T> HeapSlice<T> {
+    fn new() -> Self {
+        assert!(mem::size_of::<T>() != 0, "We're not ready to handle ZSTs");
+        unsafe {
+            // need to cast EMPTY to the actual ptr type we want, let
+            // inference handle it.
+            HeapSlice { ptr: Unique::new(heap::EMPTY as *mut _), length: 0 }
+        }
+    }
+
+    fn allocate(&mut self, newlength: usize) {
+        unsafe {
+            let typesize = mem::size_of::<T>();
+            let align = mem::align_of::<T>();
+            let size = newlength * typesize;
+
+            if self.length == 0 {
+                let ptr = heap::allocate(size, align);
+                // If allocate fails, we'll get `null` back
+                if ptr.is_null() { oom(); }
+                self.ptr = Unique::new(ptr as *mut _);
+                self.length = newlength;
+            } else {
+                panic!("already allocated ?")
+            }
+        }
+    }
+
+}
+
+// // Similar to an make_place for IntermediateBox
+// fn alloc_heapslice<T>(length: usize) -> HeapSlice<T> {
+//     let typesize = mem::size_of::<T>();
+//     let size = length * typesize;
+//     let align = mem::align_of::<T>();
+//
+//     let p = if typesize == 0 || length == 0 {
+//         heap::EMPTY as *mut T
+//     } else {
+//         let p = unsafe {
+//             heap::allocate(size, align) as *mut T
+//         };
+//         if p.is_null() {
+//             panic!("HeapSlice make_place allocation failure.");
+//         }
+//         p
+//     };
+//
+//     HeapSlice { ptr: p, length: length, typesize: typesize, size: size, align: align }
+// }
+
+impl<T> Drop for HeapSlice<T> {
     fn drop(&mut self) {
-        if self.typesize > 0 && self.length > 0 {
+        if self.length!= 0 {
+            let align = mem::align_of::<T>();
+            let elem_size = mem::size_of::<T>();
+            let size = elem_size * self.length;
             unsafe {
-                heap::deallocate(self.ptr as *mut u8, self.size, self.align)
+                heap::deallocate(*self.ptr as *mut u8, size, align)
             }
         }
     }
@@ -209,7 +245,7 @@ impl<T> Deref for HeapSlice<T> {
     type Target = [T];
     fn deref(&self) -> &[T] {
         unsafe {
-            slice::from_raw_parts(self.ptr, self.length)
+            slice::from_raw_parts(*self.ptr, self.length)
         }
     }
 }
@@ -217,7 +253,7 @@ impl<T> Deref for HeapSlice<T> {
 impl<T> DerefMut for HeapSlice<T> {
     fn deref_mut(&mut self) -> &mut [T] {
         unsafe {
-            slice::from_raw_parts_mut(self.ptr, self.length)
+            slice::from_raw_parts_mut(*self.ptr, self.length)
         }
     }
 }
@@ -225,7 +261,8 @@ impl<T> DerefMut for HeapSlice<T> {
 impl<T> ops::Mul<T> for HeapSlice<T> where T: Float {
     type Output = HeapSlice<T>;
     fn mul(self, f: T) -> HeapSlice<T> {
-        let mut fb: HeapSlice<T> = alloc_heapslice::<T>(self.length);
+        let mut fb: HeapSlice<T> = HeapSlice::<T>::new();
+        fb.allocate(self.length);
         for (xout,xin) in &mut fb.iter_mut().zip(self.iter()) {
             *xout = f*(*xin);
         }
@@ -235,7 +272,8 @@ impl<T> ops::Mul<T> for HeapSlice<T> where T: Float {
 
 impl<T> HeapSlice<T> where T: Float {
     pub fn sin(&self) -> HeapSlice<T> {
-        let mut fb: HeapSlice<T> = alloc_heapslice::<T>(self.length);
+        let mut fb: HeapSlice<T> = HeapSlice::<T>::new();
+        fb.allocate(self.length);
         for (xout,xin) in &mut fb.iter_mut().zip(self.iter()) {
             *xout = (*xin).sin();
         }
@@ -245,7 +283,8 @@ impl<T> HeapSlice<T> where T: Float {
 
 impl<T> HeapSlice<T> where T: Float {
     pub fn sinc(&self) -> HeapSlice<T> {
-        let mut fb: HeapSlice<T> = alloc_heapslice::<T>(self.length);
+        let mut fb: HeapSlice<T> = HeapSlice::<T>::new();
+        fb.allocate(self.length);
         for (xout,xin) in &mut fb.iter_mut().zip(self.iter()) {
             if *xin != T::zero() {
                 *xout = (*xin).sin()/(*xin);
@@ -261,15 +300,14 @@ pub fn linspace_heapslice<'a, T: 'a>(start: T, stop: T, len: usize) -> HeapSlice
     where T: Float {
 
     let (one, zero, dx) = get_values_as_type_t::<T>(start, stop, len);
-
-    let fb: HeapSlice<T> = alloc_heapslice::<T>(len);
-    let ptr = fb.ptr as *mut T;
+    let mut fb: HeapSlice<T> = HeapSlice::<T>::new();
+    fb.allocate(len);
 
     unsafe {
         let mut c = zero;
 
         for ii in 0..len {
-            let x = ptr.offset((ii as isize));
+            let x = fb.ptr.offset((ii as isize));
             *x = start + c*dx;
             c = c + one;
         }

@@ -4,7 +4,7 @@ extern crate rgsl;
 extern crate gnuplot;
 
 // use std::ops::Deref;
-use std::ops::DerefMut;
+// use std::ops::DerefMut;
 
 use yassy::utils;
 
@@ -21,10 +21,11 @@ fn main() {
     // let z = y.copy();
     let l = y.len();
     println!("l: {}", l);
-    let val = rgsl::fft::real_radix2::transform(y.deref_mut(),1,l);
+    let val = rgsl::fft::real_radix2::transform(&mut *y,1,l);
     let xx = utils::linspace_heapslice(0f64, (n/2+1) as f64, n/2+1);
 
-// TODO: copy, auto deref
+TODO: *) understand copy and clone
+    *) auto deref instead of &mut *y
 
     let mut fg = gnuplot::Figure::new();
     fg.set_terminal("svg","./examples/hoit.svg");

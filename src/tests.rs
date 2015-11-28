@@ -37,7 +37,6 @@ fn mytest()
     //         println!("x: {}", *ptr.offset(i))
     //     }
     // }
-
     let heapslice = utils::linspace_heapslice(1f64, 5f64, 6);
     // for x in heapslice.iter() {
     //     println!("x: {}", x);
@@ -65,6 +64,6 @@ fn mytest()
 //     println!("ar1: {:?}",ar1);
 //     // println!("y: {:?}",y);
 // //transform(data: &mut [f64], stride: u64, n: u64)
-    utils::make_arr_unsafe::<f64>(5) ;
+    // utils::make_arr_unsafe::<f64>(5) ;
 
 }

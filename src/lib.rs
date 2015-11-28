@@ -6,6 +6,8 @@
 #![feature(heap_api)]
 #![feature(core_intrinsics)]
 #![feature(raw)]
+#![feature(unique)]
+
 
 mod tests;
 pub mod utils;
