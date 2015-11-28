@@ -15,6 +15,7 @@ use std::marker;
 use std::ops::Deref;
 use std::ops::DerefMut;
 use std::ops;
+// use std::ptr::{Unique, self};
 
 fn get_values_as_type_t<T>(start: T, stop: T, len: usize) -> (T, T, T)
     where T: Float {
@@ -164,6 +165,7 @@ let (one, zero, dx) = get_values_as_type_t::<T>(start, stop, len);
 // Similar to IntermediateBox
 pub struct HeapSlice<T> {
     ptr: *mut T,
+    // ptr: Unique<T>,
     length: usize,
     typesize: usize,
     size: usize,
