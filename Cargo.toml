@@ -6,6 +6,8 @@ authors = ["stefan"]
 [dependencies]
 libc = "*"
 num = "*"
+GSL = "*"
+
 
 [lib]
 name = "yassy"

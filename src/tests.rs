@@ -38,15 +38,19 @@ fn mytest()
     //     }
     // }
     let heapslice = utils::linspace_heapslice(1f64, 5f64, 6);
-    // for x in heapslice.iter() {
-    //     println!("x: {}", x);
-    // }
-    for ii in 0..heapslice.len() {
-        unsafe {
-            println!("x: {}", heapslice.get_unchecked(ii));
-            println!("x: {}", heapslice[ii]);
-        }
+    for x in heapslice.iter() {
+        println!("x: {}", x);
     }
+    let heapslice = heapslice*10;
+    for x in heapslice.iter() {
+        println!("x: {}", x);
+    }
+    // for ii in 0..heapslice.len() {
+    //     unsafe {
+    //         println!("x: {}", heapslice.get_unchecked(ii));
+    //         println!("x: {}", heapslice[ii]);
+    //     }
+    // }
     // let ptr = heapslice.ptr;
     // unsafe {
     //     for i in 0..heapslice.length as isize {

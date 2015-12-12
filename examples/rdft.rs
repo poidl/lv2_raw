@@ -11,10 +11,9 @@ fn main() {
     let pi = std::f64::consts::PI;
     let n = 2u32.pow(8) as usize;
     let x = utils::linspace_heapslice(-1f64, 1f64, n);
-    let x = x*2f64*pi;
     let xt = utils::linspace_heapslice(-1f64, 1f64, n);
-    let fc = (n) as f64;
-    let mut y = (xt*fc).sinc();
+    let fc = 20f64;
+    let  y = (xt*2*fc).sinc()*(2f64*fc);
 
     // for ii in x.iter() {
     //     println!("ii: {}",ii)
@@ -22,7 +21,7 @@ fn main() {
     // let z = y.copy();
     let l = y.len();
     println!("length: {}", l);
-    let val = rgsl::fft::real_radix2::transform(&mut y,1,l);
+    // let val = rgsl::fft::real_radix2::transform(&mut y,1,l);
     // let xx = utils::linspace_heapslice(0f64, (n/2+1) as f64, n/2+1);
 
 // TODO: *) understand copy and clone
@@ -42,6 +41,15 @@ fn main() {
     fg.set_terminal("svg","./examples/hoit2.svg");
     fg.axes2d()
     .lines(x.iter(), mag.iter(), &[]);
+    fg.show();
+
+
+    let x = utils::linspace_heapslice(0f64, (n-1) as f64, n);
+    let kaiser = utils::kaiser(n,8.3);
+    let mut fg = gnuplot::Figure::new();
+    fg.set_terminal("svg","./examples/kaiser.svg");
+    fg.axes2d()
+    .lines(x.iter(), kaiser.iter(), &[]);
     fg.show();
     // let mut fg = gnuplot::Figure::new();
     // fg.set_terminal("svg","./examples/hoit.svg");
