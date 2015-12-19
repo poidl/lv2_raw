@@ -4,14 +4,13 @@
 
 #![feature(alloc)]
 #![feature(heap_api)]
-#![feature(core_intrinsics)]
-#![feature(raw)]
 #![feature(unique)]
 
 
 mod tests;
 pub mod utils;
 mod lv2;
+mod heapslice;
 
 extern crate libc;
 use std::ptr;
@@ -19,8 +18,6 @@ use std::mem;
 use std::str;
 use std::ffi::CString;
 use std::ffi::CStr;
-use std::io::Write;
-
 
 macro_rules! println_stderr(
     ($($arg:tt)*) => (

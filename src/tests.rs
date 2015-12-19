@@ -1,6 +1,10 @@
 #[cfg(test)]
+
 use utils;
+use utils::Castd;
+
 #[test]
+
 fn mytest()
 {
     // let v = utils::linspace_vec(1f64, 5f64, 6);
@@ -37,14 +41,27 @@ fn mytest()
     //         println!("x: {}", *ptr.offset(i))
     //     }
     // }
-    let heapslice = utils::linspace_heapslice(1f64, 5f64, 6);
-    for x in heapslice.iter() {
-        println!("x: {}", x);
+    let x = utils::linspace_heapslice(1f64, 5f64, 6);
+
+    let mut y=x.clone();
+    y[3]=1000f64;
+
+    let n=10i32;
+    let z=n.d()*x.clone();
+
+    for xi in x.iter() {
+        println!("xi: {}", xi);
     }
-    let heapslice = heapslice*10;
-    for x in heapslice.iter() {
-        println!("x: {}", x);
+    for yi in y.iter() {
+        println!("yi: {}", yi);
     }
+    for zi in z.iter() {
+        println!("yi: {}", zi);
+    }
+    // let heapslice = heapslice*10;
+    // for x in heapslice.iter() {
+    //     println!("x: {}", x);
+    // }
     // for ii in 0..heapslice.len() {
     //     unsafe {
     //         println!("x: {}", heapslice.get_unchecked(ii));

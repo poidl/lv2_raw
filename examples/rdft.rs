@@ -7,13 +7,14 @@ extern crate gnuplot;
 
 use yassy::utils;
 
+
 fn main() {
     let pi = std::f64::consts::PI;
     let n = 2u32.pow(8) as usize;
     let x = utils::linspace_heapslice(-1f64, 1f64, n);
-    let xt = utils::linspace_heapslice(-1f64, 1f64, n);
+    let xt = x.clone();
     let fc = 20f64;
-    let  y = (xt*2*fc).sinc()*(2f64*fc);
+    let  y = (2f64*fc)*(2f64*fc*xt).sinc();
 
     // for ii in x.iter() {
     //     println!("ii: {}",ii)
@@ -30,6 +31,7 @@ fn main() {
     for ii in 0..l/2 {
         mag[ii]=(y[ii].powf(2f64)+y[l-1-ii].powf(2f64)).sqrt();
     }
+    
     let mut fg = gnuplot::Figure::new();
     fg.set_terminal("svg","./examples/hoit.svg");
     fg.axes2d()
