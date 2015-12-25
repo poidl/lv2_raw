@@ -12,6 +12,7 @@ use std::ops::Deref;
 use std::ops::DerefMut;
 use std::ops;
 use std::ptr::{Unique, self};
+use std::f64;
 
 
 // similar to Vec as described in Rustonomicon
@@ -160,28 +161,41 @@ impl<T> HeapSlice<T> where T: Float {
 }
 
 
+
 // impl<T> HeapSlice<T> where T: Float+utils::FloatConst {
-//     pub fn sinc(&self) -> HeapSlice<T> {
-//         let mut fb: HeapSlice<T> = HeapSlice::<T>::new();
-//         fb.allocate(self.length);
-//         for (xout,xin) in &mut fb.iter_mut().zip(self.iter()) {
-//             if *xin != T::zero() {
-//                 *xout = (*xin*T::pi()).sin()/(*xin*T::pi());
+//     pub fn sinc(mut self) -> HeapSlice<T> {
+//         for xout in self.iter_mut() {
+//             if *xout != T::zero() {
+//                 *xout = (*xout*T::pi()).sin()/(*xout*T::pi());
 //             } else {
 //                 *xout = T::one()
 //             }
 //         }
-//         fb
+//         self
 //     }
 // }
 
-impl<T> HeapSlice<T> where T: Float+utils::FloatConst {
-    pub fn sinc(mut self) -> HeapSlice<T> {
-        for xout in self.iter_mut() {
-            if *xout != T::zero() {
-                *xout = (*xout*T::pi()).sin()/(*xout*T::pi());
+
+// impl<'a> utils::HasSinc<&'a mut [f64]> for &'a mut [f64] {
+//     fn sinc(self: &mut Self) -> &mut Self {
+//         for yi in (*self).iter_mut() {
+//             if *yi != 0f64 {
+//                 *yi = (*yi*f64::consts::PI).sin()/(*yi*f64::consts::PI);
+//             } else {
+//                 *yi = 1f64;
+//             }
+//         }
+//         self
+//     }
+// }
+
+impl<'a> utils::ToSinc<&'a mut [f64]> for &'a mut [f64] {
+    fn sinc(self) -> Self {
+        for yi in (*self).iter_mut() {
+            if *yi != 0f64 {
+                *yi = (*yi*f64::consts::PI).sin()/(*yi*f64::consts::PI);
             } else {
-                *xout = T::one()
+                *yi = 1f64;
             }
         }
         self

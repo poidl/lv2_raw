@@ -118,18 +118,68 @@ pub fn linspace_heapslice<'a, T: 'a>(start: T, stop: T, len: usize) -> heapslice
     }
 }
 
+// pub trait HasSinc<T> {
+//     fn sinc(self: &mut Self) -> &mut Self;
+// }
 
+pub trait ToSinc<T> {
+    fn sinc(self: Self) -> Self;
+}
 
-
-// pub fn sinc(f64) -> HeapSlice<T> {
-//     let mut fb: HeapSlice<T> = HeapSlice::<T>::new();
-//     fb.allocate(self.length);
-//     for (xout,xin) in &mut fb.iter_mut().zip(self.iter()) {
-//         if *xin != T::zero() {
-//             *xout = (*xin*T::pi()).sin()/(*xin*T::pi());
+// impl HasSinc<f64> for f64 {
+//     fn sinc(self: &mut Self) -> &mut Self {
+//         if *self != 0f64 {
+//             *self = (*self*f64::consts::PI).sin()/(*self*f64::consts::PI);
 //         } else {
-//             *xout = T::one()
+//             *self = 1f64;
+//         }
+//         self
+//     }
+// }
+
+impl<'a> ToSinc<&'a mut f64> for &'a mut f64 {
+    fn sinc(self) -> Self {
+        if *self != 0f64 {
+            *self = (*self*f64::consts::PI).sin()/(*self*f64::consts::PI);
+        } else {
+            *self = 1f64;
+        }
+        self
+    }
+}
+
+pub fn sinc<T: ToSinc<T>>(y: T) -> T {
+    y.sinc()
+}
+
+
+// pub fn sinc2(y: &mut f64) -> &mut f64 {
+//     if *y != 0f64 {
+//         *y = (*y*f64::consts::PI).sin()/(*y*f64::pi());
+//     } else {
+//         *y = 1f64;
+//     }
+//     y
+// }
+//
+// pub fn sinc(y: &mut [f64]) -> &mut [f64] {
+//     for yi in y.iter_mut() {
+//         if *yi != 0f64 {
+//             *yi = (*yi*f64::consts::PI).sin()/(*yi*f64::consts::PI);
+//         } else {
+//             *yi = 1f64;
 //         }
 //     }
-//     fb
+//     y
+// }
+
+// pub fn linspace(y: &mut [f64]) -> &mut [f64] {
+//     for yi in y.iter_mut() {
+//         if *yi != 0f64 {
+//             *yi = (*yi*f64::pi()).sin()/(*yi*f64::pi());
+//         } else {
+//             *yi = 1f64;
+//         }
+//     }
+//     y
 // }
