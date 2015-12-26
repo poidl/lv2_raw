@@ -118,15 +118,29 @@ pub fn linspace_heapslice<'a, T: 'a>(start: T, stop: T, len: usize) -> heapslice
     }
 }
 
-// pub trait HasSinc<T> {
+// **********************************************
+
+// pub trait ToSinc<T> {
 //     fn sinc(self: &mut Self) -> &mut Self;
 // }
 
-pub trait ToSinc<T> {
+pub trait ToSinc {
     fn sinc(self: Self) -> Self;
 }
 
-// impl HasSinc<f64> for f64 {
+// **********************************************
+
+// pub fn sinc<T: ToSinc<T>>(y: &mut T) -> &mut T {
+//     y.sinc()
+// }
+
+pub fn sinc<T: ToSinc>(y: T) -> T {
+    y.sinc()
+}
+
+// **********************************************
+
+// impl ToSinc<f64> for f64 {
 //     fn sinc(self: &mut Self) -> &mut Self {
 //         if *self != 0f64 {
 //             *self = (*self*f64::consts::PI).sin()/(*self*f64::consts::PI);
@@ -137,21 +151,48 @@ pub trait ToSinc<T> {
 //     }
 // }
 
-impl<'a> ToSinc<&'a mut f64> for &'a mut f64 {
+impl<'a> ToSinc for f64 {
     fn sinc(self) -> Self {
-        if *self != 0f64 {
-            *self = (*self*f64::consts::PI).sin()/(*self*f64::consts::PI);
+        let new: f64;
+        if self != 0f64 {
+            let new = (self*f64::consts::PI).sin()/(self*f64::consts::PI);
+            return new
         } else {
-            *self = 1f64;
+            let new = 1f64;
+            return new
+        }
+    }
+}
+
+// **********************************************
+
+// impl<'a> ToSinc<&'a mut [f64]> for &'a mut [f64] {
+//     fn sinc(self: &mut Self) -> &mut Self {
+//         for yi in (**self).iter_mut() {
+//             if *yi != 0f64 {
+//                 *yi = (*yi*f64::consts::PI).sin()/(*yi*f64::consts::PI);
+//             } else {
+//                 *yi = 1f64;
+//             }
+//         }
+//         self
+//     }
+// }
+
+impl<'a> ToSinc for &'a mut [f64] {
+    fn sinc(self) -> Self {
+        for yi in (*self).iter_mut() {
+            if *yi != 0f64 {
+                *yi = (*yi*f64::consts::PI).sin()/(*yi*f64::consts::PI);
+            } else {
+                *yi = 1f64;
+            }
         }
         self
     }
 }
 
-pub fn sinc<T: ToSinc<T>>(y: T) -> T {
-    y.sinc()
-}
-
+// **********************************************
 
 // pub fn sinc2(y: &mut f64) -> &mut f64 {
 //     if *y != 0f64 {

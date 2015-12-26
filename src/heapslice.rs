@@ -110,6 +110,7 @@ impl<T> DerefMut for HeapSlice<T> {
     }
 }
 
+
 impl<T> ops::Mul<T> for HeapSlice<T> where T: Float {
     type Output = HeapSlice<T>;
     fn mul(self, f: T) -> HeapSlice<T> {
@@ -174,30 +175,3 @@ impl<T> HeapSlice<T> where T: Float {
 //         self
 //     }
 // }
-
-
-// impl<'a> utils::HasSinc<&'a mut [f64]> for &'a mut [f64] {
-//     fn sinc(self: &mut Self) -> &mut Self {
-//         for yi in (*self).iter_mut() {
-//             if *yi != 0f64 {
-//                 *yi = (*yi*f64::consts::PI).sin()/(*yi*f64::consts::PI);
-//             } else {
-//                 *yi = 1f64;
-//             }
-//         }
-//         self
-//     }
-// }
-
-impl<'a> utils::ToSinc<&'a mut [f64]> for &'a mut [f64] {
-    fn sinc(self) -> Self {
-        for yi in (*self).iter_mut() {
-            if *yi != 0f64 {
-                *yi = (*yi*f64::consts::PI).sin()/(*yi*f64::consts::PI);
-            } else {
-                *yi = 1f64;
-            }
-        }
-        self
-    }
-}

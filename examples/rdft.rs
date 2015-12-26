@@ -12,19 +12,19 @@ use yassy::utils;
 fn main() {
     let pi = std::f64::consts::PI;
     let n = 2u32.pow(8) as usize;
-    let x = utils::linspace_heapslice(-3f64, 3f64, n);
+    let x = utils::linspace_heapslice(-5f64, 5f64, n);
     let xt = x.clone();
     let fc = 20f64;
     // let  y = (2f64*fc)*(2f64*fc*xt).sinc();
     let mut y = x.clone();
+
+    // utils::sinc(&mut &mut *y);
     utils::sinc(&mut *y);
 
-    // utils::sinc(&mut y);
-
-    let mut yy= 3f64;
+    let yy= 3f64;
     println!("yy: {}", yy);
-    utils::sinc(&mut yy);
-    println!("yy: {}", yy);   
+    utils::sinc(yy);
+    println!("yy: {}", utils::sinc(yy));
 
     // for ii in x.iter() {
     //     println!("ii: {}",ii)
