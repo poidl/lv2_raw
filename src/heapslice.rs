@@ -14,6 +14,8 @@ use std::ops;
 use std::ptr::{Unique, self};
 use std::f64;
 
+use utils::ToSinc;
+
 
 // similar to Vec as described in Rustonomicon
 pub struct HeapSlice<T> {
@@ -149,6 +151,20 @@ impl ops::Mul<i32> for HeapSlice<f64>  {
     }
 }
 
+impl ops::Mul<HeapSlice<f64>> for HeapSlice<f64>  {
+    type Output = HeapSlice<f64>;
+    fn mul(self, f: HeapSlice<f64>) -> HeapSlice<f64> {
+        let mut fb: HeapSlice<f64> = HeapSlice::<f64>::new();
+        fb.allocate(self.length);
+        unsafe {
+            for i in 0..fb.len() {
+                ptr::write(fb.get_unchecked_mut(i), self.get_unchecked(i).clone() * f.get_unchecked(i).clone());
+            }
+        }
+        fb
+    }
+}
+
 
 impl<T> HeapSlice<T> where T: Float {
     pub fn sin(&self) -> HeapSlice<T> {
@@ -161,7 +177,13 @@ impl<T> HeapSlice<T> where T: Float {
     }
 }
 
-
+impl ToSinc for HeapSlice<f64> {
+    fn sinc(self) -> Self {
+        let mut y = self;
+        let ga = utils::sinc(&mut *y);
+        to_heapslice(ga)
+    }
+}
 
 // impl<T> HeapSlice<T> where T: Float+utils::FloatConst {
 //     pub fn sinc(mut self) -> HeapSlice<T> {

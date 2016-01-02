@@ -124,6 +124,35 @@ pub fn linspace_heapslice<'a, T: 'a>(start: T, stop: T, len: usize) -> heapslice
 //     fn sinc(self: &mut Self) -> &mut Self;
 // }
 
+// pub trait TestTrait: Sized {
+//     fn test_in_place(&mut self);
+//     fn test(mut self) -> Self {
+//         self.test_in_place();
+//         self
+//     }
+// }
+//
+// impl<'a> TestTrait for &'a mut [i32] {
+//     fn test_in_place(self: &mut Self) {
+//         for x in (**self).iter_mut() {
+//             *x=*x*3;
+//         }
+//     }
+//     // fn test(self: mut Self) -> Self {
+//     //     self.test_in
+//     // }
+// }
+
+
+// pub fn test(x: i32) -> i32 {
+//     let y=2*x;
+//     y
+// }
+//
+// pub fn test2(x: Vec<i32>) {
+//     let y=x[0];
+// }
+
 pub trait ToSinc {
     fn sinc(self: Self) -> Self;
 }
@@ -191,6 +220,8 @@ impl<'a> ToSinc for &'a mut [f64] {
         self
     }
 }
+
+
 
 // **********************************************
 
