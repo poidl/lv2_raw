@@ -11,7 +11,9 @@ use gnuplot::*;
 fn main() {
     let pi = std::f64::consts::PI;
 
-    // nt is number of sampling intervals T on time axis, n is length of time axis in points. The signal within each T is resolved by n/nt points. Time axis t is symmetric around 0.
+    // nt is number of sampling intervals T on time axis, n is length of time axis in
+    // points. The signal within each T is resolved by n/nt points. Time axis t is
+    // symmetric around 0.
     let nt = 8;
     let n = 2u32.pow(12) as usize;
     println!("n: {}",n);
@@ -24,7 +26,12 @@ fn main() {
     let nth = (nt as f64)*0.5f64;
     let t = utils::linspace_heapslice(-nth , nth , n);
 
-    // The first zero crossing of the impulse determines the cutoff frequency fc=(1/Tc). The normalized sinc function sinc(T) has the first zero crossing at 1*T, corresponding to a cutoff at 0.5(1/T)=0.5*fs, which differs by a factor of 2*T*fc = 2*fc/fs from fc.  To get the cutoff at fc, we use c*sinc(c*T), where c=1/(2*T*fc)=fs/(2*fc) (see doc for the effect of linear axis scaling on the Fourier transform).
+    // The first zero crossing of the impulse determines the cutoff frequency fc=(1/Tc).
+    // The normalized sinc function sinc(T) has the first zero crossing at 1*T,
+    // corresponding to a cutoff at 0.5(1/T)=0.5*fs, which differs by a factor of
+    // 2*T*fc = 2*fc/fs from fc.  To get the cutoff at fc, we use c*sinc(c*T), where
+    // c=1/(2*T*fc)=fs/(2*fc) (see doc for the effect of linear axis scaling on the
+    // Fourier transform).
 
     let c = fs/(2f64*fc);
 
@@ -95,7 +102,11 @@ fn main() {
 
     let x = utils::linspace_heapslice(0f64, 0.5f64, n/2+1);
 
-    // The signal within each T is resolved by nppt=n/nt points per T. Denoting the temporal resolution of the time axis as Tr=T/nppt, the corresponding "resolution frequency" is fr=1/Tr. The axis of fhabs has n/2 points, representing frequencies from 0 to fr/2, or i*(fr/2)/(n/2-1) = i*n*fs/(nt*(2*n-2)) for i=0..n/2-1. We are only interested in frequencies up to around fi=60KHz, or i= [(2n-2)*nt/(n*fs)]*60KHz.
+    // The signal within each T is resolved by nppt=n/nt points per T. Denoting the temporal
+    // resolution of the time axis as Tr=T/nppt, the corresponding "resolution frequency" is
+    // fr=1/Tr. The axis of fhabs has n/2 points, representing frequencies from 0 to fr/2,
+    // or i*(fr/2)/(n/2-1) = i*n*fs/(nt*(2*n-2)) for i=0..n/2-1. We are only interested in
+    // frequencies up to around fi=60KHz, or i= [(2n-2)*nt/(n*fs)]*60KHz.
 
     let nf64=n as f64;
     let ntf64=nt as f64;
