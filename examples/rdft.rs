@@ -11,12 +11,12 @@ use gnuplot::*;
 fn main() {
     let pi = std::f64::consts::PI;
 
-    // nt is number of sampling intervals T on time axis, n is length of time axis in
-    // points. The signal within each T is resolved by n/nt points. Time axis t is
+    // nt is number of sampling intervals T on time axis, the signal within each T is
+    // resolved by nttp points. n is length of time axis in points. Time axis t is
     // symmetric around 0.
-    let nt = 8;
-    let n = 2u32.pow(12) as usize;
-    println!("n: {}",n);
+    let nt = 4;
+    let nppt = 2;
+    let n = (4*2+1) as usize;
 
     let fs = 48000f64; // sampling frequency 1/T.
     let fc = 20000f64; // cutoff frequency 1/Tc.
@@ -45,7 +45,8 @@ fn main() {
 
     // Fourier transform h to fh
     let mut fh = hk.clone();
-    rgsl::fft::real_radix2::transform(&mut fh,1,n);
+    //rgsl::fft::real_radix2::transform(&mut fh,1,n);
+    rgsl::fft::mixed_radix::transform(&mut fh,1,n,[],[],[]);
 
     // let mut hh_padded = utils::linspace_heapslice( 0f64, 1f64, n+20*n);
     // for i in 0..hh_padded.len()-1 {
@@ -104,14 +105,29 @@ fn main() {
 
     // The signal within each T is resolved by nppt=n/nt points per T. Denoting the temporal
     // resolution of the time axis as Tr=T/nppt, the corresponding "resolution frequency" is
-    // fr=1/Tr. The axis of fhabs has n/2 points, representing frequencies from 0 to fr/2,
-    // or i*(fr/2)/(n/2-1) = i*n*fs/(nt*(2*n-2)) for i=0..n/2-1. We are only interested in
-    // frequencies up to around fi=60KHz, or i= [(2n-2)*nt/(n*fs)]*60KHz.
+    // fr=1/Tr. The axis of fhabs has n/2+1 points, representing frequencies from 0 to fr/2,
+    // or i*(fr/2)/(n/2) = i*fr/n = i*fs/nt for i=0..n/2. We are only interested in
+    // frequencies up to around fi=60KHz, or i= (nt/fs)*60KHz.
+
+    // print out some usuful numbers
+    let npptf64 = nppt as f64;
+    let tr = (1f64/fs)/npptf64;
+    println!("n:    {}", n);
+    println!("fs:   {}", fs);
+    println!("T:    {}", 1f64/fs);
+    println!("nppt: {}", nppt);
+    println!("fr:   {}", 1f64/tr);
+    println!("Tr:   {}", tr);
+    println!("fr/2: {}", 1f64/(tr*2f64));
 
     let nf64=n as f64;
     let ntf64=nt as f64;
-    let fac = (2f64*nf64-2f64)*ntf64/(nf64*fs);
-    let i_fi = (fac*60000f64).round();
+    let fac = ntf64/fs;
+    // Find index such that the horizontal axis of the plot is fmax, i.e.
+    // i = (nt/fs)*fmax
+    let i_fi = 5f64;// (fac*60000f64).round();
+    println!("fac: {}", fac);
+    println!("i_fi: {}", i_fi);
 
     let f = utils::linspace_heapslice(0f64, i_fi/fac , i_fi as usize);
     let fhabs_cut = &fhabs[..i_fi as usize];
