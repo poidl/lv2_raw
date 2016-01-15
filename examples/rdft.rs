@@ -20,7 +20,7 @@ fn main() {
     // also the starting point of the next T.
     // The time signal is symmetric around 0, and if we want 0 to coincide
     // exactly with a lattice point, then nt must be an even number. It follows
-    // from n=nt*nppt-1 that n must be uneven. This is somewhat inconvenient,
+    // from n=nt*(nppt-1)+1 that n must be uneven. This is somewhat inconvenient,
     // because the most efficient fft algorithms only accept vectors with a
     // length that is a power of 2 (and hence is even). We therefore append
     // some points to the time series until it becomes a power of 2. This will
@@ -31,7 +31,7 @@ fn main() {
     let nt = 10;
     let nppt = 4;
     let n = nt*(nppt-1)+1 as usize;
-    let nn=2u32.pow(20u32) as usize;
+    let nn=2u32.pow(12u32) as usize;
     let fs = 48000f64; // sampling frequency 1/T.
     let fc = 20000f64; // cutoff frequency 1/Tc.
 
@@ -49,7 +49,7 @@ fn main() {
     let c = 2f64*fc/fs;
 
     // impulse h
-    let h = c* utils::sinc( c*t.clone() );
+    let h = (1f64/(nppt-1) as f64)*c*utils::sinc( c*t.clone() );
 
     // let kaiser = utils::kaiser(n,alpha);
     //
