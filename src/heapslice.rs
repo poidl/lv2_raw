@@ -74,22 +74,25 @@ impl<T> Drop for HeapSlice<T> {
     }
 }
 
-impl<T: Clone> Clone for HeapSlice<T> {
+impl<T: Copy> Clone for HeapSlice<T> {
     fn clone(&self) -> HeapSlice<T> {
         to_heapslice(&**self)
     }
 }
 
 pub fn to_heapslice<T>(s: &[T]) -> HeapSlice<T>
-    where T: Clone
+    where T: Copy
 {
     let mut fb: HeapSlice<T> = HeapSlice::<T>::new();
     fb.allocate(s.len());
-    // from Vec's extend_from_slice. necessary, useful?
-    unsafe {
-        for i in 0..s.len() {
-            ptr::write(fb.get_unchecked_mut(i), s.get_unchecked(i).clone());
-        }
+    // // from Vec's extend_from_slice. necessary, useful?
+    // unsafe {
+    //     for i in 0..s.len() {
+    //         ptr::write(fb.get_unchecked_mut(i), s.get_unchecked(i).clone());
+    //     }
+    // }
+    for i in 0..s.len() {
+        fb[i]=s[i];
     }
     fb
 }

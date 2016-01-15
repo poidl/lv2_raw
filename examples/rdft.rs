@@ -11,17 +11,31 @@ use gnuplot::*;
 fn main() {
     let pi = std::f64::consts::PI;
 
-    // nt is number of sampling intervals T on time axis, the signal within each T is
-    // resolved by nttp points. n is length of time axis in points. Time axis t is
-    // symmetric around 0.
-    let nt = 4;
-    let nppt = 2;
-    let n = (4*2+1) as usize;
+    // Each sampling interval T is represented by exactly nppt points (number of
+    // points per T). Denoting the resolution of the temporal lattice as Tl and
+    // the corresponding frequency as fl, it follows that T=(nppt-1)*Tl, and
+    // fs=1/T=fl/(nppt-1), where fl=1/Tl.
+    // nt is number of sampling intervals T on the temporal lattice, whose length
+    // is n=nt*nppt-1. Note that a point representing the end of one T represents
+    // also the starting point of the next T.
+    // The time signal is symmetric around 0, and if we want 0 to coincide
+    // exactly with a lattice point, then nt must be an even number. It follows
+    // from n=nt*nppt-1 that n must be uneven. This is somewhat inconvenient,
+    // because the most efficient fft algorithms only accept vectors with a
+    // length that is a power of 2 (and hence is even). We therefore append
+    // some points to the time series until it becomes a power of 2. This will
+    // increase the frequency resolution. See also the book of Frei, especially
+    // the appendix with the MATLAB code listing.
+    // Frei, B.: Digital sound generation. Institute for Computer Music and Sound Technology (ICST) Zurich University of the Arts.
 
+    let nt = 10;
+    let nppt = 4;
+    let n = nt*(nppt-1)+1 as usize;
+    let nn=2u32.pow(20u32) as usize;
     let fs = 48000f64; // sampling frequency 1/T.
     let fc = 20000f64; // cutoff frequency 1/Tc.
 
-    let alpha = 9f64; // alpha for Kaiser window
+    let alpha = 3f64; // alpha for Kaiser window
 
     let nth = (nt as f64)*0.5f64;
     let t = utils::linspace_heapslice(-nth , nth , n);
@@ -29,24 +43,28 @@ fn main() {
     // The first zero crossing of the impulse determines the cutoff frequency fc=(1/Tc).
     // The normalized sinc function sinc(T) has the first zero crossing at 1*T,
     // corresponding to a cutoff at 0.5(1/T)=0.5*fs, which differs by a factor of
-    // 2*T*fc = 2*fc/fs from fc.  To get the cutoff at fc, we use c*sinc(c*T), where
-    // c=1/(2*T*fc)=fs/(2*fc) (see doc for the effect of linear axis scaling on the
-    // Fourier transform).
+    // c=2*fc/fs from fc.  To get the cutoff at fc, we use c*sinc(c*T) (see doc for
+    // the effect of linear axis scaling on the Fourier transform).
 
-    let c = fs/(2f64*fc);
+    let c = 2f64*fc/fs;
 
     // impulse h
-    let h = c * utils::sinc( c*t.clone() );
+    let h = c* utils::sinc( c*t.clone() );
 
-    // let kaiser = utils::kaiser(n,8.3);
-    let kaiser = utils::kaiser(n,alpha);
-
-    let hk = h.clone()*kaiser.clone();
-
-    // Fourier transform h to fh
-    let mut fh = hk.clone();
-    //rgsl::fft::real_radix2::transform(&mut fh,1,n);
-    rgsl::fft::mixed_radix::transform(&mut fh,1,n,[],[],[]);
+    // let kaiser = utils::kaiser(n,alpha);
+    //
+    // let hk = h.clone()*kaiser.clone();
+    let hk=h.clone();
+    // Before Fourier transforming h to fh, append points to make the length a
+    // power of 2
+    let mut fh = utils::linspace_heapslice(0f64, 1f64 , nn);
+    fh = 0f64*fh;
+    for i in 0..hk.len()-1 {
+        fh[i]=hk[i];
+    }
+    rgsl::fft::real_radix2::transform(&mut fh,1,nn);
+    // println!("err: {}", rgsl::error::str_error(err));
+    //rgsl::fft::mixed_radix::transform(&mut fh,1,n,[],[],[]);
 
     // let mut hh_padded = utils::linspace_heapslice( 0f64, 1f64, n+20*n);
     // for i in 0..hh_padded.len()-1 {
@@ -59,9 +77,9 @@ fn main() {
     // rgsl::fft::real_radix2::transform(&mut hh_padded,1,n+20*n);
 
     // magnitude (abs) of Re and Im
-    let mut fhabs = utils::linspace_heapslice(-1f64, 1f64, n/2 +1);
-    for ii in 0..n/2 {
-        fhabs[ii]=(fh[ii].powf(2f64)+fh[n-1-ii].powf(2f64)).sqrt();
+    let mut fhabs = utils::linspace_heapslice(-1f64, 1f64, nn/2 +1);
+    for ii in 0..nn/2 {
+        fhabs[ii]=(fh[ii].powf(2f64)+fh[nn-1-ii].powf(2f64)).sqrt();
     }
 
     // let mut mag_hh_padded = utils::linspace_heapslice(-1f64, 1f64, n/2 +1);
@@ -77,11 +95,11 @@ fn main() {
     .lines(t.iter(), h.iter(), &[]);
     fg.show();
 
-    let mut fg = gnuplot::Figure::new();
-    fg.set_terminal("svg","./examples/kaiser.svg");
-    fg.axes2d()
-    .lines(t.iter(), kaiser.iter(), &[]);
-    fg.show();
+    // let mut fg = gnuplot::Figure::new();
+    // fg.set_terminal("svg","./examples/kaiser.svg");
+    // fg.axes2d()
+    // .lines(t.iter(), kaiser.iter(), &[]);
+    // fg.show();
 
     let mut fg = gnuplot::Figure::new();
     fg.set_terminal("svg","./examples/hk.svg");
@@ -101,31 +119,25 @@ fn main() {
     // .lines(x_padded.iter(), hh_padded.iter(), &[]);
     // fg.show();
 
-    let x = utils::linspace_heapslice(0f64, 0.5f64, n/2+1);
-
-    // The signal within each T is resolved by nppt=n/nt points per T. Denoting the temporal
-    // resolution of the time axis as Tr=T/nppt, the corresponding "resolution frequency" is
-    // fr=1/Tr. The axis of fhabs has n/2+1 points, representing frequencies from 0 to fr/2,
-    // or i*(fr/2)/(n/2) = i*fr/n = i*fs/nt for i=0..n/2. We are only interested in
-    // frequencies up to around fi=60KHz, or i= (nt/fs)*60KHz.
+    // The axis of fhabs has nn/2+1 points, representing frequencies from 0 to fl/2,
+    // or i*(fl/2)/(nn/2) = i*fl/nn = i*fs*(nppt-1)/nn for i=0..nn/2. (Because
+    // fl=1/Tl=fs*(nppt-1)) We are only interested in
+    // frequencies up to around fi=60KHz, or i= 60KHz*nn/(fs*(nppt-1)).
 
     // print out some usuful numbers
     let npptf64 = nppt as f64;
-    let tr = (1f64/fs)/npptf64;
     println!("n:    {}", n);
     println!("fs:   {}", fs);
-    println!("T:    {}", 1f64/fs);
     println!("nppt: {}", nppt);
-    println!("fr:   {}", 1f64/tr);
-    println!("Tr:   {}", tr);
-    println!("fr/2: {}", 1f64/(tr*2f64));
+    println!("fl:   {}", fs*(npptf64-1f64));
+    println!("fl/2: {}", fs*(npptf64-1f64)/2f64);
 
     let nf64=n as f64;
     let ntf64=nt as f64;
-    let fac = ntf64/fs;
     // Find index such that the horizontal axis of the plot is fmax, i.e.
-    // i = (nt/fs)*fmax
-    let i_fi = 5f64;// (fac*60000f64).round();
+    // i = fmax*nn/(fs*(nppt-1))
+    let fac = (nn as f64)/(fs*(npptf64-1f64));
+    let i_fi = (60000f64*fac).round();
     println!("fac: {}", fac);
     println!("i_fi: {}", i_fi);
 
