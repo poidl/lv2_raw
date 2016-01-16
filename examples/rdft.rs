@@ -10,6 +10,8 @@ use gnuplot::*;
 
 fn main() {
     let pi = std::f64::consts::PI;
+    // This approximately reproduces figure 8 in "Digital sound generation":
+    // Frei, B.: Digital sound generation. Institute for Computer Music and Sound Technology (ICST) Zurich University of the Arts.
 
     // Each sampling interval T is represented by exactly nppt points (number of
     // points per T). Denoting the resolution of the temporal lattice as Tl and
@@ -23,38 +25,57 @@ fn main() {
     // from n=nt*(nppt-1)+1 that n must be uneven. This is somewhat inconvenient,
     // because the most efficient fft algorithms only accept vectors with a
     // length that is a power of 2 (and hence is even). We therefore append
-    // some points to the time series until it becomes a power of 2. This will
-    // increase the frequency resolution. See also the book of Frei, especially
-    // the appendix with the MATLAB code listing.
-    // Frei, B.: Digital sound generation. Institute for Computer Music and Sound Technology (ICST) Zurich University of the Arts.
+    // some points to the time series until it becomes a power of 2. This will also
+    // increase the frequency resolution. See the book of Frei, especially
+    // the appendix with the MATLAB code listing. Note that we use a different
+    // number of points, because we have to use the real_radix2 fft algorithm of rgsl.
 
     let nt = 10;
-    let nppt = 4;
+    let nppt = 100;
+    let nipt = (nppt-1) as f64; // number of Tl per T
     let n = nt*(nppt-1)+1 as usize;
-    let nn=2u32.pow(12u32) as usize;
+    let nn=2u32.pow(20u32) as usize;
     let fs = 48000f64; // sampling frequency 1/T.
-    let fc = 20000f64; // cutoff frequency 1/Tc.
+    let fc = 18300f64; // cutoff frequency 1/Tc.
 
-    let alpha = 3f64; // alpha for Kaiser window
+    let alpha = 9f64/pi; // alpha for Kaiser window
+    let alpha_apo = 0.7f64/pi; // apodization
+    let apof = 0.9f64;
 
-    let nth = (nt as f64)*0.5f64;
+    // as time axis we use units of Tl instead of T for the calculation, to keep
+    // the formula for the Fourier trafo clean (linear axis scaling). Later,
+    // in the plot we will drop the factor nipt and display in units of T
+    let nth = 0.5f64*(nt as f64)*nipt;
     let t = utils::linspace_heapslice(-nth , nth , n);
 
     // The first zero crossing of the impulse determines the cutoff frequency fc=(1/Tc).
     // The normalized sinc function sinc(T) has the first zero crossing at 1*T,
     // corresponding to a cutoff at 0.5(1/T)=0.5*fs, which differs by a factor of
     // c=2*fc/fs from fc.  To get the cutoff at fc, we use c*sinc(c*T) (see doc for
-    // the effect of linear axis scaling on the Fourier transform).
+    // the effect of linear axis scaling on the Fourier transform). Also include
+    // a factor 1/nipt to transform T into Tl
 
-    let c = 2f64*fc/fs;
+    let c =  2f64*fc/(fs*nipt);
 
     // impulse h
-    let h = (1f64/(nppt-1) as f64)*c*utils::sinc( c*t.clone() );
+    let h = c*utils::sinc( c*t.clone() );
 
-    // let kaiser = utils::kaiser(n,alpha);
-    //
-    // let hk = h.clone()*kaiser.clone();
-    let hk=h.clone();
+    // apply Kaiser window
+    let kaiser = utils::kaiser(n,alpha);
+    let mut hk = h.clone()*kaiser.clone();
+
+    // apodization (scale the max to c afterwards!)
+    let kaiser_apo = utils::kaiser(n,alpha_apo);
+    let mut apo = utils::linspace_heapslice(0f64 , 1f64 , n);
+    for i in 0..apo.len()-1 {
+        apo[i]=1f64-apof*kaiser_apo[i];
+    }
+    hk = hk.clone()*apo.clone();
+    let mut tmp = hk.clone();
+    tmp.sort_by(|a, b| a.partial_cmp(b).unwrap());
+    let max=tmp[n-1];
+    hk=c*(1f64/max)*hk;
+
     // Before Fourier transforming h to fh, append points to make the length a
     // power of 2
     let mut fh = utils::linspace_heapslice(0f64, 1f64 , nn);
@@ -63,18 +84,6 @@ fn main() {
         fh[i]=hk[i];
     }
     rgsl::fft::real_radix2::transform(&mut fh,1,nn);
-    // println!("err: {}", rgsl::error::str_error(err));
-    //rgsl::fft::mixed_radix::transform(&mut fh,1,n,[],[],[]);
-
-    // let mut hh_padded = utils::linspace_heapslice( 0f64, 1f64, n+20*n);
-    // for i in 0..hh_padded.len()-1 {
-    //     if i<n {
-    //         hh_padded[i]=hh[i];
-    //     } else {
-    //         hh_padded[i]=0f64;
-    //     }
-    // }
-    // rgsl::fft::real_radix2::transform(&mut hh_padded,1,n+20*n);
 
     // magnitude (abs) of Re and Im
     let mut fhabs = utils::linspace_heapslice(-1f64, 1f64, nn/2 +1);
@@ -95,10 +104,16 @@ fn main() {
     .lines(t.iter(), h.iter(), &[]);
     fg.show();
 
+    let mut fg = gnuplot::Figure::new();
+    fg.set_terminal("svg","./examples/kaiser.svg");
+    fg.axes2d()
+    .lines(t.iter(), kaiser.iter(), &[]);
+    fg.show();
+
     // let mut fg = gnuplot::Figure::new();
-    // fg.set_terminal("svg","./examples/kaiser.svg");
+    // fg.set_terminal("svg","./examples/apo.svg");
     // fg.axes2d()
-    // .lines(t.iter(), kaiser.iter(), &[]);
+    // .lines(t.iter(), apo.iter(), &[]);
     // fg.show();
 
     let mut fg = gnuplot::Figure::new();
@@ -107,17 +122,6 @@ fn main() {
     .lines(t.iter(), hk.iter(), &[]);
     fg.show();
 
-    // let mut fg = gnuplot::Figure::new();
-    // fg.set_terminal("svg","./examples/fh.svg");
-    // fg.axes2d()
-    // .lines(.iter(), fh.iter(), &[]);
-    // fg.show();
-
-    // let mut fg = gnuplot::Figure::new();
-    // fg.set_terminal("svg","./examples/hh.svg");
-    // fg.axes2d()
-    // .lines(x_padded.iter(), hh_padded.iter(), &[]);
-    // fg.show();
 
     // The axis of fhabs has nn/2+1 points, representing frequencies from 0 to fl/2,
     // or i*(fl/2)/(nn/2) = i*fl/nn = i*fs*(nppt-1)/nn for i=0..nn/2. (Because
@@ -148,7 +152,10 @@ fn main() {
     fg.set_terminal("svg","./examples/fhabs.svg");
     fg.axes2d()
     .set_y_log(Some(10f64))
-    .lines(f.iter(), fhabs_cut.iter(), &[]);
+    .lines(f.iter(), fhabs_cut.iter(), &[])
+    .lines(&[20000f64,20000f64], &[0f64, 1f64], &[])
+    .lines(&[fs,fs], &[0f64, 1f64], &[])
+    .lines(&[fs-20000f64,fs-20000f64], &[0f64, 1f64], &[]);
     fg.show();
 
 }
