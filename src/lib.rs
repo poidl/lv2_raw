@@ -2,15 +2,15 @@
 #![allow(dead_code)]
 #![allow(unused_variables)]
 
-#![feature(alloc)]
-#![feature(heap_api)]
-#![feature(unique)]
+// #![feature(alloc)]
+//#![feature(heap_api)]
+// #![feature(unique)]
 
 
-mod tests;
+//mod tests;
 pub mod utils;
 mod lv2;
-mod heapslice;
+//mod heapslice;
 
 extern crate libc;
 use std::ptr;
