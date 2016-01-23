@@ -17,16 +17,45 @@ pub fn linspace(slice: &mut [f64], start: f64, stop: f64) -> &mut [f64] {
     }
 }
 
-pub trait Mult {
-    fn mult(self: &mut Self, c: f64);
+pub trait Mult<RHS: ?Sized> {
+    fn mult(self: &mut Self, rhs: &RHS);
 }
 
-impl Mult for [f64] {
-    fn mult(self: &mut Self, c: f64) {
+impl Mult<[f64]> for [f64]  {
+    fn mult(self: &mut Self, rhs: &Self) {
+        for ii in 0..self.len() {
+            unsafe {
+                let x = self.get_unchecked_mut(ii);
+                let y = rhs.get_unchecked(ii);
+                *x=*x*(*y);
+            }
+        }
+    }
+}
+
+
+impl Mult<f64> for [f64] {
+    fn mult(self: &mut Self, c: &f64) {
         for ii in 0..self.len() {
             unsafe {
                 let x = self.get_unchecked_mut(ii);
                 *x=*x*c;
+            }
+        }
+    }
+}
+
+pub trait Mycopy {
+    fn mycopy(self: &mut Self, rhs: &Self);
+}
+
+impl  Mycopy for [f64] {
+    fn mycopy(self: &mut Self, rhs: &Self) {
+        for ii in 0..self.len() {
+            unsafe {
+                let x = self.get_unchecked_mut(ii);
+                let y = rhs.get_unchecked(ii);
+                *x=*y;
             }
         }
     }
@@ -66,16 +95,6 @@ impl Sinc for [f64] {
     }
 }
 
-// pub fn sinc(slice: &mut [f64]) -> &mut [f64] {
-//     unsafe {
-//         for ii in 0..slice.len() {
-//             let x = slice.get_unchecked_mut(ii);
-//             sinc_element(x);
-//         }
-//         slice
-//     }
-// }
-
 fn kaiser_element(n: u32, alpha: f64, len: u32) -> f64 {
     let pi = f64::consts::PI;
     let nf = n as f64;
@@ -85,13 +104,18 @@ fn kaiser_element(n: u32, alpha: f64, len: u32) -> f64 {
     rgsl::bessel::I0(tmp) / rgsl::bessel::I0( pi*alpha )
 }
 
-pub fn mult_kaiser(slice: &mut [f64], alpha: f64) -> &mut [f64] {
-    for ii in 0..slice.len() {
-        let kaiser = kaiser_element(ii as u32,alpha, slice.len() as u32);
-        unsafe {
-            let x = slice.get_unchecked_mut(ii);
-            *x=*x*kaiser;
+pub trait Kaiser {
+    fn kaiser(self: &mut Self, alpha: f64);
+}
+
+impl Kaiser for [f64] {
+    fn kaiser(self: &mut Self, alpha: f64) {
+        for ii in 0..self.len() {
+            let kaiser = kaiser_element(ii as u32,alpha, self.len() as u32);
+            unsafe {
+                let x = self.get_unchecked_mut(ii);
+                *x=*x*kaiser;
+            }
         }
     }
-    slice
 }

@@ -1,0 +1,22 @@
+pub trait Mult {
+    fn mult(self: &mut Self, rhs: &Self);
+}
+
+impl Mult for [f64]  {
+    fn mult(self: &mut Self, rhs: &Self) {
+        for ii in 0..self.len() {
+            unsafe {
+                let x = self.get_unchecked_mut(ii);
+                let y = rhs.get_unchecked(ii);
+                *x=*x*(*y);
+            }
+        }
+    }
+}
+
+fn main() {
+    let mut two = [2f64;3];
+    let three = [3f64;3];
+    two.mult(&three); let six = two;
+    println!("Result: {:?}", six);
+}

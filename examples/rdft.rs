@@ -6,9 +6,9 @@ extern crate gnuplot;
 // use std::ops::{Deref, DerefMut};
 
 use yassy::utils;
-use yassy::utils::Mult;
-use yassy::utils::Sinc;
+use yassy::utils::*;
 use gnuplot::*;
+use std::f64;
 
 fn main() {
     let pi = std::f64::consts::PI;
@@ -27,7 +27,8 @@ fn main() {
     // from N=nt*(nppt-1)+1 that N must be uneven. This is somewhat inconvenient,
     // because the most efficient fft algorithms only accept vectors with a
     // length that is a power of 2 (and hence is even). We therefore append
-    // some points to the time series until it becomes a power of 2. This will also
+    // some points to the time series until its length becomes a power of 2. This
+    // will also
     // increase the frequency resolution. See the book of Frei, especially
     // the appendix with the MATLAB code listing. Note that we use a different
     // number of points, because we have to use the real_radix2 fft algorithm of rgsl.
@@ -36,15 +37,16 @@ fn main() {
     let nppt = 100;
     let nipt = (nppt-1) as f64; // number of Tl per T
     // N needs to be a constant if we want to stay in the heap memory (2016/01/22)
+    // Can't use variables nt and nppt
     const N: usize = 10*(100-1)+1 as usize; // Formula: nt*(nppt-1)+1 as usize;
     if N != nt*(nppt-1)+1 {
-        panic!("not good");
+        panic!("inconsistent variables");
     }
-    let nn=2u32.pow(20u32) as usize;
+    const NN: usize =2u32.pow(20u32) as usize;
     let fs = 48000f64; // sampling frequency 1/T.
     let fc = 18300f64; // cutoff frequency 1/Tc.
 
-    let alpha = 9f64/pi; // alpha for Kaiser window
+    let alpha = 9f64/pi; // alpha for Kaiser window. Note that beta = pi*alpha.
     let alpha_apo = 0.7f64/pi; // apodization
     let apof = 0.9f64;
 
@@ -67,40 +69,43 @@ fn main() {
     let c =  2f64*fc/(fs*nipt);
 
     // impulse h
-    t.mult(c); let mut ct=t;
+    t.mult(&c); let mut ct=t;
     ct.sinc(); let mut sinc_ct= ct;
-    sinc_ct.mult(c); let mut h = sinc_ct;
+    sinc_ct.mult(&c); let mut h = sinc_ct;
 
     // apply Kaiser window
-    utils::mult_kaiser(&mut h,alpha);
-    let hk = h;
+    h.kaiser(alpha); let mut hk = h;
+
+    // apodization (scale the maximum to c afterwards)
+    let mut kaiser_apo : [f64;N] = [1f64;N];
+    kaiser_apo.kaiser(alpha_apo);
+
+    let mut apo : [f64;N] = [f64::NAN;N];
+    for i in 0..apo.len() {
+        apo[i]=1f64-apof*kaiser_apo[i];
+    }
+    hk.mult(&apo[..]);
+
+    let mut tmp : [f64;N] = [0f64;N];
+    tmp.mycopy(&hk);
+    tmp.sort_by(|a, b| a.partial_cmp(b).unwrap());
+    let max=tmp[N-1];
+    hk.mult(&(c*(1f64/max)));
+
+    // Before Fourier transforming h to fh, append points to make the length a
+    // power of 2
+
+    let mut fh : [f64;N] = [0f64;NN];
+    for i in 0..hk.len()-1 {
+        fh[i]=hk[i];
+    }
+    rgsl::fft::real_radix2::transform(&mut fh,1,NN);
     //
-    // // apodization (scale the maximum to c afterwards)
-    // let kaiser_apo = utils::kaiser(N,alpha_apo);
-    // let mut apo = utils::linspace_heapslice(0f64 , 1f64 , N);
-    // for i in 0..apo.len()-1 {
-    //     apo[i]=1f64-apof*kaiser_apo[i];
-    // }
-    // hk = hk.clone()*apo.clone();
-    // let mut tmp = hk.clone();
-    // tmp.sort_by(|a, b| a.partial_cmp(b).unwrap());
-    // let max=tmp[N-1];
-    // hk=c*(1f64/max)*hk;
-    //
-    // // Before Fourier transforming h to fh, append points to make the length a
-    // // power of 2
-    // let mut fh = utils::linspace_heapslice(0f64, 1f64 , nn);
-    // fh = 0f64*fh;
-    // for i in 0..hk.len()-1 {
-    //     fh[i]=hk[i];
-    // }
-    // rgsl::fft::real_radix2::transform(&mut fh,1,nn);
-    //
-    // // magnitude (abs) of Re and Im
-    // let mut fhabs = utils::linspace_heapslice(-1f64, 1f64, nn/2 +1);
-    // for ii in 0..nn/2 {
-    //     fhabs[ii]=(fh[ii].powf(2f64)+fh[nn-1-ii].powf(2f64)).sqrt();
-    // }
+    // magnitude (abs) of Re and Im
+    let mut fhabs : [f64::NAN;NN/2 +1];
+    for ii in 0..NN/2 {
+        fhabs[ii]=(fh[ii].powf(2f64)+fh[NN-1-ii].powf(2f64)).sqrt();
+    }
     //
     // // let mut mag_hh_padded = utils::linspace_heapslice(-1f64, 1f64, N/2 +1);
     // // for ii in 0..l/2 {
