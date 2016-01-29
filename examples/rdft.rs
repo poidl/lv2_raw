@@ -38,11 +38,11 @@ fn main() {
     let nipt = (nppt-1) as f64; // number of Tl per T
     // N needs to be a constant if we want to stay in the heap memory (2016/01/22)
     // Can't use variables nt and nppt
-    const N: usize = 10*(100-1)+1 as usize; // Formula: nt*(nppt-1)+1 as usize;
+    const N: usize = 10*(100-1)+1; // Formula: nt*(nppt-1)+1 as usize;
     if N != nt*(nppt-1)+1 {
         panic!("inconsistent variables");
     }
-    const NN: usize =2u32.pow(20u32) as usize;
+    const NN: usize =1048576; // 2u32.pow(20u32)=1048576
     let fs = 48000f64; // sampling frequency 1/T.
     let fc = 18300f64; // cutoff frequency 1/Tc.
 
@@ -95,83 +95,53 @@ fn main() {
     // Before Fourier transforming h to fh, append points to make the length a
     // power of 2
 
-    let mut fh : [f64;N] = [0f64;NN];
-    for i in 0..hk.len()-1 {
+    let mut fh = [0f64;NN];
+    for i in 0..hk.len() {
         fh[i]=hk[i];
     }
     rgsl::fft::real_radix2::transform(&mut fh,1,NN);
     //
     // magnitude (abs) of Re and Im
-    let mut fhabs : [f64::NAN;NN/2 +1];
+    let mut fhabs : [f64;NN/2 +1]=[f64::NAN;NN/2 +1];
     for ii in 0..NN/2 {
         fhabs[ii]=(fh[ii].powf(2f64)+fh[NN-1-ii].powf(2f64)).sqrt();
     }
-    //
-    // // let mut mag_hh_padded = utils::linspace_heapslice(-1f64, 1f64, N/2 +1);
-    // // for ii in 0..l/2 {
-    // //     mag_hh_padded[ii]=(hh_padded[ii].powf(2f64)+hh_padded[l-1-ii].powf(2f64)).sqrt();
-    // // }
-    //
-    //
-    //
+
+    // The axis of fhabs has nn/2+1 points, representing frequencies from 0 to fl/2,
+    // or i*(fl/2)/(nn/2) = i*fl/nn = i*fs*(nppt-1)/nn for i=0..nn/2. (Because
+    // fl=1/Tl=fs*(nppt-1)) We are only interested in
+    // frequencies up to around fi=60KHz, or i= 60KHz*nn/(fs*(nppt-1)).
+
+    // print out some usuful numbers
+    let npptf64 = nppt as f64;
+    println!("N:    {}", N);
+    println!("fs:   {}", fs);
+    println!("nppt: {}", nppt);
+    println!("fl:   {}", fs*(npptf64-1f64));
+    println!("fl/2: {}", fs*(npptf64-1f64)/2f64);
+
+    let nf64=N as f64;
+    let ntf64=nt as f64;
+    // Find index such that the horizontal axis of the plot is fmax, i.e.
+    // i = fmax*nn/(fs*(nppt-1))
+    let fac = (NN as f64)/(fs*(npptf64-1f64));
+    let i_fi = (60000f64*fac).round();
+    println!("fac: {}", fac);
+    println!("i_fi: {}", i_fi);
+
+    let mut f = [0f64; NN/2+1];
+    utils::linspace(&mut f, 0f64, ((NN/2+1) as f64)/fac);
+    let f_cut = &f[..i_fi as usize];
+    let fhabs_cut = &fhabs[..i_fi as usize];
+
     let mut fg = gnuplot::Figure::new();
-    fg.set_terminal("svg","./examples/h.svg");
+    fg.set_terminal("svg","./examples/fhabs.svg");
     fg.axes2d()
-    .lines(t.iter(), hk.iter(), &[]);
+    .set_y_log(Some(10f64))
+    .lines(f_cut.iter(), fhabs_cut.iter(), &[])
+    .lines(&[20000f64,20000f64], &[0f64, 1f64], &[])
+    .lines(&[fs,fs], &[0f64, 1f64], &[])
+    .lines(&[fs-20000f64,fs-20000f64], &[0f64, 1f64], &[]);
     fg.show();
-    //
-    // let mut fg = gnuplot::Figure::new();
-    // fg.set_terminal("svg","./examples/kaiser.svg");
-    // fg.axes2d()
-    // .lines(t.iter(), kaiser.iter(), &[]);
-    // fg.show();
-    //
-    // // let mut fg = gnuplot::Figure::new();
-    // // fg.set_terminal("svg","./examples/apo.svg");
-    // // fg.axes2d()
-    // // .lines(t.iter(), apo.iter(), &[]);
-    // // fg.show();
-    //
-    // let mut fg = gnuplot::Figure::new();
-    // fg.set_terminal("svg","./examples/hk.svg");
-    // fg.axes2d()
-    // .lines(t.iter(), hk.iter(), &[]);
-    // fg.show();
-    //
-    //
-    // // The axis of fhabs has nn/2+1 points, representing frequencies from 0 to fl/2,
-    // // or i*(fl/2)/(nn/2) = i*fl/nn = i*fs*(nppt-1)/nn for i=0..nn/2. (Because
-    // // fl=1/Tl=fs*(nppt-1)) We are only interested in
-    // // frequencies up to around fi=60KHz, or i= 60KHz*nn/(fs*(nppt-1)).
-    //
-    // // print out some usuful numbers
-    // let npptf64 = nppt as f64;
-    // println!("N:    {}", N);
-    // println!("fs:   {}", fs);
-    // println!("nppt: {}", nppt);
-    // println!("fl:   {}", fs*(npptf64-1f64));
-    // println!("fl/2: {}", fs*(npptf64-1f64)/2f64);
-    //
-    // let nf64=N as f64;
-    // let ntf64=nt as f64;
-    // // Find index such that the horizontal axis of the plot is fmax, i.e.
-    // // i = fmax*nn/(fs*(nppt-1))
-    // let fac = (nn as f64)/(fs*(npptf64-1f64));
-    // let i_fi = (60000f64*fac).round();
-    // println!("fac: {}", fac);
-    // println!("i_fi: {}", i_fi);
-    //
-    // let f = utils::linspace_heapslice(0f64, i_fi/fac , i_fi as usize);
-    // let fhabs_cut = &fhabs[..i_fi as usize];
-    //
-    // let mut fg = gnuplot::Figure::new();
-    // fg.set_terminal("svg","./examples/fhabs.svg");
-    // fg.axes2d()
-    // .set_y_log(Some(10f64))
-    // .lines(f.iter(), fhabs_cut.iter(), &[])
-    // .lines(&[20000f64,20000f64], &[0f64, 1f64], &[])
-    // .lines(&[fs,fs], &[0f64, 1f64], &[])
-    // .lines(&[fs-20000f64,fs-20000f64], &[0f64, 1f64], &[]);
-    // fg.show();
 
 }
