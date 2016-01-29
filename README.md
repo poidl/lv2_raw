@@ -1,3 +1,8 @@
 # yassy (Yet Another Simple Synth)
 
-Turn eg-amp_rust into a yassy. Currently working on basic midi note message processing and a simple oscillator.
+Currently working on basic midi note message processing and a simple oscillator.
+The current oscillator sounds terrible. I found the book
+
+Frei, B.: Digital sound generation. Institute for Computer Music and Sound Technology (ICST) Zurich University of the Arts.
+
+and now I'm trying to understand it. The code in the /example directory reproduces Fig. 8 of the book.
