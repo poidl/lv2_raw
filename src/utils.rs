@@ -1,6 +1,5 @@
 extern crate rgsl;
 
-use std::f32;
 use std::f64;
 
 pub fn linspace(slice: &mut [f64], start: f64, stop: f64) -> &mut [f64] {
