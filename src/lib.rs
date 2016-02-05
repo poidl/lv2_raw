@@ -18,6 +18,11 @@ use std::mem;
 use std::str;
 use std::ffi::CString;
 use std::ffi::CStr;
+use utils::*;
+
+const N : usize = 9;
+// const NN : usize= 41000-N;
+const NN : usize= 41000-N;
 
 macro_rules! println_stderr(
     ($($arg:tt)*) => (
@@ -53,10 +58,10 @@ struct Synth {
     rate: f64,
     currentfreq: f64,
     currentmidivel: u8,
-    waveoffset: u32,
     noteison: bool,
     makesilence: bool,
-    osc: Osc
+    osc: Osc,
+    impulse: Impulse
 }
 
 impl lv2::LV2Descriptor {
@@ -78,9 +83,7 @@ impl lv2::LV2Descriptor {
                 if fptr.is_null() {
                     // host doesn't provide feature
                     libc::free(ptr as *mut libc::c_void);
-                    //let mut ptr: *mut libc::c_void = std::ptr::null_mut();
                     println!("Missing feature \"{}\"", uridmapstr);
-                    //return ptr
                     return std::ptr::null_mut();
                 }
                 let uriptr = (*fptr).uri;
@@ -107,7 +110,23 @@ impl lv2::LV2Descriptor {
         (*(ptr  as *mut Synth)).osc.set_dphase(440.0,(*(ptr  as *mut Synth)).rate);
             println!("self.dphase: {}",(*(ptr  as *mut Synth)).osc.dphase);
 
+        // define impulse
+        let im = &mut (*(ptr  as *mut Synth)).impulse;
+        for i in im.buf[..N].iter_mut() {
+            *i = 1f64;
+        }
+        let pi = std::f64::consts::PI;
+        let alpha = 9f64/pi; // alpha for Kaiser window.
+        im.buf[..N].kaiser(alpha);
+        // for i in im.buf.iter() {
+        //     println!("buf: {}", i);
+        // }
+        for i in im.buf[NN..].iter_mut() {
+            *i = 0f64;
+        }
+        im.offs = 0;
         return ptr;
+
         }
     }
 
@@ -128,65 +147,54 @@ impl lv2::LV2Descriptor {
         unsafe{
             let synth = instance as *mut Synth;
             let uris = &mut (*synth).uris;
-            // Struct for a 3 byte MIDI event, used for writing notes
-            struct MIDINoteEvent {
-                event: lv2::Lv2AtomEvent,
-                msg: [u8; 3]
-            }
-            // Initially self->out_port contains a Chunk with size set to capacity
-            // Get the capacity
-            //let out_capacity: u32 = (*synth).out_port->atom.size;
             let seq = (*synth).in_port;
             let output = (*synth).output;
-            let mut iter: *const lv2::Lv2AtomEvent  = lv2::lv2_atom_sequence_begin(&(*seq).body);
-            while !lv2::lv2_atom_sequence_is_end(&(*seq).body, (*seq).atom.size, iter) {
-                println!("next");
-                let ev = iter;
-                println!("(*ev).body.mytype: {}", (*ev).body.mytype);
+            // pointer to 1st event body
+            let mut ev: *const lv2::Lv2AtomEvent  = lv2::lv2_atom_sequence_begin(&(*seq).body);
+            // loop through event sequence
+            while !lv2::lv2_atom_sequence_is_end(&(*seq).body, (*seq).atom.size, ev) {
+                // check if event is midi
                 if (*ev).body.mytype == (*uris).midi_event {
-                    println!("**********ISMIDI**********");
+
+                    // pointer to midi event data
                     let msg: *const u8 = ev.offset(1) as *const u8;
-                    println!("message:     = {0:x}", *msg);
-                    // let isvoice = lv2::lv2_midi_is_voice_message(msg);
-                    // println!("message is voice:     = {}", isvoice);
+                    // frameindex of eventstart. In jalv this is relative to currently processed buffer chunk of length n_samples
                     let istart = (*ev).time_in_frames as u32;
+
                     match lv2::lv2_midi_message_type(msg) {
+
+                        // note on event
                         lv2::Lv2MidiMessageType::Lv2MidiMsgNoteOn => {
-                            println!("NOTEON AT FRAME {}", istart);
                             (*synth).noteison = true;
-                            (*synth).waveoffset = n_samples-istart;
                             let freq = freq_from_midimsg(msg);
                             (*synth).currentfreq = freq;
                             (*synth).currentmidivel = *msg.offset(2);
-                            //let amp = amp(isample, freq, (*synth).rate);
                             let coef = 1.0 as f32;
 
-                            (*synth).osc.reset();
-                            (*synth).osc.set_dphase(freq,(*synth).rate);
+                            // (*synth).osc.reset();
+                            // (*synth).osc.set_dphase(freq,(*synth).rate);
+                            //
+                            // for i in istart-1..n_samples {
+                            //     let amp = (*synth).osc.get();
+                            //     *output.offset(i as isize) = amp;
+                            // }
+                            (*synth).impulse.reset();
 
-                            for i in istart..n_samples-1 {
-
-                                //let amp = amp(i-istart, freq, (*synth).rate);
-                                let amp = (*synth).osc.get();
-                                println!("................writing to output amp {}", amp);
-                                *output.offset(i as isize) = amp;
-                            }
-                            println!("END OF RUN CHUNK")
-
-                        }
-
-
-                        lv2::Lv2MidiMessageType::Lv2MidiMsgNoteOff => {
-                            println!("NOTEOFFFF AT FRAME {}", istart);
-                            (*synth).noteison = false;
-                            (*synth).makesilence = true;
-                            for i in istart..n_samples-1 {
-                                let amp = 0.0 as f32;
-                                println!("noteoff silence: output amp {}", amp);
+                            for i in istart-1..n_samples {
+                                let amp = (*synth).impulse.get();
+                                println!("amp: {}", amp);
                                 *output.offset(i as isize) = amp as f32;
                             }
+                        }
 
-
+                        // note off event
+                        lv2::Lv2MidiMessageType::Lv2MidiMsgNoteOff => {
+                            (*synth).noteison = false;
+                            (*synth).makesilence = true;
+                            for i in istart-1..n_samples {
+                                let amp = 0.0 as f32;
+                                *output.offset(i as isize) = amp as f32;
+                            }
                         }
 
                         _ => {
@@ -195,33 +203,28 @@ impl lv2::LV2Descriptor {
 
                     }
                 }
-                //         const uint8_t* const msg = (const uint8_t*)(ev + 1);
-                //         switch (lv2_midi_message_type(msg))
-                iter = lv2::lv2_atom_sequence_next(iter);
+                ev = lv2::lv2_atom_sequence_next(ev);
             }
 
             if (*synth).noteison {
                 let coef = 1.0 as f32;
-                let offs = (*synth).waveoffset;
                 let freq = (*synth).currentfreq;
 
-                for i in 0..n_samples-1 {
-                    //let amp = amp(i+offs-1, freq, (*synth).rate);
-                    let amp = (*synth).osc.get();
-                    println!("keep playing output amp {}", amp);
+                // for i in 0..n_samples {
+                //     let amp = (*synth).osc.get();
+                //     *output.offset(i as isize) = (amp as f32) * coef;
+                // }
+                for i in 0..n_samples {
+                    let amp = (*synth).impulse.get();
                     *output.offset(i as isize) = (amp as f32) * coef;
                 }
-                (*synth).waveoffset = n_samples-offs;
-                println!("END OF RUN CHUNK")
 
             } else if (*synth).makesilence {
                 (*synth).makesilence = false;
-                for i in 0..n_samples-1 {
+                for i in 0..n_samples {
                     let amp = 0.0;
-                    println!("keep silence output amp {}", amp);
                     *output.offset(i as isize) = amp as f32;
                 }
-                println!("END OF RUN CHUNK")
             }
 
         }
@@ -288,16 +291,15 @@ fn freq_from_midimsg(msg: *const u8) -> f64 {
     // where n is the number of half steps from A3
     unsafe{
         let i = *msg.offset(1);
-        println!("**************************** i: {}",i);
         let freq = (2.0f64.powf((((i as i8)-57) as f64)/12.0))*220.0;
-        println!("FFFFFFFFFFFFFFFFFFFFFFFREQ: {}", freq);
+        // println!("FREQ: {}", freq);
         return freq
     }
 }
 
 fn amp(isample: u32, freq: f64, rate: f64) -> f64 {
     let lam = rate/freq;
-    println!("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrate: {}", rate);
+    // println!("rate: {}", rate);
     return (2.0*std::f64::consts::PI*((isample as f64)/lam)).sin()
 }
 
@@ -325,11 +327,30 @@ impl Osc {
         //self.phase = (x+y).0;
         // wrapping_add: allows intentional overflow
         self.phase = self.phase.wrapping_add(self.dphase);
-        println!("self.phase: {}", self.phase);
     }
     fn get(&mut self) -> f32 {
         self.step();
         let phi: f32 = (self.phase as f64/4294967296.0) as f32;
         return phi
+    }
+}
+
+struct Impulse {
+    // N+NN samples for one period, consisting of N samples during which we play, and NN samples of silence
+    buf: [f64;N+NN], // buffer for waveform
+    offs: u32 // wave offset
+}
+
+impl Impulse {
+    fn reset(& mut self) {
+        self.offs =  0
+    }
+    fn step(&mut self){
+        self.offs = (self.offs+1) % self.buf.len() as u32;
+    }
+    fn get(&mut self) -> f64 {
+        let hoit = self.buf[self.offs as usize];
+        self.step();
+        return hoit
     }
 }
