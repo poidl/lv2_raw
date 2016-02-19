@@ -20,9 +20,9 @@ use std::ffi::CString;
 use std::ffi::CStr;
 use utils::*;
 
-const N : usize = 9;
+const N : usize = 1;
 // const NN : usize= 41000-N;
-const NN : usize= 41000-N;
+const NN : usize= 82;
 
 macro_rules! println_stderr(
     ($($arg:tt)*) => (
@@ -115,12 +115,12 @@ impl lv2::LV2Descriptor {
         for i in im.buf[..N].iter_mut() {
             *i = 1f64;
         }
-        let pi = std::f64::consts::PI;
-        let alpha = 9f64/pi; // alpha for Kaiser window.
-        im.buf[..N].kaiser(alpha);
-        // for i in im.buf.iter() {
-        //     println!("buf: {}", i);
-        // }
+        // let pi = std::f64::consts::PI;
+        // let alpha = 9f64/pi; // alpha for Kaiser window.
+        // im.buf[..N].kaiser(alpha);
+        // // for i in im.buf.iter() {
+        // //     println!("buf: {}", i);
+        // // }
         for i in im.buf[NN..].iter_mut() {
             *i = 0f64;
         }
@@ -182,7 +182,7 @@ impl lv2::LV2Descriptor {
 
                             for i in istart-1..n_samples {
                                 let amp = (*synth).impulse.get();
-                                println!("amp: {}", amp);
+                                // println!("amp: {}", amp);
                                 *output.offset(i as isize) = amp as f32;
                             }
                         }

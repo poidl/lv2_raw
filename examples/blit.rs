@@ -9,44 +9,27 @@ use std::f64;
 use plot::*;
 
 fn main() {
-
-    // This approximately reproduces figure 8 in "Digital sound generation":
+    // BLIT (bandlimited impulse train) References:
+    // Stilson, T. and Smith, J., 1996: Alias-free digital synthesis of classic analog waveforms. Proc. International Computer Music Conference
     // Frei, B.: Digital sound generation. Institute for Computer Music and Sound Technology (ICST) Zurich University of the Arts.
+    // See Frei's Fig. 17.
 
-    // Each sampling interval T is represented by exactly nppt points (number of
-    // points per T). Denoting the resolution of the temporal lattice as Tl and
-    // the corresponding frequency as fl, it follows that T=(nppt-1)*Tl, and
-    // fs=1/T=fl/(nppt-1), where fl=1/Tl.
-    // nt is number of sampling intervals T on the temporal lattice, whose length
-    // is N=nt*nppt-1. Note that a point representing the end of one T represents
-    // also the starting point of the next T.
-    // The time signal is symmetric around 0, and if we want 0 to coincide
-    // exactly with a lattice point, then nt must be an even number. It follows
-    // from N=nt*(nppt-1)+1 that N must be uneven. This is somewhat inconvenient,
-    // because the most efficient fft algorithms only accept vectors with a
-    // length that is a power of 2 (and hence is even). We therefore append
-    // some points to the time series until its length becomes a power of 2. This
-    // will also
-    // increase the frequency resolution. See the book of Frei, especially
-    // the appendix with the MATLAB code listing. Note that we use a different
-    // number of points, because we have to use the real_radix2 fft algorithm of rgsl.
-
-    let nt: usize = 10;
-    let nppt: usize = 100;
+    let nt: usize = 4;
+    let nppt: usize = 2700;
     // N needs to be a constant if we want to stay in the heap memory (2016/01/22)
     // Can't use variables nt and nppt
-    const N: usize = 10*(100-1)+1; // Formula: nt*(nppt-1)+1 as usize;
+    const N: usize = 4*(2700-1)+1; // Formula: nt*(nppt-1)+1 as usize;
     if N != nt*(nppt-1)+1 {
         panic!("inconsistent variables");
     }
     const NN: usize =1048576; // 2u32.pow(20u32)=1048576
     let fs = 48000f64; // sampling frequency 1/T.
-    let fc = 18300f64; // cutoff frequency 1/Tc.
+    let fc = 15000f64; // cutoff frequency 1/Tc.
 
     let pi = std::f64::consts::PI;
-    let alpha = 9f64/pi; // alpha for Kaiser window. Note that beta = pi*alpha.
-    let alpha_apo = 0.7f64/pi; // apodization
-    let apof = 0.9f64;
+    let alpha = 8.3f64/pi; // alpha for Kaiser window. Note that beta = pi*alpha.
+    let alpha_apo = 0.5f64/pi; // apodization
+    let apof = 0.5f64;
 
     let nipt = (nppt-1) as f64; // number of Tl per T
 
@@ -119,6 +102,6 @@ fn main() {
     println!("nppt: {}", nppt);
     println!("fl:   {}", fs*(npptf64-1f64));
     println!("fl/2: {}", fs*(npptf64-1f64)/2f64);
-    let outname = "./examples/figures/frei_fig8.svg";
+    let outname = "./examples/figures/frei_fig6.svg";
     plot::plot_ampl_spec(nt, nppt, NN, fs, &fhabs, outname)
 }

@@ -1,0 +1,9 @@
+[package]
+name = "plot"
+version = "0.1.0"
+authors = ["poidl <hoitaus@gmail.com>"]
+
+[dependencies]
+gnuplot = "*"
+getopts = "=0.2.14" # gnuplot dependency
+yassy = { path = "../../../yassy" }

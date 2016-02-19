@@ -5,9 +5,7 @@ authors = ["stefan"]
 
 [dependencies]
 libc = "*"
-num = "*"
 GSL = "*"
-
 
 [lib]
 name = "yassy"
@@ -15,6 +13,6 @@ crate-type = ["rlib","dylib"] # ?
 # test = false # disable unit tests for this target unit. annoying output
 
 [dev-dependencies] # for testing/documentation
-GSL = "*"
 gnuplot = "*"
 getopts = "=0.2.14" # gnuplot dependency
+plot = { path = "examples/plot" }
