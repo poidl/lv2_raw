@@ -7,6 +7,11 @@ use self::gnuplot::*;
 
 pub fn plot_ampl_spec(nt: usize, nppt: usize, nn: usize, fs: f64, fhabs: &[f64], outname: &str) {
 
+    // The axis of fhabs has nn/2+1 points, representing frequencies from 0 to fl/2,
+    // or i*(fl/2)/(nn/2) = i*fl/nn = i*fs*(nppt-1)/nn for i=0..nn/2. (Because
+    // fl=1/Tl=fs*(nppt-1)) We are only interested in
+    // frequencies up to around fi=60KHz, or i= 60KHz*nn/(fs*(nppt-1)).
+
     let npptf64=nppt as f64;
     let ntf64=nt as f64;
     // Find index such that the horizontal axis of the plot is fmax, i.e.

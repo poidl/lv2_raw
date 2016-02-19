@@ -118,3 +118,20 @@ impl Kaiser for [f64] {
         }
     }
 }
+
+pub trait Cumsum {
+    fn cumsum(self: &mut Self);
+}
+
+impl Cumsum for [f64] {
+    fn cumsum(self: &mut Self) {
+        unsafe {
+            let ptr = self.as_mut_ptr();
+            for ii in 1..self.len() {
+                let xm1 = ptr.offset(ii as isize -1);
+                let  x = ptr.offset(ii as isize);
+                *x=*x+*xm1;
+            }
+        }
+    }
+}

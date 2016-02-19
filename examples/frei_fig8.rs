@@ -107,11 +107,6 @@ fn main() {
         fhabs[ii]=(fh[ii].powf(2f64)+fh[NN-1-ii].powf(2f64)).sqrt();
     }
 
-    // The axis of fhabs has nn/2+1 points, representing frequencies from 0 to fl/2,
-    // or i*(fl/2)/(nn/2) = i*fl/nn = i*fs*(nppt-1)/nn for i=0..nn/2. (Because
-    // fl=1/Tl=fs*(nppt-1)) We are only interested in
-    // frequencies up to around fi=60KHz, or i= 60KHz*nn/(fs*(nppt-1)).
-
     // print out some usuful numbers
     let npptf64 = nppt as f64;
     println!("N:    {}", N);

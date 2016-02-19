@@ -2,11 +2,13 @@
 extern crate yassy;
 extern crate rgsl;
 extern crate plot;
+extern crate gnuplot;
 
 use yassy::utils;
 use yassy::utils::*;
 use std::f64;
 use plot::*;
+use gnuplot::*;
 
 fn main() {
     // BLIT (bandlimited impulse train) References:
@@ -18,7 +20,10 @@ fn main() {
     let nppt: usize = 2700;
     // N needs to be a constant if we want to stay in the heap memory (2016/01/22)
     // Can't use variables nt and nppt
-    const N: usize = 4*(2700-1)+1; // Formula: nt*(nppt-1)+1 as usize;
+    const N: usize = 4*(2700-1)+1; // Formula: nt*(nppt-1)+1 as usize; nt is even, therefore N must be uneven
+    if nt%2 != 0 {
+        panic!("nt is not even");
+    }
     if N != nt*(nppt-1)+1 {
         panic!("inconsistent variables");
     }
@@ -75,6 +80,17 @@ fn main() {
     let max=tmp[N-1];
     hk.mult(&(c*(1f64/max)));
 
+    hk.cumsum();
+
+    println!("hk.len():    {}", hk.len());
+    println!("hk.len()/2+1:    {}", hk.len()/2+1);
+
+    let mut fg = gnuplot::Figure::new();
+    fg.set_terminal("svg","./examples/figures/hk.svg");
+    fg.axes2d()
+    .lines(t.iter(), hk.iter(), &[]);
+    fg.show();
+
     // Before Fourier transforming h to fh, append points to make the length a
     // power of 2
 
@@ -90,18 +106,6 @@ fn main() {
         fhabs[ii]=(fh[ii].powf(2f64)+fh[NN-1-ii].powf(2f64)).sqrt();
     }
 
-    // The axis of fhabs has nn/2+1 points, representing frequencies from 0 to fl/2,
-    // or i*(fl/2)/(nn/2) = i*fl/nn = i*fs*(nppt-1)/nn for i=0..nn/2. (Because
-    // fl=1/Tl=fs*(nppt-1)) We are only interested in
-    // frequencies up to around fi=60KHz, or i= 60KHz*nn/(fs*(nppt-1)).
-
-    // print out some usuful numbers
-    let npptf64 = nppt as f64;
-    println!("N:    {}", N);
-    println!("fs:   {}", fs);
-    println!("nppt: {}", nppt);
-    println!("fl:   {}", fs*(npptf64-1f64));
-    println!("fl/2: {}", fs*(npptf64-1f64)/2f64);
     let outname = "./examples/figures/frei_fig6.svg";
     plot::plot_ampl_spec(nt, nppt, NN, fs, &fhabs, outname)
 }
