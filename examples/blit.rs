@@ -11,7 +11,7 @@ use plot::*;
 use gnuplot::*;
 
 fn main() {
-    // BLIT (bandlimited impulse train) References:
+    // Bandlimited impulse segment for sawtooth with BLIT (bandlimited impulse train) approach. References:
     // Stilson, T. and Smith, J., 1996: Alias-free digital synthesis of classic analog waveforms. Proc. International Computer Music Conference
     // Frei, B.: Digital sound generation. Institute for Computer Music and Sound Technology (ICST) Zurich University of the Arts.
     // See Frei's Fig. 17.
@@ -43,7 +43,6 @@ fn main() {
     // in the plot we will drop the factor nipt and display in units of T.
     let nth = 0.5f64*(nt as f64)*nipt;
 
-    //let t = utils::linspace_heapslice(-nth , nth , N);
     let mut t : [f64;N] = [0f64;N];
     utils::linspace(&mut t,-nth, nth);
 
@@ -57,7 +56,9 @@ fn main() {
     let c =  2f64*fc/(fs*nipt);
 
     // impulse h
-    t.mult(&c); let mut ct=t;
+    let mut tt : [f64;N] = [0f64;N];
+    tt.mycopy(&t);
+    tt.mult(&c); let mut ct=tt;
     ct.sinc(); let mut sinc_ct= ct;
     sinc_ct.mult(&c); let mut h = sinc_ct;
 
@@ -80,16 +81,17 @@ fn main() {
     let max=tmp[N-1];
     hk.mult(&(c*(1f64/max)));
 
-    hk.cumsum();
+    // integrate and scale hk(0) (i.e. middle) to 1
+    hk.cumsum(); let mut cs = hk;
+    let middle = cs[cs.len()/2+1];
+    cs.mult(&(1f64/middle));
+    // flip cs(t>0) around t axis
+    for ii in cs.len()/2+2 .. N {
+        cs[ii]=-2f64+cs[ii];
+    }
 
     println!("hk.len():    {}", hk.len());
     println!("hk.len()/2+1:    {}", hk.len()/2+1);
-
-    let mut fg = gnuplot::Figure::new();
-    fg.set_terminal("svg","./examples/figures/hk.svg");
-    fg.axes2d()
-    .lines(t.iter(), hk.iter(), &[]);
-    fg.show();
 
     // Before Fourier transforming h to fh, append points to make the length a
     // power of 2
@@ -105,6 +107,20 @@ fn main() {
     for ii in 0..NN/2 {
         fhabs[ii]=(fh[ii].powf(2f64)+fh[NN-1-ii].powf(2f64)).sqrt();
     }
+
+    t.mult(&(1f64/nipt));
+    let mut fg = gnuplot::Figure::new();
+    fg.set_terminal("svg","./examples/figures/segment.svg");
+    fg.axes2d()
+    .lines(t.iter(), cs.iter(), &[]);
+    fg.show();
+
+    let blit = utils::blit_4T();
+    let mut fg = gnuplot::Figure::new();
+    fg.set_terminal("svg","./examples/figures/blit_4T.svg");
+    fg.axes2d()
+    .lines(t.iter(), blit.iter(), &[]);
+    fg.show();
 
     let outname = "./examples/figures/frei_fig6.svg";
     plot::plot_ampl_spec(nt, nppt, NN, fs, &fhabs, outname)

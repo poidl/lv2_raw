@@ -135,3 +135,82 @@ impl Cumsum for [f64] {
         }
     }
 }
+
+pub fn blit_4T() -> Box<[f64]> {
+    // Bandlimited impulse segment for sawtooth with BLIT (bandlimited impulse train) approach. References:
+    // Stilson, T. and Smith, J., 1996: Alias-free digital synthesis of classic analog waveforms. Proc. International Computer Music Conference
+    // Frei, B.: Digital sound generation. Institute for Computer Music and Sound Technology (ICST) Zurich University of the Arts.
+    // See Frei's Fig. 17.
+    // see also examples/blit.rs
+    let nt: usize = 4;
+    let nppt: usize = 2700;
+    // N needs to be a constant if we want to stay in the heap memory (2016/01/22)
+    // Can't use variables nt and nppt
+    const N: usize = 4*(2700-1)+1; // Formula: nt*(nppt-1)+1 as usize; nt is even, therefore N must be uneven
+    if nt%2 != 0 {
+        panic!("nt is not even");
+    }
+    if N != nt*(nppt-1)+1 {
+        panic!("inconsistent variables");
+    }
+
+    let fs = 48000f64; // sampling frequency 1/T.
+    let fc = 15000f64; // cutoff frequency 1/Tc.
+
+    let pi = f64::consts::PI;
+    let alpha = 8.3f64/pi; // alpha for Kaiser window. Note that beta = pi*alpha.
+    let alpha_apo = 0.5f64/pi; // apodization
+    let apof = 0.5f64;
+
+    let nipt = (nppt-1) as f64; // number of Tl per T
+
+    // as time axis we use units of Tl instead of T for the calculation, to keep
+    // the formula for the Fourier trafo clean (linear axis scaling). Later
+    // in the plot we will drop the factor nipt and display in units of T.
+    let nth = 0.5f64*(nt as f64)*nipt;
+
+    let mut t = vec![0f64;N];
+    linspace(&mut t,-nth, nth);
+
+    // The first zero crossing of the impulse determines the cutoff frequency fc=(1/Tc).
+    // The normalized sinc function sinc(T) has the first zero crossing at 1*T,
+    // corresponding to a cutoff at 0.5(1/T)=0.5*fs, which differs by a factor of
+    // c=2*fc/fs from fc.  To get the cutoff at fc, we use c*sinc(c*T) (see doc for
+    // the effect of linear axis scaling on the Fourier transform). Also include
+    // a factor 1/nipt to transform T into Tl
+
+    let c =  2f64*fc/(fs*nipt);
+
+    // impulse h
+    t.mult(&c); let mut ct=t;
+    ct.sinc(); let mut sinc_ct= ct;
+    sinc_ct.mult(&c); let mut h = sinc_ct;
+
+    // apply Kaiser window
+    h.kaiser(alpha); let mut hk = h;
+
+    // apodization (scale the maximum to c afterwards)
+    let mut kaiser_apo = vec![1f64;N];
+    kaiser_apo.kaiser(alpha_apo);
+
+    for i in 0..kaiser_apo.len() {
+        kaiser_apo[i]=1f64-apof*kaiser_apo[i];
+    }
+    hk.mult(&kaiser_apo[..]);
+
+    let mut tmp =  vec![0f64;N];
+    tmp.mycopy(&hk);
+    tmp.sort_by(|a, b| a.partial_cmp(b).unwrap());
+    let max=tmp[N-1];
+    hk.mult(&(c*(1f64/max)));
+
+    // integrate and scale hk(0) (i.e. middle) to 1
+    hk.cumsum(); let mut cs = hk;
+    let middle = cs[cs.len()/2+1];
+    cs.mult(&(1f64/middle));
+    // flip cs(t>0) around t axis
+    for ii in cs.len()/2+2 .. N {
+        cs[ii]=-2f64+cs[ii];
+    }
+    cs.into_boxed_slice()
+}
