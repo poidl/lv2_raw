@@ -20,6 +20,10 @@ use std::ffi::CString;
 use std::ffi::CStr;
 use utils::*;
 
+const N : usize = 1;
+// const NN : usize= 41000-N;
+const NN : usize= 82;
+
 macro_rules! println_stderr(
     ($($arg:tt)*) => (
         match writeln!(&mut ::std::io::stderr(), $($arg)* ) {
@@ -51,16 +55,17 @@ struct Synth {
     in_port: *const lv2::LV2_Atom_Sequence,
     output: *mut f32,
     uris: Synthuris,
-    fs: f64,
+    rate: f64,
     currentfreq: f64,
     currentmidivel: u8,
     noteison: bool,
     makesilence: bool,
-    osc: Osc
+    osc: Osc,
+    impulse: Impulse
 }
 
 impl lv2::LV2Descriptor {
-    pub extern fn instantiate( _descriptor: *const lv2::LV2Descriptor , fs: f64, bundle_path: *const libc::c_char , features: *const (*const lv2::LV2Feature),) -> lv2::Lv2handle {
+    pub extern fn instantiate( _descriptor: *const lv2::LV2Descriptor , rate: f64, bundle_path: *const libc::c_char , features: *const (*const lv2::LV2Feature),) -> lv2::Lv2handle {
         unsafe{
         let ptr = libc::calloc(1,mem::size_of::<Synth>() as libc::size_t);
         if ptr.is_null() {
@@ -98,14 +103,30 @@ impl lv2::LV2Descriptor {
         let uris_addr = &mut (*(ptr  as *mut Synth)).uris;
         map_synth_uris(map, uris_addr);
 
-        (*(ptr  as *mut Synth)).fs = fs;
+        (*(ptr  as *mut Synth)).rate = rate;
         (*(ptr  as *mut Synth)).noteison = false;
         (*(ptr  as *mut Synth)).makesilence = false;
         (*(ptr  as *mut Synth)).osc = Osc { phase: 0, dphase: 0 };
-        (*(ptr  as *mut Synth)).osc.set_dphase(440.0,(*(ptr  as *mut Synth)).fs);
+        (*(ptr  as *mut Synth)).osc.set_dphase(440.0,(*(ptr  as *mut Synth)).rate);
             println!("self.dphase: {}",(*(ptr  as *mut Synth)).osc.dphase);
 
-        ptr
+        // define impulse
+        let im = &mut (*(ptr  as *mut Synth)).impulse;
+        for i in im.buf[..N].iter_mut() {
+            *i = 1f64;
+        }
+        // let pi = std::f64::consts::PI;
+        // let alpha = 9f64/pi; // alpha for Kaiser window.
+        // im.buf[..N].kaiser(alpha);
+        // // for i in im.buf.iter() {
+        // //     println!("buf: {}", i);
+        // // }
+        for i in im.buf[NN..].iter_mut() {
+            *i = 0f64;
+        }
+        im.offs = 0;
+        return ptr;
+
         }
     }
 
@@ -145,17 +166,24 @@ impl lv2::LV2Descriptor {
                         // note on event
                         lv2::Lv2MidiMessageType::Lv2MidiMsgNoteOn => {
                             (*synth).noteison = true;
-                            let f0 = f0_from_midimsg(msg);
-                            (*synth).currentfreq = f0;
+                            let freq = freq_from_midimsg(msg);
+                            (*synth).currentfreq = freq;
                             (*synth).currentmidivel = *msg.offset(2);
                             let coef = 1.0 as f32;
 
-                            (*synth).osc.reset();
-                            (*synth).osc.set_dphase(f0,(*synth).fs);
+                            // (*synth).osc.reset();
+                            // (*synth).osc.set_dphase(freq,(*synth).rate);
+                            //
+                            // for i in istart-1..n_samples {
+                            //     let amp = (*synth).osc.get();
+                            //     *output.offset(i as isize) = amp;
+                            // }
+                            (*synth).impulse.reset();
 
                             for i in istart-1..n_samples {
-                                let amp = (*synth).osc.get();
-                                *output.offset(i as isize) = amp;
+                                let amp = (*synth).impulse.get();
+                                // println!("amp: {}", amp);
+                                *output.offset(i as isize) = amp as f32;
                             }
                         }
 
@@ -180,10 +208,14 @@ impl lv2::LV2Descriptor {
 
             if (*synth).noteison {
                 let coef = 1.0 as f32;
-                let f0 = (*synth).currentfreq;
+                let freq = (*synth).currentfreq;
 
+                // for i in 0..n_samples {
+                //     let amp = (*synth).osc.get();
+                //     *output.offset(i as isize) = (amp as f32) * coef;
+                // }
                 for i in 0..n_samples {
-                    let amp = (*synth).osc.get();
+                    let amp = (*synth).impulse.get();
                     *output.offset(i as isize) = (amp as f32) * coef;
                 }
 
@@ -252,22 +284,22 @@ fn map_synth_uris(map: *const lv2::Lv2uridMap, uris: &mut Synthuris) {
     }
 }
 
-fn f0_from_midimsg(msg: *const u8) -> f64 {
+fn freq_from_midimsg(msg: *const u8) -> f64 {
     // A3 has midi number 56
     // Frequencies are calculated with the formula
-    // f0 = {[(2)^1/12]^n} * 220 Hz,
+    // freq = {[(2)^1/12]^n} * 220 Hz,
     // where n is the number of half steps from A3
     unsafe{
         let i = *msg.offset(1);
-        let f0 = (2.0f64.powf((((i as i8)-57) as f64)/12.0))*220.0;
+        let freq = (2.0f64.powf((((i as i8)-57) as f64)/12.0))*220.0;
         // println!("FREQ: {}", freq);
-        return f0
+        return freq
     }
 }
 
-fn amp(isample: u32, f0: f64, fs: f64) -> f64 {
-    let lam = fs/f0;
-    // println!("fs: {}", fs);
+fn amp(isample: u32, freq: f64, rate: f64) -> f64 {
+    let lam = rate/freq;
+    // println!("rate: {}", rate);
     return (2.0*std::f64::consts::PI*((isample as f64)/lam)).sin()
 }
 
@@ -280,14 +312,14 @@ impl Osc {
     fn reset(& mut self) {
         self.phase =  0
     }
-    fn set_dphase(&mut self, f0: f64, fs: f64) {
-		// Phase increment of the phase accumulator. (f0/fs) is the
+    fn set_dphase(&mut self, freq: f64, rate: f64) {
+		// Phase increment of the phase accumulator. (freq/rate) is the
         // fraction of period per sample. This is multiplied by 2^32, so
         // each frequency is equivalent to a fraction of the "maximum
-        // phase increment" 2^32, which corresponds to  f0 = fs.
+        // phase increment" 2^32, which corresponds to  freq = rate.
 		// (2^32)/16=268435456
-        self.dphase =  ((f0/fs)*4294967296.0) as u32;
-        //println!("bla: {}",f0*(0xFFFFFFFF as u32))
+        self.dphase =  ((freq/rate)*4294967296.0) as u32;
+        //println!("bla: {}",freq*(0xFFFFFFFF as u32))
     }
     fn step(&mut self){
         //let x = Wrapping(self.phase);
@@ -303,32 +335,22 @@ impl Osc {
     }
 }
 
-pub struct OscST {
-    pub N: u32,
-    pub phase: i32, // segment size is 2N. start at zero, wrap at N from 1 to -1
-    pub dphase: i32,
-    pub alpha: f64
+struct Impulse {
+    // N+NN samples for one period, consisting of N samples during which we play, and NN samples of silence
+    buf: [f64;N+NN], // buffer for waveform
+    offs: u32 // wave offset
 }
 
-impl OscST {
-    pub fn reset(& mut self) {
-        self.N = 2u32.pow(31); // follow notation of Frei (p. 3)
-        self.phase =  0
+impl Impulse {
+    fn reset(& mut self) {
+        self.offs =  0
     }
-    pub fn set_dphase(&mut self, f0: f64, fs: f64) {
-        self.dphase =  ((f0/fs)*2f64*self.N as f64) as i32;
+    fn step(&mut self){
+        self.offs = (self.offs+1) % self.buf.len() as u32;
     }
-    pub fn set_alpha(&mut self, f0: f64, fs: f64) {
-        self.alpha =  ((f0/fs)*4f64*self.N as f64) as f64;
-    }
-    pub fn step(&mut self){
-        // wrapping_add: allows intentional overflow
-        self.phase = self.phase.wrapping_add(self.dphase);
-    }
-    pub fn get(&mut self) -> i32 {
+    fn get(&mut self) -> f64 {
+        let hoit = self.buf[self.offs as usize];
         self.step();
-        let phi = self.phase.wrapping_add(self.N as i32);
-        // phi as f32 / self.N as f32
-        phi
+        return hoit
     }
 }
