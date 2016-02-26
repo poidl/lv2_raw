@@ -304,31 +304,72 @@ impl Osc {
 }
 
 pub struct OscST {
+    // We translate the fundamental frequency f0 from units 1/t to a fraction "fn" of a wavetable with 2N lattice points. fn corresponds to the number of points which are skipped when reading the wavetable and can be interpreted as a phase increment. The max. resolved freq. f0=fs/2, i.e. we want that fn(fs/2)=N and fn(0)=0. Hence fn(f0)=2N*f0/fs.
     pub N: u32,
-    pub phase: i32, // segment size is 2N. start at zero, wrap at N from 1 to -1
-    pub dphase: i32,
-    pub alpha: f64
+    pub A: i32, // phase. Wavetable size is 2N. start at zero, wrap at N from 1 to
+    // -1
+    pub fnn: u32, // phase increment
+    pub B: i32, // A, phase shifted by N
+    pub alpha: f64,
+    pub M: u32, // number of entries in half-segment of integratied bandlimited impulse
+    pub i: u32,
+    pub f: [f64; 2*(2700-1)+1],
+    pub C: f64,
+    pub D: f64,
+    pub fs: f64, // sample rate
+    pub f0: f64, // fundamental frequency
+    pub fac_i: f64, // avoid unnecessary runtime multiplication
+    pub fac_alpha: f64,
+    pub fac_fn: f64
 }
 
 impl OscST {
-    pub fn reset(& mut self) {
+    pub fn reset(& mut self, fs: f64) {
         self.N = 2u32.pow(31); // follow notation of Frei (p. 3)
-        self.phase =  0
+        self.M = (2*(2700-1)+1) as u32;
+        self.B =  0;
+        self.A =  self.B.wrapping_add(self.N as i32);
+        self.fs = fs;
+        let c = 4 as f64 * self.N as f64;
+        self.fac_i = self.M as f64 *fs/c;
+        self.fac_alpha = c/fs;
+        self.fac_fn = 2f64*self.N as f64/self.fs;
     }
-    pub fn set_dphase(&mut self, f0: f64, fs: f64) {
-        self.dphase =  ((f0/fs)*2f64*self.N as f64) as i32;
+    pub fn set_f0fn(&mut self, f0: f64) {
+        self.f0 = f0;
+        self.fnn =  (f0*self.fac_fn) as u32;
     }
-    pub fn set_alpha(&mut self, f0: f64, fs: f64) {
-        self.alpha =  ((f0/fs)*4f64*self.N as f64) as f64;
-    }
-    pub fn step(&mut self){
+    pub fn step_AB(&mut self){
         // wrapping_add: allows intentional overflow
-        self.phase = self.phase.wrapping_add(self.dphase);
+        self.B = self.B.wrapping_add(self.fnn as i32);
+        self.A = self.B.wrapping_add(self.N as i32);
     }
-    pub fn get(&mut self) -> i32 {
-        self.step();
-        let phi = self.phase.wrapping_add(self.N as i32);
-        // phi as f32 / self.N as f32
-        phi
+    pub fn set_alpha_i(&mut self) {
+        println!("(self.A+1).abs(): {}",(self.A+1).abs());
+        self.alpha =  self.f0*self.fac_alpha as f64;
+        // TODO avoid overflow of abs(i32::min_value())
+        let tmp = ((self.A).abs() as f64 /self.f0) *self.fac_i;
+        println!("3");
+        // println!("fac_i: {}", self.fac_i);
+        // println!("i: {}", tmp);
+        self.i = tmp.trunc() as u32;
+    }
+    pub fn step_C(&mut self) {
+        if ((self.A).abs() as f64) < (self.alpha) {
+            self.C = -self.f[self.i as usize];
+        } else {
+            self.C = 0f64;
+        }
+    }
+    pub fn step_D(&mut self) {
+        let N2 = 2f64*self.N as f64;
+        self.D = self.C + self.B as f64/ N2
+    }
+    pub fn get(&mut self) -> f64 {
+        self.step_AB();
+        self.set_alpha_i();
+        self.step_C();
+        self.step_D();
+        self.D as f64
     }
 }
