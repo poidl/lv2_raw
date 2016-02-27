@@ -1,6 +1,7 @@
 #![allow(unused_imports)]
 #![allow(dead_code)]
 #![allow(unused_variables)]
+#![allow(non_snake_case)]
 
 // #![feature(alloc)]
 //#![feature(heap_api)]
@@ -56,7 +57,8 @@ struct Synth {
     currentmidivel: u8,
     noteison: bool,
     makesilence: bool,
-    osc: Osc
+    osc: Osc,
+    oscST: OscST
 }
 
 impl lv2::LV2Descriptor {
@@ -104,6 +106,25 @@ impl lv2::LV2Descriptor {
         (*(ptr  as *mut Synth)).osc = Osc { phase: 0, dphase: 0 };
         (*(ptr  as *mut Synth)).osc.set_dphase(440.0,(*(ptr  as *mut Synth)).fs);
             println!("self.dphase: {}",(*(ptr  as *mut Synth)).osc.dphase);
+
+        (*(ptr  as *mut Synth)).oscST = OscST {
+            N: 0u32,
+            A: 0i32,
+            fnn: 0u32,
+            B: 0i32,
+            alpha: 0u32,
+            M: 0u32,
+            i: 0i32,
+            f: (*Box::into_raw(utils::blit_4T())).as_ptr(), // TODO: this must be cleaned up? See https://doc.rust-lang.org/std/primitive.pointer.html
+            C: 0f64,
+            D: 0f64,
+            fs: 0f64,
+            f0: 0f64,
+            fac_i: 0f64,
+            fac_alpha: 0f64,
+            fac_fn: 0f64,
+            absA: 0i32
+        };
 
         ptr
         }
@@ -153,8 +174,13 @@ impl lv2::LV2Descriptor {
                             (*synth).osc.reset();
                             (*synth).osc.set_dphase(f0,(*synth).fs);
 
+                            // TODO don't set fs here
+                            (*synth).oscST.reset((*synth).fs);
+                            (*synth).oscST.set_f0fn(f0);
+
                             for i in istart-1..n_samples {
-                                let amp = (*synth).osc.get();
+                                // let amp = (*synth).osc.get() as f32;
+                                let amp = (*synth).oscST.get() as f32;
                                 *output.offset(i as isize) = amp;
                             }
                         }
@@ -183,7 +209,8 @@ impl lv2::LV2Descriptor {
                 let f0 = (*synth).currentfreq;
 
                 for i in 0..n_samples {
-                    let amp = (*synth).osc.get();
+                    // let amp = (*synth).osc.get();
+                    let amp = (*synth).oscST.get();
                     *output.offset(i as isize) = (amp as f32) * coef;
                 }
 
@@ -298,29 +325,30 @@ impl Osc {
     }
     fn get(&mut self) -> f32 {
         self.step();
-        let phi: f32 = (self.phase as f64/4294967296.0) as f32;
+        let phi: f32 = (self.phase as f64/2147483648.0 -1f64) as f32;
         return phi
     }
 }
 
 pub struct OscST {
-    // We translate the fundamental frequency f0 from units 1/t to a fraction "fn" of a wavetable with 2N lattice points. fn corresponds to the number of points which are skipped when reading the wavetable and can be interpreted as a phase increment. The max. resolved freq. f0=fs/2, i.e. we want that fn(fs/2)=N and fn(0)=0. Hence fn(f0)=2N*f0/fs.
+    // We translate the fundamental frequency f0 from units 1/t to a fraction "fn" of a wavetable with 2N lattice points. fn corresponds to the number of points which are skipped when reading the wavetable and can be interpreted as a phase increment. The 2N lattice points represent the interval [-pi,pi). The max. resolved freq. f0=fs/2, i.e. we want that fn(fs/2)=N and fn(0)=0. The function is linear, hence fn(f0)=2N*f0/fs. If a sined integer of k bits is used as phase accumulator, the 2N interval translates to [-2^(k-1),2^(k-1)). Note the square bracket (paranthesis) on the left (right). For k=2, the values range from -2 to 1.
     pub N: u32,
     pub A: i32, // phase. Wavetable size is 2N. start at zero, wrap at N from 1 to
     // -1
     pub fnn: u32, // phase increment
     pub B: i32, // A, phase shifted by N
-    pub alpha: f64,
+    pub alpha: u32,
     pub M: u32, // number of entries in half-segment of integratied bandlimited impulse
-    pub i: u32,
-    pub f: [f64; 2*(2700-1)+1],
+    pub i: i32,
+    pub f: *const f64,
     pub C: f64,
     pub D: f64,
     pub fs: f64, // sample rate
     pub f0: f64, // fundamental frequency
     pub fac_i: f64, // avoid unnecessary runtime multiplication
     pub fac_alpha: f64,
-    pub fac_fn: f64
+    pub fac_fn: f64,
+    pub absA: i32
 }
 
 impl OscST {
@@ -343,27 +371,32 @@ impl OscST {
         // wrapping_add: allows intentional overflow
         self.B = self.B.wrapping_add(self.fnn as i32);
         self.A = self.B.wrapping_add(self.N as i32);
+        // A.abs() will panic/overflow if A=i32::min_value().
+        let mask = self.A >> 31u32;
+        self.absA = self.A ^ mask; // xor with mask is equivalent to -1*(A+1) for A<0, and a no-op otherwise. http://stackoverflow.com/questions/12041632/how-to-compute-the-integer-absolute-value
     }
     pub fn set_alpha_i(&mut self) {
-        println!("(self.A+1).abs(): {}",(self.A+1).abs());
-        self.alpha =  self.f0*self.fac_alpha as f64;
-        // TODO avoid overflow of abs(i32::min_value())
-        let tmp = ((self.A).abs() as f64 /self.f0) *self.fac_i;
-        println!("3");
-        // println!("fac_i: {}", self.fac_i);
-        // println!("i: {}", tmp);
-        self.i = tmp.trunc() as u32;
+        self.alpha =  (self.f0*self.fac_alpha) as u32;
+        let tmp = (self.A as f64 /self.f0) *self.fac_i;
+        self.i = tmp.trunc() as i32;
     }
     pub fn step_C(&mut self) {
-        if ((self.A).abs() as f64) < (self.alpha) {
-            self.C = -self.f[self.i as usize];
+        if self.absA < (self.alpha as i32) {
+            unsafe {
+                self.C = -*self.f.offset(self.M as isize + self.i as isize);
+            }
+            // println!("apply {}", self.C);
         } else {
             self.C = 0f64;
         }
     }
     pub fn step_D(&mut self) {
-        let N2 = 2f64*self.N as f64;
-        self.D = self.C + self.B as f64/ N2
+        let N = self.N as f64;
+        // println!("self.B {}", self.B as f64/ N );
+        // println!("self.C {}", self.C);
+        // println!("self.i {}", self.i);
+        // println!(" ");
+        self.D = self.C + self.B as f64/ N
     }
     pub fn get(&mut self) -> f64 {
         self.step_AB();
