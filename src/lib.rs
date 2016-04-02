@@ -25,113 +25,40 @@ use utils::*;
 use oscillators::*;
 use voice::*;
 
+// struct Synth {
+//     output: *mut f32,
+//     fs: f64,
+//     voice: Voice,
+//     osc1: OscBasic
+//     // osc2: Osc
+// }
 
-
-struct Synth {
-    output: *mut f32,
-    fs: f64,
-    voice: Voice,
-    osc1: OscBasic
-    // osc2: Osc
-}
-
-impl Synth {
-    fn instantiate() {
-
-        (*(ptr  as *mut Synth)).fs = fs;
-        (*(ptr  as *mut Synth)).noteison = false;
-        (*(ptr  as *mut Synth)).makesilence = false;
-        (*(ptr  as *mut Synth)).osc = Osc { phase: 0, dphase: 0 };
-        (*(ptr  as *mut Synth)).osc.set_dphase(440.0,(*(ptr  as *mut Synth)).fs);
-            println!("self.dphase: {}",(*(ptr  as *mut Synth)).osc.dphase);
-
-    }
-}
+// impl Synth {
+//     fn new(fs: f64) -> Synth {
+//         Synth {
+//             output: ptr::null_mut(),
+//             fs: fs,
+//             voice: Voice { f0: 0f64, vel: 0u8, on: false},
+//             osc1: OscBasic { fs: fs, phase: 0, dphase: 0}
+//         }
+//     }
+//     fn noteon (&mut self, f0: f64, vel: u8) {
+//         self.voice.f0 = f0;
+//         self.voice.vel = vel;
+//         self.voice.on = true;
+//         self.osc1.reset_phase();
+//         self.osc1.set_dphase(self.voice.f0);
+//     }
+//     fn run(&mut self, n_samples: u32)  {
+//
+//
+//     }
+// }
 
 
 
 // impl lv2::LV2Descriptor {
-    // pub extern fn instantiate( _descriptor: *const lv2::LV2Descriptor , fs: f64, bundle_path: *const libc::c_char , features: *const (*const lv2::LV2Feature),) -> lv2::Lv2handle {
-    //     unsafe{
-    //     let ptr = libc::calloc(1,mem::size_of::<Synth>() as libc::size_t);
-    //     if ptr.is_null() {
-    //         panic!("failed to allocate memory");
-    //     }
-    //
-    //     let mut map = (*(ptr  as *mut Synth)).map;
-    //
-    //     let uridmapstr = "http://lv2plug.in/ns/ext/urid#map";
-    //     let mut x: isize = 0;
-    //     let mut done = false;
-    //     while !done {
-    //
-    //             let fptr: *const lv2::LV2Feature = *features.offset(x);
-    //             if fptr.is_null() {
-    //                 // host doesn't provide feature
-    //                 libc::free(ptr as *mut libc::c_void);
-    //                 println!("Missing feature \"{}\"", uridmapstr);
-    //                 return std::ptr::null_mut();
-    //             }
-    //             let uriptr = (*fptr).uri;
-    //             let buf = CStr::from_ptr(uriptr).to_bytes();
-    //             let s: &str = str::from_utf8(buf).unwrap();
-    //             println!("uri: {}", s);
-    //             if s == uridmapstr {
-    //
-    //                 map = (*fptr).data;
-    //                 done=true;
-    //                 println!{" -> obtained urid#map from host"}
-    //             }
-    //
-    //         x = x+1;
-    //     }
-    //
-    //     let uris_addr = &mut (*(ptr  as *mut Synth)).uris;
-    //     map_synth_uris(map, uris_addr);
-    //
-    //     (*(ptr  as *mut Synth)).fs = fs;
-    //     (*(ptr  as *mut Synth)).noteison = false;
-    //     (*(ptr  as *mut Synth)).makesilence = false;
-    //     (*(ptr  as *mut Synth)).osc = Osc { phase: 0, dphase: 0 };
-    //     (*(ptr  as *mut Synth)).osc.set_dphase(440.0,(*(ptr  as *mut Synth)).fs);
-    //         println!("self.dphase: {}",(*(ptr  as *mut Synth)).osc.dphase);
-    //
-    //     (*(ptr  as *mut Synth)).oscST = OscST {
-    //         N: 0u32,
-    //         A: 0i32,
-    //         fnn: 0u32,
-    //         B: 0i32,
-    //         alpha: 0u32,
-    //         M: 0u32,
-    //         i: 0i32,
-    //         f: (*Box::into_raw(utils::blit_4T())).as_ptr(), // TODO: this must be cleaned up? See https://doc.rust-lang.org/std/primitive.pointer.html
-    //         C: 0f64,
-    //         D: 0f64,
-    //         fs: 0f64,
-    //         f0: 0f64,
-    //         fac_i: 0f64,
-    //         fac_alpha: 0f64,
-    //         fac_fn: 0f64,
-    //         absA: 0i32
-    //     };
-    //
-    //     ptr
-    //     }
-    // }
-//
-//     pub extern fn connect_port(handle: lv2::Lv2handle, port: u32, data: *mut libc::c_void) {
-//         let synth: *mut Synth = handle as *mut Synth;
-//         // simpler to use PortIndex instead of u32 for port, but that doesn't correspond to C?
-//         match PortIndex::from_int(port) {
-//             // data may be NULL pointer -> don't dereference!
-//         // match port {
-//             PortIndex::MidiIn => unsafe{ (*synth).in_port = data  as *const lv2::LV2_Atom_Sequence},
-//             PortIndex::AudioOut => unsafe{ (*synth).output = data as *mut f32 },
-//         }
-//
-//     }
-//     pub extern fn activate(_instance: lv2::Lv2handle) {}
-//
+
 //     pub extern fn run(instance: lv2::Lv2handle, n_samples: u32) {
 //         unsafe{
 //             let synth = instance as *mut Synth;
@@ -287,81 +214,3 @@ impl Synth {
 //     return (2.0*std::f64::consts::PI*((isample as f64)/lam)).sin()
 // }
 //
-
-//
-// pub struct OscST {
-//     // We translate the fundamental frequency f0 from units 1/t to a fraction "fn" of a wavetable with 2N lattice points. fn corresponds to the number of points which are skipped when reading the wavetable and can be interpreted as a phase increment. The 2N lattice points represent the interval [-pi,pi). The max. resolved freq. f0=fs/2, i.e. we want that fn(fs/2)=N and fn(0)=0. The function is linear, hence fn(f0)=2N*f0/fs. If a sined integer of k bits is used as phase accumulator, the 2N interval translates to [-2^(k-1),2^(k-1)). Note the square bracket (paranthesis) on the left (right). For k=2, the values range from -2 to 1.
-//     pub N: u32,
-//     pub A: i32, // phase. Wavetable size is 2N. start at zero, wrap at N from 1 to
-//     // -1
-//     pub fnn: u32, // phase increment
-//     pub B: i32, // A, phase shifted by N
-//     pub alpha: u32,
-//     pub M: u32, // number of entries in half-segment of integratied bandlimited impulse
-//     pub i: i32,
-//     pub f: *const f64,
-//     pub C: f64,
-//     pub D: f64,
-//     pub fs: f64, // sample rate
-//     pub f0: f64, // fundamental frequency
-//     pub fac_i: f64, // avoid unnecessary runtime multiplication
-//     pub fac_alpha: f64,
-//     pub fac_fn: f64,
-//     pub absA: i32
-// }
-//
-// impl OscST {
-//     pub fn reset(& mut self, fs: f64) {
-//         self.N = 2u32.pow(31); // follow notation of Frei (p. 3)
-//         self.M = (2*(2700-1)+1) as u32;
-//         self.B =  0;
-//         self.A =  self.B.wrapping_add(self.N as i32);
-//         self.fs = fs;
-//         let c = 4 as f64 * self.N as f64;
-//         self.fac_i = self.M as f64 *fs/c;
-//         self.fac_alpha = c/fs;
-//         self.fac_fn = 2f64*self.N as f64/self.fs;
-//     }
-//     pub fn set_f0fn(&mut self, f0: f64) {
-//         self.f0 = f0;
-//         self.fnn =  (f0*self.fac_fn) as u32;
-//     }
-//     pub fn step_AB(&mut self){
-//         // wrapping_add: allows intentional overflow
-//         self.B = self.B.wrapping_add(self.fnn as i32);
-//         self.A = self.B.wrapping_add(self.N as i32);
-//         // A.abs() will panic/overflow if A=i32::min_value().
-//         let mask = self.A >> 31u32;
-//         self.absA = self.A ^ mask; // xor with mask is equivalent to -1*(A+1) for A<0, and a no-op otherwise. http://stackoverflow.com/questions/12041632/how-to-compute-the-integer-absolute-value
-//     }
-//     pub fn set_alpha_i(&mut self) {
-//         self.alpha =  (self.f0*self.fac_alpha) as u32;
-//         let tmp = (self.A as f64 /self.f0) *self.fac_i;
-//         self.i = tmp.trunc() as i32;
-//     }
-//     pub fn step_C(&mut self) {
-//         if self.absA < (self.alpha as i32) {
-//             unsafe {
-//                 self.C = -*self.f.offset(self.M as isize + self.i as isize);
-//             }
-//             // println!("apply {}", self.C);
-//         } else {
-//             self.C = 0f64;
-//         }
-//     }
-//     pub fn step_D(&mut self) {
-//         let N = self.N as f64;
-//         // println!("self.B {}", self.B as f64/ N );
-//         // println!("self.C {}", self.C);
-//         // println!("self.i {}", self.i);
-//         // println!(" ");
-//         self.D = self.C + self.B as f64/ N
-//     }
-//     pub fn get(&mut self) -> f64 {
-//         self.step_AB();
-//         self.set_alpha_i();
-//         self.step_C();
-//         self.step_D();
-//         self.D as f64
-//     }
-// }
