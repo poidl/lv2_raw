@@ -1,6 +1,8 @@
+use oscillators::*;
+
 pub struct Voice {
     pub f0: f64,
     pub vel: u8,
     pub on: bool,
-    // pub osc: 
+    pub osc1: OscBasic
 }
