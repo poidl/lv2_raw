@@ -1,27 +1,27 @@
 
 pub trait Oscillator {
     fn set_fs(&mut self, f64);
-    fn set_f0(&mut self, f64);
+    fn set_f0(&mut self, f32);
     fn reset_phase(&mut self);
-    fn get(&mut self) -> f32;
+    fn get_amp(&mut self) -> f32;
 }
 
 impl Oscillator for OscBasic {
     fn set_fs(&mut self, fs: f64) {
         self.fs = fs;
     }
-    fn set_f0(&mut self, f0: f64) {
+    fn set_f0(&mut self, f0: f32) {
 		// Phase increment of the phase accumulator. (f0/fs) is the
         // fraction of period per sample. This is multiplied by 2^32, so
         // each frequency is equivalent to a fraction of the "maximum
         // phase increment" 2^32, which corresponds to  f0 = fs.
 		// (2^32)/16=268435456
-        self.dphase =  ((f0/self.fs)*4294967296.0) as u32;
+        self.dphase =  ((f0/self.fs as f32)*4294967296.0) as u32;
     }
     fn reset_phase(& mut self) {
         self.phase =  0
     }
-    fn get(&mut self) -> f32 {
+    fn get_amp(&mut self) -> f32 {
         self.step();
         let phi: f32 = (self.phase as f64/2147483648.0 -1f64) as f32;
         return phi

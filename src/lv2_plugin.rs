@@ -8,10 +8,7 @@ use synth;
 use synth::isSynth;
 use lv2;
 
-pub trait isLv2SynthPlugin {
-    fn midievent(&self, *const u8);
-    fn getAmp(&self) -> f32;
-}
+pub trait isLv2SynthPlugin: isSynth {}
 
 pub struct Synthuris {
     pub midi_event: lv2::Lv2urid
@@ -23,24 +20,19 @@ pub struct Lv2SynthPlugin {
     pub in_port: *const lv2::LV2_Atom_Sequence,
     pub output: *mut f32,
     pub uris: Synthuris,
-    // pub synth: synth::Synth
+    pub synth: synth::Synth,
+    fs: f64
 }
 
-fn map_synth_uris(map: *const lv2::Lv2uridMap, uris: &mut Synthuris) {
-    let s = "http://lv2plug.in/ns/ext/midi#MidiEvent";
-    let cstr = CString::new(s).unwrap();
-    let lv2_midi_midi_event = cstr.as_ptr();
-    //mem::forget(cstr);
-    unsafe{
-        uris.midi_event = ((*map).map)((*map).handle, lv2_midi_midi_event);
+
+impl isSynth for Lv2SynthPlugin {
+    fn midievent(&mut self, msg: &u8) {
+        self.synth.midievent(msg);
+    }
+    fn set_fs(&mut self, fs: f64) {
+        self.synth.set_fs(fs);
+    }
+    fn get_amp(&mut self) -> f32 {
+        self.synth.get_amp()
     }
 }
-
-// impl isLv2SynthPlugin for Lv2SynthPlugin {
-//     fn midievent(&self, msg: *const u8) {
-//         self.synth.midievent(msg);
-//     }
-//     fn getAmp(&self) -> f32 {
-//         self.synth.getAmp()
-//     }
-// }

@@ -10,10 +10,11 @@
 //mod tests;
 // pub mod utils;
 mod lv2;
-mod oscillators;
+mod oscillator;
 mod voice;
 mod lv2_plugin;
 mod synth;
+mod midi;
 //mod heapslice;
 
 extern crate libc;
@@ -23,10 +24,11 @@ use std::str;
 use std::ffi::CString;
 use std::ffi::CStr;
 // use utils::*;
-use oscillators::*;
+use oscillator::*;
 use voice::*;
 use synth::*;
-use lv2_plugin::Lv2SynthPlugin::*;
+// use lv2_plugin::*;
+
 
 enum PortIndex {
     MidiIn = 0,
@@ -77,8 +79,11 @@ impl lv2::LV2Descriptor {
                 }
                 x = x+1;
             }
-            let uris_addr = &mut (*(ptr  as *mut lv2_plugin::Lv2SynthPlugin)).uris;
-            lv2_plugin::Lv2SynthPlugin::map_synth_uris(map, uris_addr);
+            let s = "http://lv2plug.in/ns/ext/midi#MidiEvent";
+            let cstr = CString::new(s).unwrap();
+            let lv2_midi_midi_event = cstr.as_ptr();
+            (*(ptr  as *mut lv2_plugin::Lv2SynthPlugin)).uris.midi_event = ((*map).map)((*map).handle, lv2_midi_midi_event);
+            (*(ptr  as *mut lv2_plugin::Lv2SynthPlugin)).set_fs(fs);
             ptr
         }
     }
@@ -107,21 +112,26 @@ impl lv2::LV2Descriptor {
             let mut ev: *const lv2::Lv2AtomEvent  = lv2::lv2_atom_sequence_begin(&(*seq).body);
             // loop through event sequence
             while !lv2::lv2_atom_sequence_is_end(&(*seq).body, (*seq).atom.size, ev) {
-                println!("INLOOP", );
                 // check if event is midi
                 if (*ev).body.mytype == (*uris).midi_event {
-                    println!("MMMMMMMMMMMMMMMMMMMMMM", );
                     // pointer to midi event data
-                    let msg: *const u8 = ev.offset(1) as *const u8;
-                    // (*synth).synth.midievent(msg);
+                    let msg: &u8 = &*(ev.offset(1) as *const u8);
+                    (*synth).midievent(msg);
 
                     let istart = (*ev).time_in_frames as u32;
 
                     for i in istart-1..n_samples {
-                        // *output.offset(i as isize) = (*synth).synth.getAmp();
+                        let amp = (*synth).get_amp();
+                        // println!("Amp: {}", amp);
+                        *output.offset(i as isize) = amp;
                     }
                 }
                 ev = lv2::lv2_atom_sequence_next(ev);
+            }
+            for i in 0..n_samples {
+                let amp = (*synth).get_amp();
+                // println!("Amp: {}", amp);
+                *output.offset(i as isize) = amp;
             }
         }
     }
