@@ -26,28 +26,12 @@ use std::ffi::CStr;
 // use utils::*;
 use oscillator::*;
 use voice::*;
-use synth::*;
 // use lv2_plugin::*;
 
 
-enum PortIndex {
-    MidiIn = 0,
-    AudioOut = 1
-}
-
-// Unnecessary? See comment in connect_port().
-impl PortIndex {
-    fn from_int(x: u32) -> PortIndex {
-        match x {
-            0 => PortIndex::MidiIn,
-            1 => PortIndex::AudioOut,
-            _ => panic!("Not a valid PortIndex: {}", x)
-        }
-    }
-}
 
 impl lv2::LV2Descriptor {
-    pub extern fn instantiate( _descriptor: *const lv2::LV2Descriptor , fs: f64, bundle_path: *const libc::c_char , features: *const (*const lv2::LV2Feature),) -> lv2::Lv2handle {
+pub extern fn instantiate( _descriptor: *const lv2::LV2Descriptor , fs: f64, bundle_path: *const libc::c_char , features: *const (*const lv2::LV2Feature),) -> lv2::Lv2handle {
         unsafe{
             let ptr = libc::calloc(1,mem::size_of::<lv2_plugin::Lv2SynthPlugin>() as libc::size_t);
             if ptr.is_null() {
@@ -90,15 +74,7 @@ impl lv2::LV2Descriptor {
 
     pub extern fn connect_port(handle: lv2::Lv2handle, port: u32, data: *mut libc::c_void) {
         let synth: *mut lv2_plugin::Lv2SynthPlugin = handle as *mut lv2_plugin::Lv2SynthPlugin;
-        // simpler to use PortIndex instead of u32 for port, but that doesn't correspond to C?
-
-        match PortIndex::from_int(port) {
-            // data may be NULL pointer -> don't dereference!
-        // match port {
-            PortIndex::MidiIn => unsafe{(*synth).in_port = data  as *const lv2::LV2_Atom_Sequence},
-            PortIndex::AudioOut => unsafe{(*synth).output = data as *mut f32 },
-        }
-
+        synth.connect_port(port,data)
     }
     pub extern fn activate(_instance: lv2::Lv2handle) {}
 
@@ -120,7 +96,7 @@ impl lv2::LV2Descriptor {
 
                     let istart = (*ev).time_in_frames as u32;
 
-                    for i in istart-1..n_samples {
+                    for i in istart..n_samples {
                         let amp = (*synth).get_amp();
                         // println!("Amp: {}", amp);
                         *output.offset(i as isize) = amp;
