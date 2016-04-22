@@ -6,6 +6,7 @@ authors = ["stefan"]
 [dependencies]
 libc = "*"
 GSL = "*"
+midi = { path = "../midi" }
 
 [lib]
 name = "yassy"

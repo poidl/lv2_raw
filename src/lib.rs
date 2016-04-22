@@ -14,10 +14,10 @@ mod oscillator;
 mod voice;
 mod lv2_plugin;
 mod synth;
-mod midi;
 //mod heapslice;
 
 extern crate libc;
+extern crate midi;
 use std::ptr;
 use std::mem;
 use std::str;
