@@ -14,6 +14,7 @@ mod oscillator;
 mod voice;
 mod lv2_plugin;
 mod synth;
+mod plugin;
 //mod heapslice;
 
 extern crate libc;
@@ -33,6 +34,8 @@ use lv2_plugin::*;
 impl lv2::LV2Descriptor {
 pub extern fn instantiate( _descriptor: *const lv2::LV2Descriptor , fs: f64, bundle_path: *const libc::c_char , features: *const (*const lv2::LV2Feature),) -> lv2::Lv2handle {
         unsafe{
+            // let plugin = lv2_plugin::Lv2SynthPlugin{};
+
             let ptr = libc::calloc(1,mem::size_of::<lv2_plugin::Lv2SynthPlugin>() as libc::size_t);
             if ptr.is_null() {
                 panic!("failed to allocate memory");

@@ -1,6 +1,7 @@
 use oscillator::*;
 
 pub trait IsVoice {
+    fn new() -> Voice;
     fn set_fs(&mut self, f64);
     fn get_amp(&mut self) -> f32;
     fn initialize(&mut self);
@@ -16,6 +17,14 @@ pub struct Voice {
 }
 
 impl IsVoice for Voice {
+    fn new() -> Voice {
+        Voice {
+            f0: 0f32,
+            vel: 0f32,
+            on: false,
+            osc1: OscBasic::new()
+        }
+    }
     fn set_fs(&mut self, fs: f64) {
         self.osc1.set_fs(fs);
     }

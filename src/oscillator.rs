@@ -40,6 +40,16 @@ impl OscBasic {
     }
 }
 
+impl OscBasic {
+    pub fn new() -> OscBasic {
+        OscBasic {
+            fs: 0f64,
+            phase: 0u32,
+            dphase: 0u32
+        }
+    }
+}
+
 pub struct OscST {
     // We translate the fundamental frequency f0 from units 1/t to a fraction "fn" of a wavetable with 2N lattice points. fn corresponds to the number of points which are skipped when reading the wavetable and can be interpreted as a phase increment. The 2N lattice points represent the interval [-pi,pi). The max. resolved freq. f0=fs/2, i.e. we want that fn(0)=0 and fn(fs/2)=N. The function is linear, hence fn(f0)=2N*f0/fs. If a sined integer of k bits is used as phase accumulator, the 2N interval translates to [-2^(k-1),2^(k-1)). Note the interval is open on the left. For k=2, the values range from -2 to 1.
     pub N: u32,

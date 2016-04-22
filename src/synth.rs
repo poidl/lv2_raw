@@ -2,14 +2,15 @@
 use std::collections::HashMap;
 use voice;
 use voice::*;
+use std::ptr;
 
-pub trait isSynth {
-    fn set_fs(&mut self, f64);
-    fn noteon(&mut self, f32, f32);
-    fn noteoff(&mut self);
-    // fn controlevent(&mut self, &u8);
-    fn get_amp(&mut self) -> f32;
-}
+// pub trait isSynth {
+//     fn set_fs(&mut self, f64);
+//     fn noteon(&mut self, f32, f32);
+//     fn noteoff(&mut self);
+//     // fn controlevent(&mut self, &u8);
+//     fn get_amp(&mut self) -> f32;
+// }
 
 // pub enum Param {
 //     gain {idx: u32, val: f32, ptr: *mut f32},
@@ -44,11 +45,11 @@ pub trait isSynth {
 //     gain,
 // }
 
-pub struct Synth<'a> {
+pub struct Synth {
     fs: f32,
     voice: voice::Voice,
     gain: f32,
-    pub params: [&'a f32;1]
+    pub params: [*const f32;1]
 }
 
 enum param_name {
@@ -59,11 +60,19 @@ enum param_name {
 //     gain: *const f32
 // }
 
-impl<'a> isSynth for Synth<'a> {
-    fn set_fs(&mut self, fs: f64) {
+impl  Synth {
+    pub fn new() -> Synth {
+        Synth {
+            fs: 0f32,
+            voice: voice::Voice::new(),
+            gain: 0f32,
+            params: [&0f32;1]
+        }
+    }
+    pub fn set_fs(&mut self, fs: f64) {
         self.voice.set_fs(fs);
     }
-    fn noteon(&mut self, f0: f32, vel: f32) {
+    pub fn noteon(&mut self, f0: f32, vel: f32) {
         self.voice.on = true;
         self.voice.f0 = f0;
         // let a=-2.302587f32;
@@ -74,15 +83,15 @@ impl<'a> isSynth for Synth<'a> {
         self.voice.vel = vel;
         self.voice.initialize();
     }
-    fn noteoff(&mut self) {
+    pub fn noteoff(&mut self) {
         self.voice.on = false;
     }
     // fn controlevent(&mut self, paramId, paramVal) {
     //     self.updateParam
     // }
-    fn get_amp(&mut self) -> f32 {
-        println!("gain: {}", *(self.params[param_name::gain as usize]));
-        *(self.params[param_name::gain as usize])*self.voice.get_amp()
+    pub fn get_amp(&mut self) -> f32 {
+        // println!("gain: {}", *(self.params[param_name::gain as usize]));
+        unsafe {*(self.params[param_name::gain as usize])*self.voice.get_amp() }
     }
     // fn set_param(&mut self, id, val) {
     //     self.params.gain = g;
