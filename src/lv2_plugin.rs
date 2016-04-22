@@ -10,6 +10,7 @@ use synth;
 use lv2;
 use midi;
 use midi::*;
+use synth::*;
 
 // enum PortIndex {
 //     MidiIn = 0,
@@ -30,10 +31,11 @@ use midi::*;
 // }
 
 pub trait isLv2SynthPlugin: {
-    fn connect_port(&self, u32, *mut libc::c_void);
+    fn connect_port(&mut self, u32, *mut libc::c_void);
     fn midievent(&mut self, msg: &u8) ;
     fn set_fs(&mut self, f64);
     fn get_amp(&mut self) -> f32;
+    fn map_params(&mut self, u32, *mut libc::c_void);
 }
 
 pub struct Synthuris {
@@ -41,23 +43,33 @@ pub struct Synthuris {
 }
 
 #[repr(C)]
-pub struct Lv2SynthPlugin {
+pub struct Lv2SynthPlugin<'a> {
     pub map: *const lv2::Lv2uridMap,
     // pub portidx: PortIndex,
     pub in_port: *const lv2::LV2_Atom_Sequence,
     pub output: *mut f32,
     pub uris: Synthuris,
-    pub synth: synth::Synth,
+    pub synth: synth::Synth<'a>,
     fs: f64
 }
 
-impl isLv2SynthPlugin for Lv2SynthPlugin {
-    fn connect_port(&self, port: u32, data: *mut libc::c_void) {
+impl<'a> isLv2SynthPlugin for Lv2SynthPlugin<'a> {
+    fn connect_port(&mut self, port: u32, data: *mut libc::c_void) {
         match port {
             0 => unsafe{self.in_port = data  as *const lv2::LV2_Atom_Sequence},
             1 => unsafe{self.output = data as *mut f32 },
-            2 => unsafe{self.gain = data as *mut f32 },
-            _ => panic!("Not a valid PortIndex: {}", port)
+            _ => self.map_params(port,data)
+        }
+    }
+    fn map_params(&mut self, port: u32, data: *mut libc::c_void) {
+        let nparams = 1;
+        let iport = port - 2; //TODO: don't hardcode number of input/output ports
+        if (iport <= nparams-1) {
+            println!("connecting port: {}", port);
+            unsafe{self.synth.params[iport as usize]= &*(data  as *mut f32) };
+            // println!("param: {}",  *(self.synth.params[0]));
+        } else {
+            panic!("Not a valid PortIndex: {}", iport)
         }
     }
     fn midievent(&mut self, msg: &u8) {

@@ -1,3 +1,5 @@
+
+use std::collections::HashMap;
 use voice;
 use voice::*;
 
@@ -9,13 +11,55 @@ pub trait isSynth {
     fn get_amp(&mut self) -> f32;
 }
 
-pub struct Synth {
+// pub enum Param {
+//     gain {idx: u32, val: f32, ptr: *mut f32},
+//     // osctype {val: i32, ptr: *mut f32}
+// }
+//
+// impl Param {
+//     pub fn connect(&mut self, data: *mut f32) {
+//         match *self {
+//             Param::gain {idx, val, mut ptr} => ptr = data,
+//             // Param::osctype {val, mut ptr} => ptr = data,
+//         }
+//     }
+//     pub fn get(&self) -> f32 {
+//         match *self {
+//             Param::gain {idx, val, ptr} => unsafe{ *ptr },
+//             // Param::osctype {val, mut ptr} => ptr = data,
+//         }
+//     }
+// }
+
+// struct SynthParams {
+//     gain: Param::gain,
+//     // osctype: Param::osctype
+// }
+// let mut book_reviews = HashMap::new();
+//
+// // review some books.
+// book_reviews.insert("Adventures of Huckleberry Finn",    "My favorite book.");
+// book_review
+// pub enum SynthParams {
+//     gain,
+// }
+
+pub struct Synth<'a> {
     fs: f32,
     voice: voice::Voice,
-    gain: f32
+    gain: f32,
+    pub params: [&'a f32;1]
 }
 
-impl isSynth for Synth {
+enum param_name {
+    gain,
+}
+
+// pub struct SynthLv2Params {
+//     gain: *const f32
+// }
+
+impl<'a> isSynth for Synth<'a> {
     fn set_fs(&mut self, fs: f64) {
         self.voice.set_fs(fs);
     }
@@ -37,6 +81,10 @@ impl isSynth for Synth {
     //     self.updateParam
     // }
     fn get_amp(&mut self) -> f32 {
-        self.voice.get_amp()
+        println!("gain: {}", *(self.params[param_name::gain as usize]));
+        *(self.params[param_name::gain as usize])*self.voice.get_amp()
     }
+    // fn set_param(&mut self, id, val) {
+    //     self.params.gain = g;
+    // }
 }

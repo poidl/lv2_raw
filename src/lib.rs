@@ -26,7 +26,7 @@ use std::ffi::CStr;
 // use utils::*;
 use oscillator::*;
 use voice::*;
-// use lv2_plugin::*;
+use lv2_plugin::*;
 
 
 
@@ -74,7 +74,9 @@ pub extern fn instantiate( _descriptor: *const lv2::LV2Descriptor , fs: f64, bun
 
     pub extern fn connect_port(handle: lv2::Lv2handle, port: u32, data: *mut libc::c_void) {
         let synth: *mut lv2_plugin::Lv2SynthPlugin = handle as *mut lv2_plugin::Lv2SynthPlugin;
-        synth.connect_port(port,data)
+        unsafe {
+            (*synth).connect_port(port,data)
+        }
     }
     pub extern fn activate(_instance: lv2::Lv2handle) {}
 
