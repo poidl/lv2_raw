@@ -4,7 +4,7 @@
 #![allow(non_snake_case)]
 
 extern crate libc;
-
+use std::ffi::CStr;
 use std::ffi::CString;
 use std::ptr;
 use plugin;
@@ -12,6 +12,7 @@ use lv2;
 use midi;
 use midi::*;
 use plugin::*;
+use std::str;
 
 // enum PortIndex {
 //     MidiIn = 0,
@@ -61,25 +62,60 @@ pub struct Lv2SynthPlugin {
     fs: f64
 }
 
-pub struct Lv2SynthPluginBuilder {
-    pub map: *const lv2::Lv2uridMap,
-    pub in_port: *const lv2::LV2_Atom_Sequence,
-    pub output: *mut f32,
-    pub uris: Synthuris,
-    pub plugin: plugin::SynthPlugin,
-    fs: f64
-}
+// pub struct Lv2SynthPluginBuilder {
+//     pub map: *const lv2::Lv2uridMap,
+//     pub in_port: *const lv2::LV2_Atom_Sequence,
+//     pub output: *mut f32,
+//     pub uris: Synthuris,
+//     pub plugin: plugin::SynthPlugin,
+//     fs: f64
+// }
 
-impl  Lv2SynthPluginBuilder {
-    fn new() -> Lv2SynthPluginBuilder {
+impl  Lv2SynthPlugin {
+    pub fn new() -> Lv2SynthPlugin {
         // let np = ptr::null();
-        Lv2SynthPluginBuilder {
+        Lv2SynthPlugin {
             map: ptr::null(),
             in_port: ptr::null(),
             output: ptr::null_mut(),
             uris: Synthuris::new(),
             plugin: plugin::SynthPlugin::new(),
             fs: 0f64
+        }
+    }
+    pub fn mapfeatures(&mut self, hostfeatures: *const (*const lv2::LV2Feature)) -> Result<&'static str, &'static str> {
+        let requiredfeature = "http://lv2plug.in/ns/ext/urid#map";
+        let mut x: isize = 0;
+        let mut done = false;
+        unsafe{
+            while !done {
+
+                let fptr: *const lv2::LV2Feature = *hostfeatures.offset(x);
+                if fptr.is_null() {
+                    // host doesn't provide feature
+                    println!("Missing feature \"{}\"", requiredfeature);
+                    return Err("missing feature")
+                }
+                let uriptr = (*fptr).uri;
+                let buf = CStr::from_ptr(uriptr).to_bytes();
+                let s: &str = str::from_utf8(buf).unwrap();
+                println!("uri: {}", s);
+                if s == requiredfeature {
+                    self.map = (*fptr).data;
+                    done=true;
+                    println!{" -> obtained urid#map from host"}
+                }
+                x = x+1;
+            }
+        }
+        Ok("mapping done")
+    }
+    pub fn seturis(&mut self) {
+        unsafe{
+            let s = "http://lv2plug.in/ns/ext/midi#MidiEvent";
+            let cstr = CString::new(s).unwrap();
+            let lv2_midi_midi_event = cstr.as_ptr();
+            self.uris.midi_event = ((*self.map).map)((*self.map).handle, lv2_midi_midi_event);
         }
     }
     // fn finalize(&self) -> Lv2SynthPlugin {

@@ -32,45 +32,19 @@ use lv2_plugin::*;
 
 
 impl lv2::LV2Descriptor {
-pub extern fn instantiate( _descriptor: *const lv2::LV2Descriptor , fs: f64, bundle_path: *const libc::c_char , features: *const (*const lv2::LV2Feature),) -> lv2::Lv2handle {
+pub extern fn instantiate( _descriptor: *const lv2::LV2Descriptor , fs: f64, bundle_path: *const libc::c_char, hostfeatures: *const (*const lv2::LV2Feature),) -> lv2::Lv2handle {
         unsafe{
-            // let plugin = lv2_plugin::Lv2SynthPlugin{};
+            let mut bx = Box::new(lv2_plugin::Lv2SynthPlugin::new());
 
-            let ptr = libc::calloc(1,mem::size_of::<lv2_plugin::Lv2SynthPlugin>() as libc::size_t);
-            if ptr.is_null() {
-                panic!("failed to allocate memory");
+            let mapped = bx.mapfeatures(hostfeatures);
+            if !mapped.is_ok() {
+                // bx is dropped automatically
+                return ptr::null_mut();
             }
-
-            let mut map = (*(ptr  as *mut lv2_plugin::Lv2SynthPlugin)).map;
-
-            let uridmapstr = "http://lv2plug.in/ns/ext/urid#map";
-            let mut x: isize = 0;
-            let mut done = false;
-            while !done {
-
-                let fptr: *const lv2::LV2Feature = *features.offset(x);
-                if fptr.is_null() {
-                    // host doesn't provide feature
-                    libc::free(ptr as *mut libc::c_void);
-                    println!("Missing feature \"{}\"", uridmapstr);
-                    return std::ptr::null_mut();
-                }
-                let uriptr = (*fptr).uri;
-                let buf = CStr::from_ptr(uriptr).to_bytes();
-                let s: &str = str::from_utf8(buf).unwrap();
-                println!("uri: {}", s);
-                if s == uridmapstr {
-                    map = (*fptr).data;
-                    done=true;
-                    println!{" -> obtained urid#map from host"}
-                }
-                x = x+1;
-            }
-            let s = "http://lv2plug.in/ns/ext/midi#MidiEvent";
-            let cstr = CString::new(s).unwrap();
-            let lv2_midi_midi_event = cstr.as_ptr();
-            (*(ptr  as *mut lv2_plugin::Lv2SynthPlugin)).uris.midi_event = ((*map).map)((*map).handle, lv2_midi_midi_event);
-            (*(ptr  as *mut lv2_plugin::Lv2SynthPlugin)).set_fs(fs);
+            bx.seturis();
+            bx.set_fs(fs);
+            let ptr = (&*bx as *const lv2_plugin::Lv2SynthPlugin) as *mut libc::c_void;
+            mem::forget(bx);
             ptr
         }
     }
