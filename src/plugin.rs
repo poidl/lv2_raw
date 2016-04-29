@@ -12,13 +12,6 @@ use midi;
 use midi::*;
 use synth::*;
 
-// pub trait isSynthPlugin: {
-//     fn midievent(&mut self, msg: &u8) ;
-//     fn set_fs(&mut self, f64);
-//     fn get_amp(&mut self) -> f32;
-//     fn map_params(&mut self, u32, *mut libc::c_void);
-// }
-
 pub struct SynthPlugin {
     pub midi_in: *const u8,
     pub audio_out: *mut f32,
@@ -48,7 +41,9 @@ impl  SynthPlugin {
     }
     pub fn midievent(&mut self, msg: &u8) {
         let mm = msg as midi::MidiMessage;
+        println!("SynthPlugin received midi message:");
         if mm.noteon() {
+            println!("  note on");
             self.synth.noteon(mm.f0(), mm.vel())
         } else if mm.noteoff() {
             self.synth.noteoff();

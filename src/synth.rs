@@ -4,47 +4,6 @@ use voice;
 use voice::*;
 use std::ptr;
 
-// pub trait isSynth {
-//     fn set_fs(&mut self, f64);
-//     fn noteon(&mut self, f32, f32);
-//     fn noteoff(&mut self);
-//     // fn controlevent(&mut self, &u8);
-//     fn get_amp(&mut self) -> f32;
-// }
-
-// pub enum Param {
-//     gain {idx: u32, val: f32, ptr: *mut f32},
-//     // osctype {val: i32, ptr: *mut f32}
-// }
-//
-// impl Param {
-//     pub fn connect(&mut self, data: *mut f32) {
-//         match *self {
-//             Param::gain {idx, val, mut ptr} => ptr = data,
-//             // Param::osctype {val, mut ptr} => ptr = data,
-//         }
-//     }
-//     pub fn get(&self) -> f32 {
-//         match *self {
-//             Param::gain {idx, val, ptr} => unsafe{ *ptr },
-//             // Param::osctype {val, mut ptr} => ptr = data,
-//         }
-//     }
-// }
-
-// struct SynthParams {
-//     gain: Param::gain,
-//     // osctype: Param::osctype
-// }
-// let mut book_reviews = HashMap::new();
-//
-// // review some books.
-// book_reviews.insert("Adventures of Huckleberry Finn",    "My favorite book.");
-// book_review
-// pub enum SynthParams {
-//     gain,
-// }
-
 pub struct Synth {
     fs: f32,
     voice: voice::Voice,
@@ -55,10 +14,6 @@ pub struct Synth {
 enum param_name {
     gain,
 }
-
-// pub struct SynthLv2Params {
-//     gain: *const f32
-// }
 
 impl  Synth {
     pub fn new() -> Synth {

@@ -14,24 +14,6 @@ use midi::*;
 use plugin::*;
 use std::str;
 
-// enum PortIndex {
-//     MidiIn = 0,
-//     AudioOut = 1,
-//     Gain = 2
-// }
-//
-// // Unnecessary? See comment in connect_port().
-// impl PortIndex {
-//     fn from_int(x: u32) -> PortIndex {
-//         match x {
-//             0 => PortIndex::MidiIn,
-//             1 => PortIndex::AudioOut,
-//             2 => PortIndex::Gain,
-//             _ => panic!("Not a valid PortIndex: {}", x)
-//         }
-//     }
-// }
-
 pub trait isLv2SynthPlugin: {
     fn connect_port(&mut self, u32, *mut libc::c_void);
     fn midievent(&mut self, msg: &u8) ;
@@ -59,29 +41,21 @@ pub struct Lv2SynthPlugin {
     pub output: *mut f32,
     pub uris: Synthuris,
     pub plugin: plugin::SynthPlugin,
-    fs: f64
 }
-
-// pub struct Lv2SynthPluginBuilder {
-//     pub map: *const lv2::Lv2uridMap,
-//     pub in_port: *const lv2::LV2_Atom_Sequence,
-//     pub output: *mut f32,
-//     pub uris: Synthuris,
-//     pub plugin: plugin::SynthPlugin,
-//     fs: f64
-// }
 
 impl  Lv2SynthPlugin {
     pub fn new() -> Lv2SynthPlugin {
         // let np = ptr::null();
-        Lv2SynthPlugin {
+        let mut lv2plugin = Lv2SynthPlugin {
             map: ptr::null(),
             in_port: ptr::null(),
             output: ptr::null_mut(),
             uris: Synthuris::new(),
             plugin: plugin::SynthPlugin::new(),
-            fs: 0f64
-        }
+        };
+        // TODO: this is to avoid needing to access lv2plugin.plugin in lv2::LV2Descriptor::connect_port()
+        lv2plugin.output = lv2plugin.plugin.audio_out;
+        lv2plugin
     }
     pub fn mapfeatures(&mut self, hostfeatures: *const (*const lv2::LV2Feature)) -> Result<&'static str, &'static str> {
         let requiredfeature = "http://lv2plug.in/ns/ext/urid#map";
@@ -118,9 +92,6 @@ impl  Lv2SynthPlugin {
             self.uris.midi_event = ((*self.map).map)((*self.map).handle, lv2_midi_midi_event);
         }
     }
-    // fn finalize(&self) -> Lv2SynthPlugin {
-    //     Circle { x: self.x, y: self.y, radius: self.radius }
-    // }
 }
 
 

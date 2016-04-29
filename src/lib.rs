@@ -14,7 +14,7 @@ mod oscillator;
 mod voice;
 mod lv2_plugin;
 mod synth;
-mod plugin;
+pub mod plugin;
 //mod heapslice;
 
 extern crate libc;
