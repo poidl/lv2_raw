@@ -65,29 +65,60 @@ pub extern fn instantiate( _descriptor: *const lv2::LV2Descriptor , fs: f64, bun
             let output = (*synth).output;
             // pointer to 1st event body
             let mut ev: *const lv2::Lv2AtomEvent  = lv2::lv2_atom_sequence_begin(&(*seq).body);
-            // loop through event sequence
-            while !lv2::lv2_atom_sequence_is_end(&(*seq).body, (*seq).atom.size, ev) {
-                // check if event is midi
-                if (*ev).body.mytype == (*uris).midi_event {
-                    // pointer to midi event data
-                    let msg: &u8 = &*(ev.offset(1) as *const u8);
-                    (*synth).midievent(msg);
 
-                    let istart = (*ev).time_in_frames as u32;
+            let mut ismidi = false;
+            let mut ievent = 0;
 
-                    for i in istart..n_samples {
-                        let amp = (*synth).get_amp();
-                        // println!("Amp: {}", amp);
-                        *output.offset(i as isize) = amp;
+            for i in 0..n_samples {
+                // at i=0, search for the first midi event and get index
+                while !lv2::lv2_atom_sequence_is_end(&(*seq).body, (*seq).atom.size, ev) {
+                    ismidi = ( (*ev).body.mytype == (*uris).midi_event );
+                    if !ismidi {
+                        ev = lv2::lv2_atom_sequence_next(ev);
+                    } else {
+                        ievent = (*ev).time_in_frames as u32;
+                        break;
                     }
                 }
-                ev = lv2::lv2_atom_sequence_next(ev);
-            }
-            for i in 0..n_samples {
+                // compare midi event index with i
+                if ismidi & (ievent==i) {
+                    let msg: &u8 = &*(ev.offset(1) as *const u8);
+                    (*synth).midievent(msg);
+                    ev = lv2::lv2_atom_sequence_next(ev);
+                    ismidi = false;
+                }
+
                 let amp = (*synth).get_amp();
                 // println!("Amp: {}", amp);
                 *output.offset(i as isize) = amp;
+
             }
+
+            // // loop through event sequence
+            // while !lv2::lv2_atom_sequence_is_end(&(*seq).body, (*seq).atom.size, ev) {
+            //     // check if event is midi
+            //     if (*ev).body.mytype == (*uris).midi_event {
+            //         // pointer to midi event data
+            //         let msg: &u8 = &*(ev.offset(1) as *const u8);
+            //         (*synth).midievent(msg);
+            //
+            //         let istart = (*ev).time_in_frames as u32;
+            //
+            //         for i in istart..n_samples {
+            //             let amp = (*synth).get_amp();
+            //             println!("Amp: {}", amp);
+            //             *output.offset(i as isize) = amp;
+            //         }
+            //     }
+            //     ev = lv2::lv2_atom_sequence_next(ev);
+            // }
+            //
+            // // before looping through event sequence, set the buffer to how is was left in the previous iteration. TODO: Necessary?
+            // for i in 0..n_samples {
+            //     let amp = (*synth).get_amp();
+            //     println!("Amp: {}", amp);
+            //     *output.offset(i as isize) = amp;
+            // }
         }
     }
 

@@ -41,9 +41,7 @@ impl  SynthPlugin {
     }
     pub fn midievent(&mut self, msg: &u8) {
         let mm = msg as midi::MidiMessage;
-        println!("SynthPlugin received midi message:");
         if mm.noteon() {
-            println!("  note on");
             self.synth.noteon(mm.f0(), mm.vel())
         } else if mm.noteoff() {
             self.synth.noteoff();

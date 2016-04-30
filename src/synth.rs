@@ -21,7 +21,7 @@ impl  Synth {
             fs: 0f32,
             voice: voice::Voice::new(),
             gain: 0f32,
-            params: [&0f32;1]
+            params: [&0.5f32;1]
         }
     }
     pub fn set_fs(&mut self, fs: f64) {
@@ -45,8 +45,10 @@ impl  Synth {
     //     self.updateParam
     // }
     pub fn get_amp(&mut self) -> f32 {
-        // println!("gain: {}", *(self.params[param_name::gain as usize]));
-        unsafe {*(self.params[param_name::gain as usize])*self.voice.get_amp() }
+        unsafe {
+            // println!("gain: {}", *(self.params[param_name::gain as usize]));
+            *(self.params[param_name::gain as usize])*self.voice.get_amp()
+        }
     }
     // fn set_param(&mut self, id, val) {
     //     self.params.gain = g;
