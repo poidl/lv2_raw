@@ -20,6 +20,7 @@ pub trait isLv2SynthPlugin: {
     fn set_fs(&mut self, f64);
     fn get_amp(&mut self) -> f32;
     fn map_params(&mut self, u32, *mut libc::c_void);
+    // fn get_nparams(& self) -> u32;
 }
 
 pub struct Synthuris {
@@ -108,12 +109,15 @@ impl isLv2SynthPlugin for Lv2SynthPlugin {
         let iport = port - 2; //TODO: don't hardcode number of input/output ports
         if (iport <= nparams-1) {
             println!("connecting port: {}", port);
-            unsafe{self.plugin.synth.params[iport as usize]= &*(data  as *mut f32) };
+            unsafe{self.plugin.params[iport as usize]= data  as *mut f32 };
             // println!("param: {}",  *(self.synth.params[0]));
         } else {
             panic!("Not a valid PortIndex: {}", iport)
         }
     }
+    // fn get_nparams(&self) -> u32 {
+    //     self.plugin.params.len()
+    // }
     fn midievent(&mut self, msg: &u8) {
         let mm = msg as midi::MidiMessage;
         self.plugin.midievent(mm)

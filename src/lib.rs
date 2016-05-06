@@ -32,7 +32,7 @@ use lv2_plugin::*;
 
 
 impl lv2::LV2Descriptor {
-pub extern fn instantiate( _descriptor: *const lv2::LV2Descriptor , fs: f64, bundle_path: *const libc::c_char, hostfeatures: *const (*const lv2::LV2Feature),) -> lv2::Lv2handle {
+    pub extern fn instantiate( _descriptor: *const lv2::LV2Descriptor , fs: f64, bundle_path: *const libc::c_char, hostfeatures: *const (*const lv2::LV2Feature),) -> lv2::Lv2handle {
         unsafe{
             let mut bx = Box::new(lv2_plugin::Lv2SynthPlugin::new());
 
