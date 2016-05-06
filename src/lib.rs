@@ -66,26 +66,30 @@ pub extern fn instantiate( _descriptor: *const lv2::LV2Descriptor , fs: f64, bun
             // pointer to 1st event body
             let mut ev: *const lv2::Lv2AtomEvent  = lv2::lv2_atom_sequence_begin(&(*seq).body);
 
-            let mut ismidi = false;
+            let mut mq = false; // midi is queued
             let mut ievent = 0;
 
             for i in 0..n_samples {
                 // at i=0, search for the first midi event and get index
-                while !lv2::lv2_atom_sequence_is_end(&(*seq).body, (*seq).atom.size, ev) {
-                    ismidi = ( (*ev).body.mytype == (*uris).midi_event );
-                    if !ismidi {
-                        ev = lv2::lv2_atom_sequence_next(ev);
-                    } else {
-                        ievent = (*ev).time_in_frames as u32;
-                        break;
+                if !mq {
+                    while !lv2::lv2_atom_sequence_is_end(&(*seq).body, (*seq).atom.size, ev) {
+                        mq = ( (*ev).body.mytype == (*uris).midi_event );
+                        if !mq {
+                            ev = lv2::lv2_atom_sequence_next(ev);
+                        } else {
+                            ievent = (*ev).time_in_frames as u32;
+                            break;
+                        }
                     }
                 }
+
                 // compare midi event index with i
-                if ismidi & (ievent==i) {
+                if mq & (ievent==i) {
                     let msg: &u8 = &*(ev.offset(1) as *const u8);
                     (*synth).midievent(msg);
+                    // move to next event and set mq (midi is queued) to false
                     ev = lv2::lv2_atom_sequence_next(ev);
-                    ismidi = false;
+                    mq = false;
                 }
 
                 let amp = (*synth).get_amp();
