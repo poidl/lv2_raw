@@ -4,11 +4,11 @@
 #![allow(non_snake_case)]
 
 extern crate libc;
+extern crate lv2;
 use std::ffi::CStr;
 use std::ffi::CString;
 use std::ptr;
 use plugin;
-use lv2;
 use midi;
 use midi::*;
 use plugin::*;

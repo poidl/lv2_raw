@@ -38,17 +38,17 @@ impl  SynthPlugin {
             params: [&mut 0.5f32;1]
         }
     }
-    fn map_params(&mut self, port: u32, data: *mut libc::c_void) {
-        let nparams = 1;
-        let iport = port - 2; //TODO: don't hardcode number of input/output ports
-        if (iport <= nparams-1) {
-            println!("connecting port: {}", port);
-            unsafe{self.params[iport as usize]= data  as *mut f32 };
-            // println!("param: {}",  *(self.synth.params[0]));
-        } else {
-            panic!("Not a valid PortIndex: {}", iport)
-        }
-    }
+    // fn map_params(&mut self, port: u32, data: *mut libc::c_void) {
+    //     let nparams = 1;
+    //     let iport = port - 2; //TODO: don't hardcode number of input/output ports
+    //     if (iport <= nparams-1) {
+    //         println!("connecting port: {}", port);
+    //         unsafe{self.params[iport as usize]= data  as *mut f32 };
+    //         // println!("param: {}",  *(self.synth.params[0]));
+    //     } else {
+    //         panic!("Not a valid PortIndex: {}", iport)
+    //     }
+    // }
     pub fn midievent(&mut self, msg: &u8) {
         let mm = msg as midi::MidiMessage;
         if mm.noteon() {

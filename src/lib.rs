@@ -9,7 +9,6 @@
 
 //mod tests;
 // pub mod utils;
-mod lv2;
 mod oscillator;
 mod voice;
 mod lv2_plugin;
@@ -19,6 +18,7 @@ pub mod plugin;
 
 extern crate libc;
 extern crate midi;
+extern crate lv2;
 use std::ptr;
 use std::mem;
 use std::str;
@@ -29,9 +29,10 @@ use oscillator::*;
 use voice::*;
 use lv2_plugin::*;
 
+// have to define new type. Otherwise error: "cannot define inherent impl for a type outside of the crate where the type is defined; define and implement a trait or new type instead"
+struct descriptor(lv2::LV2Descriptor);
 
-
-impl lv2::LV2Descriptor {
+impl descriptor {
     pub extern fn instantiate( _descriptor: *const lv2::LV2Descriptor , fs: f64, bundle_path: *const libc::c_char, hostfeatures: *const (*const lv2::LV2Feature),) -> lv2::Lv2handle {
         unsafe{
             let mut bx = Box::new(lv2_plugin::Lv2SynthPlugin::new());
@@ -97,32 +98,6 @@ impl lv2::LV2Descriptor {
                 *output.offset(i as isize) = amp;
 
             }
-
-            // // loop through event sequence
-            // while !lv2::lv2_atom_sequence_is_end(&(*seq).body, (*seq).atom.size, ev) {
-            //     // check if event is midi
-            //     if (*ev).body.mytype == (*uris).midi_event {
-            //         // pointer to midi event data
-            //         let msg: &u8 = &*(ev.offset(1) as *const u8);
-            //         (*synth).midievent(msg);
-            //
-            //         let istart = (*ev).time_in_frames as u32;
-            //
-            //         for i in istart..n_samples {
-            //             let amp = (*synth).get_amp();
-            //             println!("Amp: {}", amp);
-            //             *output.offset(i as isize) = amp;
-            //         }
-            //     }
-            //     ev = lv2::lv2_atom_sequence_next(ev);
-            // }
-            //
-            // // before looping through event sequence, set the buffer to how is was left in the previous iteration. TODO: Necessary?
-            // for i in 0..n_samples {
-            //     let amp = (*synth).get_amp();
-            //     println!("Amp: {}", amp);
-            //     *output.offset(i as isize) = amp;
-            // }
         }
     }
 
@@ -144,13 +119,13 @@ static S: &'static [u8] = b"http://example.org/yassy\0";
 
 static mut desc: lv2::LV2Descriptor = lv2::LV2Descriptor {
     uri: 0 as *const libc::c_char, // ptr::null() isn't const fn (yet)
-    instantiate: lv2::LV2Descriptor::instantiate,
-    connect_port: lv2::LV2Descriptor::connect_port,
-    activate: lv2::LV2Descriptor::activate,
-    run: lv2::LV2Descriptor::run,
-    deactivate: lv2::LV2Descriptor::deactivate,
-    cleanup: lv2::LV2Descriptor::cleanup,
-    extension_data: lv2::LV2Descriptor::extension_data
+    instantiate: descriptor::instantiate,
+    connect_port: descriptor::connect_port,
+    activate: descriptor::activate,
+    run: descriptor::run,
+    deactivate: descriptor::deactivate,
+    cleanup: descriptor::cleanup,
+    extension_data: descriptor::extension_data
 };
 
 #[no_mangle]

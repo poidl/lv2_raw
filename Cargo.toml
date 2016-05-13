@@ -7,6 +7,7 @@ authors = ["stefan"]
 libc = "*"
 GSL = "*"
 midi = { path = "../midi" }
+lv2 = { path = "../lv2" }
 
 [lib]
 name = "yassy"
