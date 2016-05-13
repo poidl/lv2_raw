@@ -2,4 +2,4 @@
 
 A beginner's programming exercise in Rust.
 
-LV2 http://lv2plug.in/
+LV2 docs: http://lv2plug.in/
