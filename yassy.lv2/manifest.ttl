@@ -7,9 +7,3 @@
 	lv2:binary <libyassy.so> ;
 	rdfs:seeAlso <yassy.ttl> .
 	
-<http://example.org/yassy#ui>
- 	a ui:X11UI ;
-	ui:binary <libyassyui.so> ;
-	rdfs:seeAlso <yassy.ttl> .
-
-	
