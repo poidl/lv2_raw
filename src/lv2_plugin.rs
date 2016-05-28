@@ -24,20 +24,20 @@ pub trait isLv2SynthPlugin: {
 }
 
 pub struct Synthuris {
-    pub midi_event: lv2::Lv2urid
+    pub midi_event: lv2::LV2Urid
 }
 
 impl Synthuris {
     fn new() -> Synthuris {
         Synthuris {
-            midi_event: 0 as lv2::Lv2urid
+            midi_event: 0 as lv2::LV2Urid
         }
     }
 }
 
 #[repr(C)]
 pub struct Lv2SynthPlugin {
-    pub map: *const lv2::Lv2uridMap,
+    pub map: *const lv2::LV2UridMap,
     pub in_port: *const lv2::LV2_Atom_Sequence,
     pub output: *mut f32,
     pub uris: Synthuris,

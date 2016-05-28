@@ -1,0 +1,1551 @@
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:34:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:44:13: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:45:19: The '-gtk-image-effect' property has been renamed to '-gtk-icon-effect'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:50:29: The :prelight pseudo-class is deprecated. Use :hover instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:56:32: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:75:18: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:115:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:133:31: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:164:20: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:178:29: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:244:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:254:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:264:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:265:27: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:274:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:280:42: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:280:69: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:283:44: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:283:71: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:321:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:335:21: The '-gtk-image-effect' property has been renamed to '-gtk-icon-effect'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:348:66: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:348:111: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:349:43: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:349:78: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:349:132: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:350:52: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:356:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:357:21: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:357:66: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:358:43: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:363:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:365:23: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:367:23: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:367:51: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:371:25: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:371:62: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:385:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:398:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:408:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:411:27: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:411:61: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:418:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:424:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:436:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:457:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:465:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:466:28: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:466:63: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:473:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:478:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:487:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:490:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:500:19: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:503:35: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:503:85: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:503:135: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:504:52: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:505:52: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:512:19: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:524:19: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:536:19: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:553:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:569:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:578:51: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:578:103: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:578:174: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:579:73: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:584:19: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:586:53: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:586:114: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:586:194: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:587:75: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:589:53: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:589:107: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:589:167: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:589:245: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:590:75: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:590:134: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:590:213: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:591:75: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:595:55: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:595:118: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:595:187: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:595:274: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:596:77: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:596:145: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:596:233: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:597:77: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:600:102: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:600:164: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:601:62: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:601:114: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:601:185: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:602:71: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:608:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:610:40: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:613:42: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:613:87: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:624:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:632:19: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:640:19: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:641:47: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:641:99: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:648:19: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:653:19: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:667:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:683:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:692:53: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:692:107: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:692:180: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:693:75: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:698:19: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:700:55: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:700:118: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:700:200: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:701:77: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:703:55: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:703:111: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:703:173: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:703:253: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:704:77: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:704:138: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:704:219: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:705:77: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:709:57: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:709:122: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:709:193: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:709:282: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:710:79: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:710:149: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:710:239: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:711:79: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:714:106: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:714:170: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:715:64: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:715:118: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:715:191: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:716:73: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:722:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:724:42: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:727:44: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:727:91: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:738:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:746:19: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:754:19: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:755:49: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:755:103: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:762:19: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:767:19: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:812:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:840:53: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:845:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:847:55: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:849:53: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:849:113: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:853:55: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:853:124: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:860:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:867:62: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:872:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:874:64: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:876:62: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:876:131: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:880:64: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:880:142: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:896:204: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:899:135: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:912:131: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:924:169: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:939:131: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:981:37: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:982:37: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:983:37: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:984:28: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:985:28: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:988:121: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:988:174: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:988:246: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:988:318: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:989:68: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:990:68: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:996:48: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:997:67: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:998:67: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:999:65: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1000:65: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1001:57: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1002:234: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1008:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1024:75: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1078:33: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1087:42: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1091:44: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1099:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1105:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1114:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1118:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1126:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1129:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1131:38: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1137:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1140:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1162:56: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1162:119: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1167:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1169:58: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1169:130: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1176:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1191:55: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1191:117: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1196:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1198:57: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1198:128: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1205:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1207:51: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1207:111: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1212:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1214:53: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1214:122: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1220:357: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1220:420: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1220:760: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1223:350: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1223:412: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1223:746: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1244:25: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1247:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1251:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1252:34: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1332:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1364:52: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1365:54: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1368:54: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1368:109: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1369:56: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1370:56: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1378:87: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1379:54: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1379:85: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1382:49: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1383:56: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1384:35: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1388:38: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1389:45: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1390:40: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1391:47: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1397:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1398:33: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1399:35: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1402:35: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1402:73: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1403:37: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1404:37: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1408:37: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1408:84: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1409:39: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1410:39: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1461:19: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1482:19: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1484:25: The '-gtk-image-effect' property has been renamed to '-gtk-icon-effect'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1500:61: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1500:121: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1501:73: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1502:63: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1503:68: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1504:75: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1509:21: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1512:63: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1512:132: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1513:75: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1514:65: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1515:70: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1516:77: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1518:61: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1518:123: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1518:191: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1519:73: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1519:140: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1520:73: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1521:63: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1522:63: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1523:68: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1524:75: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1525:68: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1526:75: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1531:63: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1531:134: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1531:211: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1532:75: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1532:151: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1533:75: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1534:65: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1535:65: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1536:70: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1537:77: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1538:70: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1539:77: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1542:110: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1543:62: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1543:113: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1544:62: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1547:57: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1548:64: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1549:57: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1550:64: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1556:19: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1557:50: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1558:52: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1563:19: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1565:52: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1566:54: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1568:52: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1568:105: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1569:54: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1570:54: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1574:54: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1574:116: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1575:56: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1576:56: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1597:69: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1598:71: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1603:21: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1606:71: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1607:73: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1615:21: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1618:78: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1619:80: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1624:21: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1627:80: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1628:82: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1646:19: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1670:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1711:30: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1713:32: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1715:34: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1717:32: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1814:35: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1814:94: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1814:153: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1815:57: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1816:57: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1827:46: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1845:36: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1866:31: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1868:33: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:1887:28: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2183:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2211:31: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2215:42: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2240:34: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2295:58: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2301:69: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2325:82: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2376:32: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2396:32: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2415:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2418:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2426:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2429:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2437:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2440:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2446:18: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2448:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2449:20: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2449:83: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2450:49: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2451:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2453:23: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2453:63: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2454:37: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2459:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2462:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2468:27: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2470:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2471:29: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2471:101: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2472:58: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2473:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2475:32: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2475:81: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2476:46: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2479:19: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2481:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2482:21: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2482:85: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2483:50: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2484:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2486:24: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2486:65: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2487:38: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2490:19: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2492:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2493:21: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2493:91: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2494:50: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2495:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2497:24: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2497:71: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2498:38: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2501:19: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2503:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2504:21: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2504:94: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2505:50: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2506:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2508:24: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2508:74: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2509:38: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2512:19: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2514:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2515:21: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2515:94: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2516:50: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2517:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2519:24: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2519:74: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2520:38: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2523:19: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2523:31: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2525:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2526:21: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2526:33: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2526:97: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2526:109: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2527:50: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2527:62: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2528:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2530:24: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2530:36: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2530:77: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2530:89: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2531:38: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2531:50: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2534:19: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2534:31: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2536:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2537:21: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2537:33: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2537:106: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2537:118: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2538:50: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2538:62: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2539:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2541:24: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2541:36: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2541:86: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2541:98: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2542:38: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2542:50: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2547:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2550:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2556:26: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2558:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2559:28: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2559:99: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2560:57: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2561:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2563:31: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2563:79: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2564:45: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2569:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2572:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2580:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2583:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2591:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2594:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2600:35: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2602:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2603:37: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2603:117: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2604:66: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2605:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2607:40: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2607:97: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2608:54: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2614:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2618:36: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2622:35: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2627:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2630:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2638:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2641:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2649:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2652:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2658:18: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2660:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2661:20: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2661:83: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2662:49: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2663:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2665:23: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2665:63: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2666:37: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2671:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2674:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2680:27: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2682:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2683:29: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2683:101: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2684:58: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2685:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2687:32: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2687:81: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2688:46: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2691:19: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2693:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2694:21: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2694:85: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2695:50: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2696:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2698:24: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2698:65: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2699:38: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2702:19: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2704:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2705:21: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2705:91: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2706:50: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2707:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2709:24: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2709:71: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2710:38: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2713:19: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2715:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2716:21: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2716:94: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2717:50: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2718:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2720:24: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2720:74: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2721:38: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2724:19: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2726:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2727:21: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2727:94: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2728:50: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2729:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2731:24: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2731:74: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2732:38: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2735:19: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2735:31: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2737:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2738:21: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2738:33: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2738:97: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2738:109: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2739:50: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2739:62: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2740:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2742:24: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2742:36: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2742:77: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2742:89: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2743:38: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2743:50: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2746:19: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2746:31: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2748:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2749:21: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2749:33: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2749:106: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2749:118: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2750:50: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2750:62: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2751:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2753:24: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2753:36: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2753:86: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2753:98: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2754:38: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2754:50: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2759:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2762:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2768:26: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2770:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2771:28: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2771:99: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2772:57: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2773:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2775:31: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2775:79: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2776:45: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2781:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2784:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2792:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2795:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2803:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2806:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2812:35: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2814:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2815:37: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2815:117: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2816:66: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2817:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2819:40: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2819:97: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2820:54: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2826:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2830:36: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2834:35: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2839:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2843:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2851:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2856:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2861:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2866:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2871:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2876:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2881:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2886:13: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2893:40: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2893:80: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2893:127: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2893:140: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2893:180: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2893:220: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2893:267: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2893:280: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2895:42: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2895:91: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2895:147: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2895:160: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2895:209: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2895:258: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2895:314: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2895:327: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2908:16: The 'outline-radius' property has been renamed to '-gtk-outline-radius'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2913:18: The 'outline-radius' property has been renamed to '-gtk-outline-radius'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2940:29: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2941:73: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2942:82: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2961:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2972:19: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2982:19: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:2989:19: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3008:29: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3008:65: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3009:73: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3010:82: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3011:82: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3012:91: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3035:36: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3035:77: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3036:75: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3037:84: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3038:84: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3039:93: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3076:49: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3092:58: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3129:49: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3145:58: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3182:58: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3198:67: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3235:58: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3251:67: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3411:37: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3412:37: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3413:37: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3414:28: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3415:28: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3448:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3467:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3480:51: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3480:105: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3480:178: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3480:251: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3481:73: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3482:73: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3487:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3490:53: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3490:116: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3490:198: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3490:280: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3491:75: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3492:75: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3494:53: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3494:109: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3494:171: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3494:251: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3494:331: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3495:75: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3496:75: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3496:136: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3496:217: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3496:298: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3497:75: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3498:75: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3503:55: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3503:120: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3503:191: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3503:280: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3503:369: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3504:77: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3505:77: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3505:147: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3505:237: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3505:327: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3506:77: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3507:77: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3517:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3519:40: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3524:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3527:42: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3529:42: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3529:89: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3533:44: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3533:100: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3568:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3578:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3587:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3599:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3600:41: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3600:89: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3601:47: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3602:56: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3609:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3615:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3649:26: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3649:52: The :inconsistent pseudo-class is deprecated. Use :indeterminate instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3682:63: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3687:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3689:65: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3696:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3698:72: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3703:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3705:74: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3725:19: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3727:93: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3732:21: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3734:95: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3736:82: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3757:19: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3759:95: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3764:21: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3766:97: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3768:84: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3799:53: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3803:64: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3805:44: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3809:55: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3898:29: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3899:33: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3900:32: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3901:30: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3906:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3908:31: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3909:35: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3910:34: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3911:32: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3921:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3924:40: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3925:44: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3926:43: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3927:41: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3932:19: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3935:42: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3936:46: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3937:45: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:3938:43: The :insensitive pseudo-class is deprecated. Use :disabled instead.
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:4061:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:4069:17: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:4123:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+
+(jalv.gtk3:4639): Gtk-WARNING **: Theme parsing error: gtk.css:4199:15: The 'icon-shadow' property has been renamed to '-gtk-icon-shadow'
+UI:           http://example.org/yassy#ui
+Comm buffers: 524288 bytes
+Update rate:  25.0 Hz
+uri: http://lv2plug.in/ns/ext/uri-map
+uri: http://lv2plug.in/ns/ext/urid#map
+ -> obtained urid#map from host
+connecting port: 2
+
+connecting port: 2
+host called instantiate()
+uri: http://lv2plug.in/ns/ext/uri-map
+uri: http://lv2plug.in/ns/ext/urid#map
+uri: http://lv2plug.in/ns/ext/urid#unmap
+uri: http://lv2plug.in/ns/ext/instance-access
+uri: http://lv2plug.in/ns/ext/data-access
+uri: http://lv2plug.in/ns/ext/log#log
+uri: http://lv2plug.in/ns/extensions/ui#parent
+uri: http://lv2plug.in/ns/ext/options#options
+uri: http://lv2plug.in/ns/extensions/ui#portMap
+missing feature
+host called port_event()

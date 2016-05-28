@@ -33,7 +33,7 @@ use lv2_plugin::*;
 struct descriptor(lv2::LV2Descriptor);
 
 impl descriptor {
-    pub extern fn instantiate( _descriptor: *const lv2::LV2Descriptor , fs: f64, bundle_path: *const libc::c_char, hostfeatures: *const (*const lv2::LV2Feature),) -> lv2::Lv2handle {
+    pub extern fn instantiate( _descriptor: *const lv2::LV2Descriptor , fs: f64, bundle_path: *const libc::c_char, hostfeatures: *const (*const lv2::LV2Feature),) -> lv2::LV2Handle {
         unsafe{
             let mut bx = Box::new(lv2_plugin::Lv2SynthPlugin::new());
 
@@ -50,15 +50,15 @@ impl descriptor {
         }
     }
 
-    pub extern fn connect_port(handle: lv2::Lv2handle, port: u32, data: *mut libc::c_void) {
+    pub extern fn connect_port(handle: lv2::LV2Handle, port: u32, data: *mut libc::c_void) {
         let synth: *mut lv2_plugin::Lv2SynthPlugin = handle as *mut lv2_plugin::Lv2SynthPlugin;
         unsafe {
             (*synth).connect_port(port,data)
         }
     }
-    pub extern fn activate(_instance: lv2::Lv2handle) {}
+    pub extern fn activate(_instance: lv2::LV2Handle) {}
 
-    pub extern fn run(instance: lv2::Lv2handle, n_samples: u32) {
+    pub extern fn run(instance: lv2::LV2Handle, n_samples: u32) {
         unsafe{
             let synth = instance as *mut lv2_plugin::Lv2SynthPlugin;
             let uris = &mut (*synth).uris;
@@ -101,13 +101,13 @@ impl descriptor {
         }
     }
 
-    pub extern fn deactivate(_instance: lv2::Lv2handle) {}
+    pub extern fn deactivate(_instance: lv2::LV2Handle) {}
 
-    pub extern fn cleanup(instance: lv2::Lv2handle) {
+    pub extern fn cleanup(instance: lv2::LV2Handle) {
 
         unsafe{
             //ptr::read(instance as *mut Amp); // no need for this?
-            libc::free(instance  as lv2::Lv2handle)
+            libc::free(instance  as lv2::LV2Handle)
         }
     }
     pub extern fn extension_data(_uri: *const u8)-> (*const libc::c_void) {
@@ -141,3 +141,5 @@ pub extern fn lv2_descriptor(index:i32) -> *const lv2::LV2Descriptor {
         }
     }
 }
+
+

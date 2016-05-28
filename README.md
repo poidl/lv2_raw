@@ -1,5 +1,7 @@
 # yassy (Yet Another Simple Synth)
 
+A beginner's programming exercise in Rust.
+
 Currently working on basic midi note message processing and a simple oscillator.
 Implemented basic bandlimited sawtooth oscillator as described in:
 

@@ -3,6 +3,8 @@
 @prefix lv2:   <http://lv2plug.in/ns/lv2core#> .
 @prefix urid:  <http://lv2plug.in/ns/ext/urid#> .
 @prefix midi:  <http://lv2plug.in/ns/ext/midi#> .
+@prefix ui:    <http://lv2plug.in/ns/extensions/ui#> .
+
 
 <http://example.org/yassy>
 	a lv2:Plugin ,
@@ -11,10 +13,10 @@
 	lv2:project <http://example.org> ;
 
 	doap:name "yassy (simple synth)" ;
-	doap:license <http://opensource.org/licenses/isc> ;
-	lv2:requiredFeature urid:map ;
+	lv2:requiredFeature urid:map;
 	lv2:optionalFeature lv2:hardRTCapable ;
-  lv2:port [
+	ui:ui <http://example.org/yassy#ui> ;
+        lv2:port [
           a lv2:InputPort ,
                   atom:AtomPort ;
           atom:bufferType atom:Sequence ;
@@ -29,7 +31,7 @@
           lv2:symbol "out" ;
           lv2:name "Out"
 	] , [
-					a lv2:InputPort ,
+	  a lv2:InputPort ,
                   lv2:ControlPort ;
           lv2:index 2 ;
           lv2:symbol "gain" ;
@@ -38,3 +40,14 @@
           lv2:minimum 0.0 ;
           lv2:maximum 1.0
   ] .
+   
+<http://example.org/yassy#ui>
+	a ui:X11UI ;
+        lv2:requiredFeature urid:map, ui:parent, ui:idleInterface , ui:showInterface ;
+        lv2:extensionData ui:idleInterface, ui:showInterface ;      
+        ui:portNotification [
+                ui:plugin <http://example.org/yassy> ;
+                lv2:symbol "gain" ;
+                ui:protocol ui:floatProtocol
+        ] .
+        
