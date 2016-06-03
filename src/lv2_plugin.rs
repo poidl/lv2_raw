@@ -37,7 +37,7 @@ impl Synthuris {
 
 #[repr(C)]
 pub struct Lv2SynthPlugin {
-    pub map: *const lv2::LV2UridMap,
+    pub map: *mut lv2::LV2UridMap,
     pub in_port: *const lv2::LV2_Atom_Sequence,
     pub output: *mut f32,
     pub uris: Synthuris,
@@ -48,7 +48,7 @@ impl  Lv2SynthPlugin {
     pub fn new() -> Lv2SynthPlugin {
         // let np = ptr::null();
         let mut lv2plugin = Lv2SynthPlugin {
-            map: ptr::null(),
+            map: ptr::null_mut(),
             in_port: ptr::null(),
             output: ptr::null_mut(),
             uris: Synthuris::new(),
@@ -57,33 +57,6 @@ impl  Lv2SynthPlugin {
         // TODO: this is to avoid needing to access lv2plugin.plugin in lv2::LV2Descriptor::connect_port()
         lv2plugin.output = lv2plugin.plugin.audio_out;
         lv2plugin
-    }
-    pub fn mapfeatures(&mut self, hostfeatures: *const (*const lv2::LV2Feature)) -> Result<&'static str, &'static str> {
-        let requiredfeature = "http://lv2plug.in/ns/ext/urid#map";
-        let mut x: isize = 0;
-        let mut done = false;
-        unsafe{
-            while !done {
-
-                let fptr: *const lv2::LV2Feature = *hostfeatures.offset(x);
-                if fptr.is_null() {
-                    // host doesn't provide feature
-                    println!("Missing feature \"{}\"", requiredfeature);
-                    return Err("missing feature")
-                }
-                let uriptr = (*fptr).uri;
-                let buf = CStr::from_ptr(uriptr).to_bytes();
-                let s: &str = str::from_utf8(buf).unwrap();
-                println!("uri: {}", s);
-                if s == requiredfeature {
-                    self.map = (*fptr).data;
-                    done=true;
-                    println!{" -> obtained urid#map from host"}
-                }
-                x = x+1;
-            }
-        }
-        Ok("mapping done")
     }
     pub fn seturis(&mut self) {
         unsafe{
@@ -94,7 +67,6 @@ impl  Lv2SynthPlugin {
         }
     }
 }
-
 
 impl isLv2SynthPlugin for Lv2SynthPlugin {
     fn connect_port(&mut self, port: u32, data: *mut libc::c_void) {

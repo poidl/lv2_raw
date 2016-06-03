@@ -34,20 +34,19 @@ struct descriptor(lv2::LV2Descriptor);
 
 impl descriptor {
     pub extern fn instantiate( _descriptor: *const lv2::LV2Descriptor , fs: f64, bundle_path: *const libc::c_char, hostfeatures: *const (*const lv2::LV2Feature),) -> lv2::LV2Handle {
-        unsafe{
-            let mut bx = Box::new(lv2_plugin::Lv2SynthPlugin::new());
 
-            let mapped = bx.mapfeatures(hostfeatures);
-            if !mapped.is_ok() {
-                // bx is dropped automatically
-                return ptr::null_mut();
-            }
-            bx.seturis();
-            bx.set_fs(fs);
-            let ptr = (&*bx as *const lv2_plugin::Lv2SynthPlugin) as *mut libc::c_void;
-            mem::forget(bx);
-            ptr
+        let mut bx = Box::new(lv2_plugin::Lv2SynthPlugin::new());
+        let featureptr = lv2::mapfeature(hostfeatures,"http://lv2plug.in/ns/ext/urid#map");
+        match featureptr {
+            Ok(fp) => bx.map =fp as *mut lv2::LV2UridMap,
+            _ => return ptr::null_mut()
         }
+        bx.seturis();
+        bx.set_fs(fs);
+        let ptr = (&*bx as *const lv2_plugin::Lv2SynthPlugin) as *mut libc::c_void;
+        mem::forget(bx);
+        ptr
+        
     }
 
     pub extern fn connect_port(handle: lv2::LV2Handle, port: u32, data: *mut libc::c_void) {
