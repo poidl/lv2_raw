@@ -4,8 +4,6 @@
 @prefix kx:    <http://kxstudio.sf.net/ns/lv2ext/external-ui#> .
 @prefix owl:   <http://www.w3.org/2002/07/owl#> .
 
-# Credits to Hanspeter Portner for explaining how ui:UI and kx:Widget work. See
-# http://lists.lv2plug.in/pipermail/devel-lv2plug.in/2016-May/001649.html
 # to please sord_validate
 kx:Widget
 	a rdfs:Class, owl:Class ;
