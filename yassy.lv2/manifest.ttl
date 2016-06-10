@@ -14,16 +14,16 @@ kx:Host
 <http://example.org/yassy>
 	a lv2:Plugin ;
 	lv2:binary <libyassy.so> ;
-	ui:ui <http://example.org/yassy#ui> ;
-	ui:ui <http://example.org/yassy#kx> ;
+	ui:ui <http://example.org/yassyui#ui> ;
+	ui:ui <http://example.org/yassyui#kx> ;
 	rdfs:seeAlso <yassy.ttl> .
 	
-<http://example.org/yassy#ui>
+<http://example.org/yassyui#ui>
 	a ui:UI ;
 	ui:binary <libyassyui.so> ;	
 	rdfs:seeAlso <yassyui.ttl> .
 	
-<http://example.org/yassy#kx>	
+<http://example.org/yassyui#kx>	
 	a kx:Widget ;
 	ui:binary <libyassyui.so> ;	
 	rdfs:seeAlso <yassyui.ttl> .
