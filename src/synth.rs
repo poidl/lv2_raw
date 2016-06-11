@@ -1,20 +1,14 @@
 
-use std::collections::HashMap;
 use voice;
 use voice::*;
-use std::ptr;
 
 pub struct Synth {
-    fs: f32,
     voice: voice::Voice,
 }
 
 impl Synth {
     pub fn new() -> Synth {
-        Synth {
-            fs: 0f32,
-            voice: voice::Voice::new(),
-        }
+        Synth { voice: voice::Voice::new() }
     }
     pub fn set_fs(&mut self, fs: f64) {
         self.voice.set_fs(fs);

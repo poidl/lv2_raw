@@ -1,30 +1,14 @@
-#![allow(unused_imports)]
-#![allow(dead_code)]
-#![allow(unused_variables)]
-// #![allow(non_snake_case)]
-
-// #![feature(alloc)]
-//#![feature(heap_api)]
-// #![feature(unique)]
-
-//mod tests;
-// pub mod utils;
 mod oscillator;
 mod voice;
 mod lv2_plugin;
 mod synth;
 pub mod plugin;
-//mod heapslice;
 
 extern crate libc;
 extern crate midi;
 extern crate lv2;
 use std::ptr;
 use std::mem;
-use std::str;
-use std::ffi::CString;
-use std::ffi::CStr;
-// use utils::*;
 use oscillator::*;
 use voice::*;
 use lv2_plugin::*;
@@ -33,7 +17,7 @@ use lv2_plugin::*;
 struct Descriptor(lv2::LV2Descriptor);
 
 impl Descriptor {
-    pub extern fn instantiate( _descriptor: *const lv2::LV2Descriptor , fs: f64, bundle_path: *const libc::c_char, hostfeatures: *const (*const lv2::LV2Feature),) -> lv2::LV2Handle {
+    pub extern fn instantiate( _descriptor: *const lv2::LV2Descriptor , fs: f64, _bundle_path: *const libc::c_char, hostfeatures: *const (*const lv2::LV2Feature),) -> lv2::LV2Handle {
 
         let mut bx = Box::new(lv2_plugin::Lv2SynthPlugin::new());
         let featureptr = lv2::mapfeature(hostfeatures,"http://lv2plug.in/ns/ext/urid#map");
