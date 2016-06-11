@@ -30,9 +30,9 @@ use voice::*;
 use lv2_plugin::*;
 
 // have to define new type. Otherwise error: "cannot define inherent impl for a type outside of the crate where the type is defined; define and implement a trait or new type instead"
-struct descriptor(lv2::LV2Descriptor);
+struct Descriptor(lv2::LV2Descriptor);
 
-impl descriptor {
+impl Descriptor {
     pub extern fn instantiate( _descriptor: *const lv2::LV2Descriptor , fs: f64, bundle_path: *const libc::c_char, hostfeatures: *const (*const lv2::LV2Feature),) -> lv2::LV2Handle {
 
         let mut bx = Box::new(lv2_plugin::Lv2SynthPlugin::new());
@@ -73,7 +73,7 @@ impl descriptor {
                 // at i=0, search for the first midi event and get index
                 if !mq {
                     while !lv2::lv2_atom_sequence_is_end(&(*seq).body, (*seq).atom.size, ev) {
-                        mq = ( (*ev).body.mytype == (*uris).midi_event );
+                        mq = (*ev).body.mytype == (*uris).midi_event;
                         if !mq {
                             ev = lv2::lv2_atom_sequence_next(ev);
                         } else {
@@ -118,13 +118,13 @@ static S: &'static [u8] = b"http://example.org/yassy\0";
 
 static mut desc: lv2::LV2Descriptor = lv2::LV2Descriptor {
     uri: 0 as *const libc::c_char, // ptr::null() isn't const fn (yet)
-    instantiate: descriptor::instantiate,
-    connect_port: descriptor::connect_port,
-    activate: descriptor::activate,
-    run: descriptor::run,
-    deactivate: descriptor::deactivate,
-    cleanup: descriptor::cleanup,
-    extension_data: descriptor::extension_data
+    instantiate: Descriptor::instantiate,
+    connect_port: Descriptor::connect_port,
+    activate: Descriptor::activate,
+    run: Descriptor::run,
+    deactivate: Descriptor::deactivate,
+    cleanup: Descriptor::cleanup,
+    extension_data: Descriptor::extension_data
 };
 
 #[no_mangle]

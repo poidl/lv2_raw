@@ -51,77 +51,77 @@ impl OscBasic {
 }
 
 pub struct OscST {
-    // We translate the fundamental frequency f0 from units 1/t to a fraction "fn" of a wavetable with 2N lattice points. fn corresponds to the number of points which are skipped when reading the wavetable and can be interpreted as a phase increment. The 2N lattice points represent the interval [-pi,pi). The max. resolved freq. f0=fs/2, i.e. we want that fn(0)=0 and fn(fs/2)=N. The function is linear, hence fn(f0)=2N*f0/fs. If a sined integer of k bits is used as phase accumulator, the 2N interval translates to [-2^(k-1),2^(k-1)). Note the interval is open on the left. For k=2, the values range from -2 to 1.
-    pub N: u32,
-    pub A: i32, // phase. Wavetable size is 2N. start at zero, wrap at N from 1 to -1
+    // We translate the fundamental frequency f0 from units 1/t to a fraction "fn" of a wavetable with 2N lattice points. fn corresponds to the number of points which are skipped when reading the wavetable and can be interpreted as a phase increment. The 2N lattice points represent the interval [-pi,pi). The max. resolved freq. f0=fs/2, i.e. we want that fn(0)=0 and fn(fs/2)=n. The function is linear, hence fn(f0)=2N*f0/fs. If a sined integer of k bits is used as phase accumulator, the 2N interval translates to [-2^(k-1),2^(k-1)). Note the interval is open on the left. For k=2, the values range from -2 to 1.
+    pub n: u32,
+    pub a: i32, // phase. Wavetable size is 2N. start at zero, wrap at N from 1 to -1
     pub fnn: u32, // phase increment
-    pub B: i32, // A, phase shifted by N
+    pub b: i32, // a, phase shifted by N
     pub alpha: u32,
-    pub M: u32, // number of entries in half-segment of integratied bandlimited impulse
+    pub m: u32, // number of entries in half-segment of integratied bandlimited impulse
     pub i: i32,
     pub f: *const f64,
-    pub C: f64,
-    pub D: f64,
+    pub c: f64,
+    pub d: f64,
     pub fs: f64, // sample rate
     pub f0: f64, // fundamental frequency
     pub fac_i: f64, // avoid unnecessary runtime multiplication
     pub fac_alpha: f64,
     pub fac_fn: f64,
-    pub absA: i32
+    pub abs_a: i32
 }
 
 impl OscST {
     pub fn reset(& mut self, fs: f64) {
-        self.N = 2u32.pow(31); // follow notation of Frei (p. 3)
-        self.M = (2*(2700-1)+1) as u32;
-        self.B =  0;
-        self.A =  self.B.wrapping_add(self.N as i32);
+        self.n = 2u32.pow(31); // follow notation of Frei (p. 3)
+        self.m = (2*(2700-1)+1) as u32;
+        self.b =  0;
+        self.a =  self.b.wrapping_add(self.n as i32);
         self.fs = fs;
-        let c = 4 as f64 * self.N as f64;
-        self.fac_i = self.M as f64 *fs/c;
+        let c = 4 as f64 * self.n as f64;
+        self.fac_i = self.m as f64 *fs/c;
         self.fac_alpha = c/fs;
-        self.fac_fn = 2f64*self.N as f64/self.fs;
+        self.fac_fn = 2f64*self.n as f64/self.fs;
     }
     pub fn set_f0fn(&mut self, f0: f64) {
         self.f0 = f0;
         self.fnn =  (f0*self.fac_fn) as u32;
     }
-    pub fn step_AB(&mut self){
+    pub fn step_ab(&mut self){
         // wrapping_add: allows intentional overflow
-        self.B = self.B.wrapping_add(self.fnn as i32);
-        self.A = self.B.wrapping_add(self.N as i32);
-        // A.abs() will panic/overflow if A=i32::min_value().
-        let mask = self.A >> 31u32;
-        self.absA = self.A ^ mask; // xor with mask is equivalent to -1*(A+1) for A<0, and a no-op otherwise. http://stackoverflow.com/questions/12041632/how-to-compute-the-integer-absolute-value
+        self.b = self.b.wrapping_add(self.fnn as i32);
+        self.a = self.b.wrapping_add(self.n as i32);
+        // a.abs() will panic/overflow if a=i32::min_value().
+        let mask = self.a >> 31u32;
+        self.abs_a = self.a ^ mask; // xor with mask is equivalent to -1*(a+1) for a<0, and a no-op otherwise. http://stackoverflow.com/questions/12041632/how-to-compute-the-integer-absolute-value
     }
     pub fn set_alpha_i(&mut self) {
         self.alpha =  (self.f0*self.fac_alpha) as u32;
-        let tmp = (self.A as f64 /self.f0) *self.fac_i;
+        let tmp = (self.a as f64 /self.f0) *self.fac_i;
         self.i = tmp.trunc() as i32;
     }
-    pub fn step_C(&mut self) {
-        if self.absA < (self.alpha as i32) {
+    pub fn step_c(&mut self) {
+        if self.abs_a < (self.alpha as i32) {
             unsafe {
-                self.C = -*self.f.offset(self.M as isize + self.i as isize);
+                self.c = -*self.f.offset(self.m as isize + self.i as isize);
             }
-            // println!("apply {}", self.C);
+            // println!("apply {}", self.c);
         } else {
-            self.C = 0f64;
+            self.c = 0f64;
         }
     }
-    pub fn step_D(&mut self) {
-        let N = self.N as f64;
-        // println!("self.B {}", self.B as f64/ N );
-        // println!("self.C {}", self.C);
+    pub fn step_d(&mut self) {
+        let n = self.n as f64;
+        // println!("self.b {}", self.b as f64/ n );
+        // println!("self.c {}", self.c);
         // println!("self.i {}", self.i);
         // println!(" ");
-        self.D = self.C + self.B as f64/ N
+        self.d = self.c + self.b as f64/ n
     }
     pub fn get(&mut self) -> f64 {
-        self.step_AB();
+        self.step_ab();
         self.set_alpha_i();
-        self.step_C();
-        self.step_D();
-        self.D as f64
+        self.step_c();
+        self.step_d();
+        self.d as f64
     }
 }

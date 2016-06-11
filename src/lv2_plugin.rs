@@ -14,7 +14,7 @@ use midi::*;
 use plugin::*;
 use std::str;
 
-pub trait isLv2SynthPlugin: {
+pub trait IsLv2SynthPlugin: {
     fn connect_port(&mut self, u32, *mut libc::c_void);
     fn midievent(&mut self, msg: &u8) ;
     fn set_fs(&mut self, f64);
@@ -68,20 +68,20 @@ impl  Lv2SynthPlugin {
     }
 }
 
-impl isLv2SynthPlugin for Lv2SynthPlugin {
+impl IsLv2SynthPlugin for Lv2SynthPlugin {
     fn connect_port(&mut self, port: u32, data: *mut libc::c_void) {
         match port {
-            0 => unsafe{self.in_port = data  as *const lv2::LV2_Atom_Sequence},
-            1 => unsafe{self.output = data as *mut f32 },
+            0 => self.in_port = data  as *const lv2::LV2_Atom_Sequence,
+            1 => self.output = data as *mut f32,
             _ => self.map_params(port,data)
         }
     }
     fn map_params(&mut self, port: u32, data: *mut libc::c_void) {
         let nparams = 1;
         let iport = port - 2; //TODO: don't hardcode number of input/output ports
-        if (iport <= nparams-1) {
+        if iport <= nparams-1 {
             println!("connecting port: {}", port);
-            unsafe{self.plugin.params[iport as usize]= data  as *mut f32 };
+            self.plugin.params[iport as usize]= data  as *mut f32 ;
             // println!("param: {}",  *(self.synth.params[0]));
         } else {
             panic!("Not a valid PortIndex: {}", iport)
