@@ -14,15 +14,6 @@ use midi::*;
 use plugin::*;
 use std::str;
 
-pub trait IsLv2SynthPlugin: {
-    fn connect_port(&mut self, u32, *mut libc::c_void);
-    fn midievent(&mut self, msg: &u8) ;
-    fn set_fs(&mut self, f64);
-    fn get_amp(&mut self) -> f32;
-    fn map_params(&mut self, u32, *mut libc::c_void);
-    // fn get_nparams(& self) -> u32;
-}
-
 pub struct Synthuris {
     pub midi_event: lv2::LV2Urid
 }
@@ -66,15 +57,25 @@ impl  Lv2SynthPlugin {
             self.uris.midi_event = ((*self.map).map)((*self.map).handle, lv2_midi_midi_event);
         }
     }
-}
-
-impl IsLv2SynthPlugin for Lv2SynthPlugin {
-    fn connect_port(&mut self, port: u32, data: *mut libc::c_void) {
+    pub fn connect_port(&mut self, port: u32, data: *mut libc::c_void) {
         match port {
             0 => self.in_port = data  as *const lv2::LV2_Atom_Sequence,
             1 => self.output = data as *mut f32,
             _ => self.map_params(port,data)
         }
+    }
+    // fn get_nparams(&self) -> u32 {
+    //     self.plugin.params.len()
+    // }
+    pub fn midievent(&mut self, msg: &u8) {
+        let mm = msg as midi::MidiMessage;
+        self.plugin.midievent(mm)
+    }
+    pub fn set_fs(&mut self, fs: f64) {
+        self.plugin.set_fs(fs);
+    }
+    pub fn get_amp(&mut self) -> f32 {
+        self.plugin.get_amp()
     }
     fn map_params(&mut self, port: u32, data: *mut libc::c_void) {
         let nparams = 1;
@@ -86,18 +87,5 @@ impl IsLv2SynthPlugin for Lv2SynthPlugin {
         } else {
             panic!("Not a valid PortIndex: {}", iport)
         }
-    }
-    // fn get_nparams(&self) -> u32 {
-    //     self.plugin.params.len()
-    // }
-    fn midievent(&mut self, msg: &u8) {
-        let mm = msg as midi::MidiMessage;
-        self.plugin.midievent(mm)
-    }
-    fn set_fs(&mut self, fs: f64) {
-        self.plugin.set_fs(fs);
-    }
-    fn get_amp(&mut self) -> f32 {
-        self.plugin.get_amp()
     }
 }

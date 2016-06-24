@@ -67,6 +67,10 @@ impl SynthPlugin {
         self.synth.set_fs(fs);
     }
     pub fn get_amp(&mut self) -> f32 {
-        unsafe { *(self.params[ParamName::Gain as usize]) * self.synth.get_amp() }
+        unsafe {
+            // let g = *(self.params[ParamName::Gain as usize]);
+            // g * self.synth.get_amp()
+            self.synth.get_amp()
+        }
     }
 }

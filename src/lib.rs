@@ -1,17 +1,17 @@
+extern crate libc;
+extern crate midi;
+extern crate lv2;
+
 mod oscillator;
 mod voice;
 mod lv2_plugin;
 mod synth;
 pub mod plugin;
 
-extern crate libc;
-extern crate midi;
-extern crate lv2;
 use std::ptr;
 use std::mem;
 use oscillator::*;
 use voice::*;
-use lv2_plugin::*;
 
 // have to define new type. Otherwise error: "cannot define inherent impl for a type outside of the crate where the type is defined; define and implement a trait or new type instead"
 struct Descriptor(lv2::LV2Descriptor);
@@ -30,7 +30,6 @@ impl Descriptor {
         let ptr = (&*bx as *const lv2_plugin::Lv2SynthPlugin) as *mut libc::c_void;
         mem::forget(bx);
         ptr
-        
     }
 
     pub extern fn connect_port(handle: lv2::LV2Handle, port: u32, data: *mut libc::c_void) {
