@@ -15,14 +15,12 @@ use plugin::*;
 use std::str;
 
 pub struct Synthuris {
-    pub midi_event: lv2::LV2Urid
+    pub midi_event: lv2::LV2Urid,
 }
 
 impl Synthuris {
     fn new() -> Synthuris {
-        Synthuris {
-            midi_event: 0 as lv2::LV2Urid
-        }
+        Synthuris { midi_event: 0 as lv2::LV2Urid }
     }
 }
 
@@ -35,7 +33,7 @@ pub struct Lv2SynthPlugin {
     pub plugin: plugin::SynthPlugin,
 }
 
-impl  Lv2SynthPlugin {
+impl Lv2SynthPlugin {
     pub fn new() -> Lv2SynthPlugin {
         // let np = ptr::null();
         let mut lv2plugin = Lv2SynthPlugin {
@@ -50,7 +48,7 @@ impl  Lv2SynthPlugin {
         lv2plugin
     }
     pub fn seturis(&mut self) {
-        unsafe{
+        unsafe {
             let s = "http://lv2plug.in/ns/ext/midi#MidiEvent";
             let cstr = CString::new(s).unwrap();
             let lv2_midi_midi_event = cstr.as_ptr();
@@ -59,18 +57,35 @@ impl  Lv2SynthPlugin {
     }
     pub fn connect_port(&mut self, port: u32, data: *mut libc::c_void) {
         match port {
-            0 => self.in_port = data  as *const lv2::LV2_Atom_Sequence,
+            0 => self.in_port = data as *const lv2::LV2_Atom_Sequence,
             1 => self.output = data as *mut f32,
-            _ => self.map_params(port,data)
+            _ => self.map_params(port, data),
         }
     }
-    // fn get_nparams(&self) -> u32 {
-    //     self.plugin.params.len()
-    // }
     pub fn midievent(&mut self, msg: &u8) {
         let mm = msg as midi::MidiMessage;
-        self.plugin.midievent(mm)
+        if mm.noteon() {
+            self.plugin.noteon(mm.f0(), mm.vel())
+        } else if mm.noteoff() {
+            self.plugin.noteoff();
+        }
     }
+    //     } else if mm.cc() {
+    //         let x = mm.cc_type();
+    //         unsafe {
+    //             match x {
+    //                 midi::cckind::channelvolume => {
+    //                     *(self.params[ParamName::Gain as usize]) = mm.cc_value()
+    //                 }
+    //                 _ => println!("Don't understand cc midi message", ),
+    //             }
+    //         }
+    //         println!("ccnr: {}", mm.ccnr());
+    //         println!("ccval: {}", mm.ccval());
+    //     } else {
+    //         println!("Don't understand midi message", );
+    //     }
+    // }
     pub fn set_fs(&mut self, fs: f64) {
         self.plugin.set_fs(fs);
     }
@@ -80,9 +95,9 @@ impl  Lv2SynthPlugin {
     fn map_params(&mut self, port: u32, data: *mut libc::c_void) {
         let nparams = 1;
         let iport = port - 2; //TODO: don't hardcode number of input/output ports
-        if iport <= nparams-1 {
+        if iport <= nparams - 1 {
             println!("connecting port: {}", port);
-            self.plugin.params[iport as usize]= data  as *mut f32 ;
+            self.plugin.params[iport as usize] = data as *mut f32;
             // println!("param: {}",  *(self.synth.params[0]));
         } else {
             panic!("Not a valid PortIndex: {}", iport)

@@ -39,38 +39,20 @@ impl SynthPlugin {
             params: [&mut 0.5f32; 1],
         }
     }
-
-    pub fn midievent(&mut self, msg: &u8) {
-        let mm = msg as midi::MidiMessage;
-        if mm.noteon() {
-            self.synth.noteon(mm.f0(), mm.vel())
-        } else if mm.noteoff() {
-            self.synth.noteoff();
-        } else if mm.cc() {
-            let x = mm.cc_type();
-            unsafe {
-                match x {
-                    midi::cckind::channelvolume => {
-                        *(self.params[ParamName::Gain as usize]) = mm.cc_value()
-                    }
-                    _ => println!("Don't understand cc midi message", ),
-                }
-            }
-            println!("ccnr: {}", mm.ccnr());
-            println!("ccval: {}", mm.ccval());
-        } else {
-            println!("Don't understand midi message", );
-        }
-        // self.synth.midievent(msg);
+    pub fn noteon(&mut self, f0: f32, vel: f32) {
+        self.synth.noteon(f0, vel);
+    }
+    pub fn noteoff(&mut self) {
+        self.synth.noteoff();
     }
     pub fn set_fs(&mut self, fs: f64) {
         self.synth.set_fs(fs);
     }
     pub fn get_amp(&mut self) -> f32 {
         unsafe {
-            // let g = *(self.params[ParamName::Gain as usize]);
-            // g * self.synth.get_amp()
-            self.synth.get_amp()
+            let g = *(self.params[ParamName::Gain as usize]);
+            g * self.synth.get_amp()
+            // self.synth.get_amp()
         }
     }
 }
