@@ -31,9 +31,9 @@ pub struct LV2UIExternalUIWidget {
     // Why "Option"? Nullable function pointers. See
     // https://doc.rust-lang.org/book/ffi.html
     // https://mail.mozilla.org/pipermail/rust-dev/2014-September/011200.html
-    pub run: Option<extern "C" fn(ui: LV2UIExternalUIWidget)>,
-    pub show: Option<extern "C" fn(ui: LV2UIExternalUIWidget)>,
-    pub hide: Option<extern "C" fn(ui: LV2UIExternalUIWidget)>,
+    pub run: Option<extern "C" fn(ui: *const LV2UIExternalUIWidget)>,
+    pub show: Option<extern "C" fn(ui: *const LV2UIExternalUIWidget)>,
+    pub hide: Option<extern "C" fn(ui: *const LV2UIExternalUIWidget)>,
 }
 
 #[repr(C)]
