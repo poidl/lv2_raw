@@ -10,8 +10,6 @@ pub mod plugin;
 
 use std::ptr;
 use std::mem;
-use oscillator::*;
-use voice::*;
 
 // have to define new type. Otherwise error: "cannot define inherent impl for a type outside of the crate where the type is defined; define and implement a trait or new type instead"
 struct Descriptor(lv2::LV2Descriptor);

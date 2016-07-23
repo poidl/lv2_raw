@@ -13,8 +13,8 @@
 
 	doap:name "yassy (simple synth)" ;
 	lv2:requiredFeature urid:map;
-        #ui:ui <http://example.org/yassyui#kx> ;
-	ui:ui <http://example.org/yassyui#ui> ;
+        ui:ui <http://example.org/yassyui#kx> ;
+	#ui:ui <http://example.org/yassyui#ui> ;
         lv2:port [
           a lv2:InputPort ,
                   atom:AtomPort ;
