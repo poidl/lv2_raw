@@ -23,10 +23,5 @@ keywords = ["lv2"]
 # separated with a `/`.
 license = "ISC"
 
-# If a project is using a nonstandard license, then this key may be specified in
-# lieu of the above key and must point to a file relative to this manifest
-# (similar to the readme key).
-license-file = "COPYING"
-
 [dependencies]
-libc = "*"
+libc = "0"
