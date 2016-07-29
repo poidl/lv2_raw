@@ -6,6 +6,13 @@ fi
 git remote add $1 git@github.com:poidl/$1.git
 git fetch $1
 git checkout -b $1 $1/master
+
+# make script in branch to merge changes on master
+mkdir scripts
+echo "git merge --squash -s subtree master" >> scripts/merge_master.sh
+chmod u+x scripts/merge_master.sh
+
+# switch back to master and copy repo into subfolder
 git checkout master
 #git merge -s ours --no-commit  $1/master
 git read-tree --prefix=$1/ -u $1/master
