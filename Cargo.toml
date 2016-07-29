@@ -3,11 +3,15 @@ name = "yassy"
 version = "0.1.0"
 authors = ["stefan"]
 
+# This workspace contains multiple crates. See http://doc.crates.io/manifest.html
+#[workspace]
+#members = ["./ui"]
+
 [dependencies]
 libc = "*"
 GSL = "*"
-midi = { path = "../midi" }
-lv2 = { path = "../lv2" }
+midi = { path = "midi" }
+lv2 = { path = "lv2" }
 
 [lib]
 name = "yassy"
@@ -18,3 +22,5 @@ crate-type = ["rlib","dylib"] # ?
 gnuplot = "*"
 getopts = "=0.2.14" # gnuplot dependency
 plot = { path = "examples/plot" }
+
+

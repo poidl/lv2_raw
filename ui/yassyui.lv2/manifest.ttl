@@ -1,0 +1,29 @@
+@prefix lv2:  <http://lv2plug.in/ns/lv2core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ui:   <http://lv2plug.in/ns/extensions/ui#> .
+@prefix kx:	  <http://kxstudio.sf.net/ns/lv2ext/external-ui#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+
+# Credits to Hanspeter Portner for explaining how to use ui:UI and kx:Widget:
+# http://lists.lv2plug.in/pipermail/devel-lv2plug.in/2016-May/001649.html
+
+# what is sord_validate? 
+# from: Hanspeter Portner
+# https://github.com/ventosus/customui.lv2/blob/master/manifest.ttl.in
+# to please sord_validate
+kx:Widget
+	a rdfs:Class, owl:Class ;
+	rdfs:subClassOf ui:UI .
+kx:Host
+	a lv2:Feature .
+	
+<http://example.org/yassyui#ui>
+	a ui:UI ;
+	ui:binary <libyassyui.so> ;
+	rdfs:seeAlso <yassyui.ttl> .
+	
+<http://example.org/yassyui#kx>	
+	a kx:Widget ;
+	ui:binary <libyassyui.so> ;
+	rdfs:seeAlso <yassyui.ttl> .
+		

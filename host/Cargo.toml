@@ -1,0 +1,11 @@
+[package]
+name = "yassyhost"
+version = "0.1.0"
+authors = ["poidl <hoitaus@gmail.com>"]
+
+[dependencies]
+libc = "*"
+websocket = "*"
+bitflags = "*"
+midi = { path = "../midi" }
+yassy = { path = ".." }
