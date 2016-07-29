@@ -1,5 +1,5 @@
 if [ $# -ne 1 ]; then
-  echo 'Usage: fingerprint NAME_OF_REPOSITORY'
+  echo 'Usage: subtree_branch.sh NAME_OF_REPOSITORY'
   exit 1
 fi
 
