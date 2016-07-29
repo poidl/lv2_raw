@@ -8,3 +8,15 @@ Implemented basic bandlimited sawtooth oscillator as described in:
 Frei, B.: Digital sound generation. Institute for Computer Music and Sound Technology (ICST) Zurich University of the Arts.
 
 The code in the /example directory reproduces e.g. Fig. 8 of the book.
+
+### ./ui/
+browser based ui for yassy using websocket
+
+### ./host/
+jack host for yassy
+
+### ./midi/
+Minimal midi message processing in Rust
+
+### ./lv2/
+Minimal lv2 interface for Rust
