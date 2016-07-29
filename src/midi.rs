@@ -2,9 +2,9 @@
    Return true iff `msg` is a MIDI voice message (which has a channel).
 */
 pub fn lv2_midi_is_voice_message(msg: *const u8) -> (bool) {
-	unsafe{
-		return (*msg) >= 0x80 && (*msg) < 0xF0;
-	}
+    unsafe {
+        return (*msg) >= 0x80 && (*msg) < 0xF0;
+    }
 }
 
 /**
@@ -12,20 +12,20 @@ pub fn lv2_midi_is_voice_message(msg: *const u8) -> (bool) {
    @param msg Pointer to the start (status byte) of a MIDI message.
 */
 pub fn lv2_midi_message_type(msg: *const u8) -> (Lv2MidiMessageType) {
-	if lv2_midi_is_voice_message(msg) {
-		unsafe{
-			return Lv2MidiMessageType::from_int((*msg) & 0xF0);
-		}
-	} else {
-		return Lv2MidiMessageType::Lv2MidiMsgInvalid;
-	}
+    if lv2_midi_is_voice_message(msg) {
+        unsafe {
+            return Lv2MidiMessageType::from_int((*msg) & 0xF0);
+        }
+    } else {
+        return Lv2MidiMessageType::Lv2MidiMsgInvalid;
+    }
 }
 
 pub enum Lv2MidiMessageType {
-	Lv2MidiMsgInvalid          = 0,    // Invalid Message
-	Lv2MidiMsgNoteOff         = 0x80, // Note Off
-	Lv2MidiMsgNoteOn          = 0x90,  // Note On
-	Lv2MidiMsgNotImplemented  = 9999999999999  //
+    Lv2MidiMsgInvalid = 0, // Invalid Message
+    Lv2MidiMsgNoteOff = 0x80, // Note Off
+    Lv2MidiMsgNoteOn = 0x90, // Note On
+    Lv2MidiMsgNotImplemented = 9999999999999, //
 }
 
 // Unnecessary?
@@ -34,8 +34,8 @@ impl Lv2MidiMessageType {
         match x {
             0 => Lv2MidiMessageType::Lv2MidiMsgInvalid,
             0x80 => Lv2MidiMessageType::Lv2MidiMsgNoteOff,
-			0x90 => Lv2MidiMessageType::Lv2MidiMsgNoteOn,
-            _ => Lv2MidiMessageType::Lv2MidiMsgNotImplemented
+            0x90 => Lv2MidiMessageType::Lv2MidiMsgNoteOn,
+            _ => Lv2MidiMessageType::Lv2MidiMsgNotImplemented,
         }
     }
 }

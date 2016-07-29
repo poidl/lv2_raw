@@ -5,10 +5,10 @@ pub type LV2UIHandle = *mut libc::c_void;
 pub type LV2UIWidget = *mut libc::c_void;
 pub type LV2UIController = *const libc::c_void;
 pub type LV2UIWriteFunction = Option<extern "C" fn(controller: LV2UIController,
-                                            port_index: libc::c_uint,
-                                            buffer_size: libc::c_uint,
-                                            port_protocol: libc::c_uint,
-                                            buffer: *const libc::c_void)>;
+                                                   port_index: libc::c_uint,
+                                                   buffer_size: libc::c_uint,
+                                                   port_protocol: libc::c_uint,
+                                                   buffer: *const libc::c_void)>;
 
 #[repr(C)]
 pub struct LV2UIIdleInterface {
