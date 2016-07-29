@@ -1,10 +1,12 @@
-git remote add lv2 git@github.com:poidl/lv2.git
-git fetch lv2
-git checkout -b lv2 lv2/master
+if [ $# -ne 1 ]; then
+  echo 'Usage: fingerprint NAME_OF_REPOSITORY'
+  exit 1
+fi
+
+git remote add $1 git@github.com:poidl/$1.git
+git fetch $1
+git checkout -b $1 $1/master
 git checkout master
-git merge -s ours --no-commit --allow-unrelated-histories lv2_remote/master
-git merge -s ours --no-commit  lv2_remote/master
-git branch
-git read-tree --prefix=lv2/ -u lv2_remote/master
-ls lv2/
-git commit -m "Subtree merged in lv2"
+#git merge -s ours --no-commit  $1/master
+git read-tree --prefix=$1/ -u $1/master
+git commit -m "Subtree merged in "$1
