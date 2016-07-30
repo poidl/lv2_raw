@@ -21,6 +21,6 @@ git checkout -b $1 $1/master
 # switch back to master and copy repo into subfolder
 git checkout master
 # is this necessary?
-it merge -s ours --no-commit  $1/master
+git merge -s ours --no-commit  $1/master
 git read-tree --prefix=$1/ -u $1/master
 git commit -m "Subtree merged in "$1
