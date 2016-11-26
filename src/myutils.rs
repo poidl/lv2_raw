@@ -14,9 +14,6 @@ pub fn mapfeature(hostfeatures: *const (*const LV2Feature),
                 // host doesn't provide feature
                 break;
             }
-            // let uriptr = (*fptr).uri;
-            // let buf = CStr::from_ptr(uriptr).to_bytes();
-            // let s: &str = str::from_utf8(buf).unwrap();
             let s = cstring((*fptr).uri);
             if s == requiredfeature {
                 println!{" -> Obtained uri ptr from host: {}", requiredfeature}

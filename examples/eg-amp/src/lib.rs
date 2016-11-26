@@ -22,13 +22,41 @@ extern crate libc;
 extern crate lv2;
 use std::ptr;
 use std::mem;
+use std::slice;
 use lv2::*;
 
-#[repr(C)]
-struct Amp {
-    gain: *const f32,
-    input: *const f32,
-    output: *mut f32,
+struct AmpNew<'a> {
+    gain: &'a f32,
+    input: &'a [f32],
+    output: &'a mut [f32],
+}
+
+impl<'a> lv2::LV2HandleNew<'a> for AmpNew<'a> {
+    fn connect_port(&mut self, port: u32, data: &'a mut [f32]) {
+        match port {
+            0 => self.gain = &data[0] as &f32, // data may be NULL pointer, so don't dereference!
+            1 => self.input = data as &'a [f32],
+            2 => self.output = data,
+            _ => panic!("Not a valid PortIndex: {}", port),
+        }
+    }
+    fn activate(&mut self) {}
+    fn run(&mut self, n_samples: u32) {
+
+        let coef: f32;
+        match *self.gain > -90.0 {
+            true => coef = (10.0 as f32).powf(self.gain * 0.05),
+            false => coef = 0.0,
+        }
+        for x in 0..n_samples {
+            let i = x as usize;
+            self.output[i] = self.input[i] * coef;
+        }
+
+    }
+
+    fn deactivate(&mut self) {}
+    fn cleanup(&mut self) {}
 }
 
 // have to define new type. Otherwise error: "cannot define inherent impl for a type outside of the crate where the type is defined; define and implement a trait or new type instead"
@@ -40,39 +68,29 @@ impl Descriptor {
                                   _bundle_path: *const i8,
                                   _features: *const *const lv2::LV2Feature)
                                   -> lv2::LV2Handle {
-        let ptr: *mut libc::c_void;
-        unsafe {
-            ptr = libc::malloc(mem::size_of::<Amp>() as libc::size_t) as *mut libc::c_void;
-        }
-        return ptr;
+        let amp = AmpNew {
+            gain: &0f32,
+            input: &[0f32],
+            output: &mut [0f32],
+        };
+        let bx = Box::new(amp);
+        let ptr = (&*bx as *const AmpNew) as *mut libc::c_void;
+        mem::forget(bx);
+        ptr
     }
     pub extern "C" fn connect_port(handle: lv2::LV2Handle, port: u32, data: *mut libc::c_void) {
-        let amp: *mut Amp = handle as *mut Amp;
-        match port {
-            0 => unsafe { (*amp).gain = data as *const f32 }, // data may be NULL pointer, so don't dereference!
-            1 => unsafe { (*amp).input = data as *const f32 },
-            2 => unsafe { (*amp).output = data as *mut f32 },
-            _ => panic!("Not a valid PortIndex: {}", port)
+        let d = data as *mut f32;
+        let amp = handle as *mut AmpNew;
+        unsafe {
+            // TODO: This should be sample_count.
+            let bs: &mut [f32] = slice::from_raw_parts_mut(d, 256 * mem::size_of::<f32>());
+            (*amp).connect_port(port, bs)
         }
     }
     pub extern "C" fn activate(_instance: lv2::LV2Handle) {}
     pub extern "C" fn run(instance: lv2::LV2Handle, n_samples: u32) {
-        let amp = instance as *const Amp;
-        let gain = unsafe { *((*amp).gain) };
-        let input: *const f32 = unsafe { (*amp).input };
-        let output: *mut f32 = unsafe { (*amp).output };
-
-        let coef: f32;
-        match gain > -90.0 {
-            true => coef = (10.0 as f32).powf(gain * 0.05),
-            false => coef = 0.0,
-        }
-
-        unsafe {
-            for x in 0..n_samples {
-                *output.offset(x as isize) = *input.offset(x as isize) * coef;
-            }
-        }
+        let amp = instance as *mut AmpNew;
+        unsafe { (*amp).run(n_samples) }
     }
 
     pub extern "C" fn deactivate(_instance: lv2::LV2Handle) {}
@@ -97,7 +115,7 @@ static mut desc: lv2::LV2Descriptor = lv2::LV2Descriptor {
     run: Descriptor::run,
     deactivate: Descriptor::deactivate,
     cleanup: Descriptor::cleanup,
-    extension_data: Descriptor::extension_data
+    extension_data: Descriptor::extension_data,
 };
 
 #[no_mangle]

@@ -1,5 +1,13 @@
 use libc;
 
+pub trait LV2HandleNew<'a> {
+    fn connect_port(&mut self, _port: u32, _data: &'a mut [f32]) {}
+    fn activate(&mut self) {}
+    fn run(&mut self, _n_samples: u32) {}
+    fn deactivate(&mut self) {}
+    fn cleanup(&mut self) {}
+}
+
 pub type LV2Handle = *mut libc::c_void;
 
 #[repr(C)]
