@@ -21,17 +21,20 @@
 extern crate libc;
 extern crate lv2;
 use std::ptr;
-use std::mem;
-use std::slice;
-use lv2::*;
+// use std::marker::PhantomData;
 
-struct AmpNew<'a> {
+pub struct AmpNew<'a> {
     gain: &'a f32,
     input: &'a [f32],
     output: &'a mut [f32],
 }
 
 impl<'a> lv2::LV2HandleNew<'a> for AmpNew<'a> {
+    // TODO: this should be a constructor named "instantiate()" or "new()", depending on whether one wants to adopt LV2 or Rust terminology, respectively (i.e. it should not take &mut self as argument, but allocate an AmpNew); But I don't know how to do this properly. The AmpNew struct only contains references, and there are two ways I can think of:
+    // 1) Use raw pointers, but I'd like to avoid that since the code looks more elegant with &-references, e.g. I don't have to use "unsafe" when dereferencing.
+    // 2) Create "dummy resources" in AmpNew and carry them around with the struct. Then the &-references can initially point to those resources in the constructor, and the compiler doesn't complain because the resources don't go out of scope when the constructor returns. But that would be awkward, since these resources would never get used, because the actual resources are provided by the host.
+    // For now, initialize() is a placeholder function that doesn't do anything. More complicated plugins may scan host features, set a sample rate, etc.
+    fn initialize(&mut self) {}
     fn connect_port(&mut self, port: u32, data: &'a mut [f32]) {
         match port {
             0 => self.gain = &data[0] as &f32, // data may be NULL pointer, so don't dereference!
@@ -54,72 +57,27 @@ impl<'a> lv2::LV2HandleNew<'a> for AmpNew<'a> {
         }
 
     }
-
     fn deactivate(&mut self) {}
     fn cleanup(&mut self) {}
 }
 
-// have to define new type. Otherwise error: "cannot define inherent impl for a type outside of the crate where the type is defined; define and implement a trait or new type instead"
-struct Descriptor(lv2::LV2Descriptor);
-
-impl Descriptor {
-    pub extern "C" fn instantiate(_descriptor: *const lv2::LV2Descriptor,
-                                  _rate: f64,
-                                  _bundle_path: *const i8,
-                                  _features: *const *const lv2::LV2Feature)
-                                  -> lv2::LV2Handle {
-        let amp = AmpNew {
-            gain: &0f32,
-            input: &[0f32],
-            output: &mut [0f32],
-        };
-        let bx = Box::new(amp);
-        let ptr = (&*bx as *const AmpNew) as *mut libc::c_void;
-        mem::forget(bx);
-        ptr
-    }
-    pub extern "C" fn connect_port(handle: lv2::LV2Handle, port: u32, data: *mut libc::c_void) {
-        let d = data as *mut f32;
-        let amp = handle as *mut AmpNew;
-        unsafe {
-            // TODO: This should be sample_count.
-            let bs: &mut [f32] = slice::from_raw_parts_mut(d, 256 * mem::size_of::<f32>());
-            (*amp).connect_port(port, bs)
-        }
-    }
-    pub extern "C" fn activate(_instance: lv2::LV2Handle) {}
-    pub extern "C" fn run(instance: lv2::LV2Handle, n_samples: u32) {
-        let amp = instance as *mut AmpNew;
-        unsafe { (*amp).run(n_samples) }
-    }
-
-    pub extern "C" fn deactivate(_instance: lv2::LV2Handle) {}
-    pub extern "C" fn cleanup(instance: lv2::LV2Handle) {
-
-        unsafe {
-            // ptr::read(instance as *mut Amp); // no need for this?
-            libc::free(instance as lv2::LV2Handle)
-        }
-    }
-    pub extern "C" fn extension_data(_uri: *const u8) -> (*const libc::c_void) {
-        ptr::null()
-    }
-}
+type Newtype<'a> = AmpNew<'a>;
 
 static S: &'static [u8] = b"http://example.org/eg-amp_rust\0";
 static mut desc: lv2::LV2Descriptor = lv2::LV2Descriptor {
     uri: 0 as *const libc::c_char, // ptr::null() isn't const fn (yet)
-    instantiate: Descriptor::instantiate,
-    connect_port: Descriptor::connect_port,
-    activate: Descriptor::activate,
-    run: Descriptor::run,
-    deactivate: Descriptor::deactivate,
-    cleanup: Descriptor::cleanup,
-    extension_data: Descriptor::extension_data,
+    instantiate: lv2::instantiate::<Newtype>,
+    connect_port: lv2::connect_port::<Newtype>,
+    activate: lv2::activate,
+    run: lv2::run::<Newtype>,
+    deactivate: lv2::deactivate,
+    cleanup: lv2::cleanup,
+    extension_data: lv2::extension_data,
 };
 
+
 #[no_mangle]
-pub extern "C" fn lv2_descriptor(index: i32) -> *const LV2Descriptor {
+pub extern "C" fn lv2_descriptor(index: i32) -> *const lv2::LV2Descriptor {
     if index != 0 {
         return ptr::null();
     } else {
@@ -127,7 +85,7 @@ pub extern "C" fn lv2_descriptor(index: i32) -> *const LV2Descriptor {
         let ptr = S.as_ptr() as *const libc::c_char;
         unsafe {
             desc.uri = ptr;
-            return &desc as *const LV2Descriptor;
+            return &desc as *const lv2::LV2Descriptor;
         }
     }
 }
