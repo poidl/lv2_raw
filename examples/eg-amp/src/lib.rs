@@ -30,7 +30,7 @@ pub struct AmpNew<'a> {
 }
 
 impl<'a> lv2::LV2HandleNew<'a> for AmpNew<'a> {
-    // TODO: this should be a constructor named "instantiate()" or "new()", depending on whether one wants to adopt LV2 or Rust terminology, respectively (i.e. it should not take &mut self as argument, but allocate an AmpNew); But I don't know how to do this properly. The AmpNew struct only contains references, and there are two ways I can think of:
+    // TODO: Instead of "initialize()" there should be a constructor named "instantiate()" or "new()", depending on whether one wants to adopt LV2 or Rust terminology, respectively (i.e. it should not take &mut self as argument, but allocate an AmpNew); But I don't know how to do this properly. The AmpNew struct only contains references, and there are two ways I can think of:
     // 1) Use raw pointers, but I'd like to avoid that since the code looks more elegant with &-references, e.g. I don't have to use "unsafe" when dereferencing.
     // 2) Create "dummy resources" in AmpNew and carry them around with the struct. Then the &-references can initially point to those resources in the constructor, and the compiler doesn't complain because the resources don't go out of scope when the constructor returns. But that would be awkward, since these resources would never get used, because the actual resources are provided by the host.
     // For now, initialize() is a placeholder function that doesn't do anything. More complicated plugins may scan host features, set a sample rate, etc.
