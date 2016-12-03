@@ -21,7 +21,10 @@
 extern crate libc;
 extern crate lv2;
 use std::ptr;
-// use std::marker::PhantomData;
+
+// This is a simple "amplifier" plugin. It holds references to input and output
+// buffers, and a reference to a single number (gain) by which the input buffer
+// is multiplied. Memory managemet of these resources is done by the host.
 
 pub struct AmpNew<'a> {
     gain: &'a f32,
@@ -29,10 +32,38 @@ pub struct AmpNew<'a> {
     output: &'a mut [f32],
 }
 
+// The main question is: Should one use raw pointers instead of references in this
+// struct?
+
+// I'd say NO, because:
+
+// I want to implement "lv2::LV2HandleNew"
+// without having to use "unsafe", i.e. to "provide a safe interface" to the
+// lv2 library. What is the correct (let's say idiomatic) way to "provide a safe
+// interface"?
+
+// I'd say YES, because:
+
+// *) AFAIK it's impossible to implement a constructor "::new()" function for this
+// struct, since the resources go out of scope when "new()" terminates. Instead, the
+// plugin is instantiated by the lv2::instantiate::<>() function using
+// libc::malloc(), similar to the code I commented at the bottom of this page.
+// It seems weired to not being able to allocate the plugin from safe code.
+// How would one design a plugin interface in pure Rust (i.e.
+// with a host written in Rust)?
+
+// *) There are potential problems arising with unkown buffer sizes. The function
+// connect_port() below takes an "&'a mut [f32]", which is constructed in the
+// calling function (containing unsafe code) by "slice::from_raw_parts_mut()",
+// which needs a buffer size as argument. This size is not passed by host to
+// the extern "C" connect_port(). Instead,
+// the host passes the "n_samples" argument to the real-time "run()" function to
+// indicate the length of the buffer.
+// This may not be an issue, since one can pass a really high buffer size
+// to "slice::from_raw_parts_mut()" without having to worry about perfomance/space,
+// since no resources are actually allocated anyways, right?
+
 impl<'a> lv2::LV2HandleNew<'a> for AmpNew<'a> {
-    // TODO: Instead of "initialize()" there should be a constructor named "instantiate()" or "new()", depending on whether one wants to adopt LV2 or Rust terminology, respectively (i.e. it should not take &mut self as argument, but allocate an AmpNew); But I don't know how to do this properly. The AmpNew struct only contains references, and there are two ways I can think of:
-    // 1) Use raw pointers, but I'd like to avoid that since the code looks more elegant with &-references, e.g. I don't have to use "unsafe" when dereferencing.
-    // 2) Create "dummy resources" in AmpNew and carry them around with the struct. Then the &-references can initially point to those resources in the constructor, and the compiler doesn't complain because the resources don't go out of scope when the constructor returns. But that would be awkward, since these resources would never get used, because the actual resources are provided by the host.
     // For now, initialize() is a placeholder function that doesn't do anything. More complicated plugins may scan host features, set a sample rate, etc.
     fn initialize(&mut self) {}
     fn connect_port(&mut self, port: u32, data: &'a mut [f32]) {
@@ -63,6 +94,15 @@ impl<'a> lv2::LV2HandleNew<'a> for AmpNew<'a> {
 
 type Newtype<'a> = AmpNew<'a>;
 
+// If I understand correctly, the lv2::LV2Descriptor struct that is delivered
+// to the host by "lv2_descriptor()" CANNOT be generic over "Newtype", since this
+// would require "lv2_descriptor()" to be generic. But functions called from C
+// (by their name) CANNOT be generic.
+// The reason why "lv2::instantiate::<>" etc. CAN be generic, is that those functions
+// get passed to C via FUNCTION POINTERS contained in a #[repr(C)] struct.
+// A secondary question is: Is this necessary? How to implement this more
+// effectively?
+
 static S: &'static [u8] = b"http://example.org/eg-amp_rust\0";
 static mut desc: lv2::LV2Descriptor = lv2::LV2Descriptor {
     uri: 0 as *const libc::c_char, // ptr::null() isn't const fn (yet)
@@ -89,3 +129,18 @@ pub extern "C" fn lv2_descriptor(index: i32) -> *const lv2::LV2Descriptor {
         }
     }
 }
+
+// fn instantiate<T>() -> *mut libc::c_void {
+//     let ptr: *mut libc::c_void;
+//     unsafe {
+//         ptr = libc::malloc(mem::size_of::<T>() as libc::size_t) as *mut libc::c_void;
+//         let plgptr = ptr as *mut T;
+//     }
+//     ptr
+// }
+
+// impl<'a> AmpNew<'a> {
+//     fn new_ptr() -> *mut libc::c_void {
+//         instantiate::<AmpNew>()
+//     }
+// }
