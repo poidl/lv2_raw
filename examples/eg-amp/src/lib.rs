@@ -104,13 +104,13 @@ type Newtype<'a> = AmpNew<'a>;
 // effectively?
 
 static S: &'static [u8] = b"http://example.org/eg-amp_rust\0";
-static mut desc: lv2::LV2Descriptor = lv2::LV2Descriptor {
+static mut DESC: lv2::LV2Descriptor = lv2::LV2Descriptor {
     uri: 0 as *const libc::c_char, // ptr::null() isn't const fn (yet)
     instantiate: lv2::instantiate::<Newtype>,
     connect_port: lv2::connect_port::<Newtype>,
-    activate: lv2::activate,
+    activate: Some(lv2::activate),
     run: lv2::run::<Newtype>,
-    deactivate: lv2::deactivate,
+    deactivate: Some(lv2::deactivate),
     cleanup: lv2::cleanup,
     extension_data: lv2::extension_data,
 };
@@ -124,8 +124,8 @@ pub extern "C" fn lv2_descriptor(index: i32) -> *const lv2::LV2Descriptor {
         // credits to ker on stackoverflow: http://stackoverflow.com/questions/31334356/static-struct-with-c-strings-for-lv2-plugin (duplicate) or http://stackoverflow.com/questions/25880043/creating-a-static-c-struct-containing-strings
         let ptr = S.as_ptr() as *const libc::c_char;
         unsafe {
-            desc.uri = ptr;
-            return &desc as *const lv2::LV2Descriptor;
+            DESC.uri = ptr;
+            return &DESC as *const lv2::LV2Descriptor;
         }
     }
 }
