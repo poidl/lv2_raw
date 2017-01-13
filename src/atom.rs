@@ -1,61 +1,71 @@
-use std::mem;
+// Copyright 2017 Stefan Riha
 
-// The header of an atom:Atom.
+// Documentation copied from http://lv2plug.in/ns/ext/atom/atom.h
+
+// Copyright text of the original C file:
+
+// Copyright 2008-2016 David Robillard <http://drobilla.net>
+//
+// Permission to use, copy, modify, and/or distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
+//
+// THIS SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+// WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+// MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+// ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+// WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+// ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+// OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+//
+
+/** The header of an atom:Atom. */
 #[repr(C)]
 pub struct LV2_Atom {
-    pub size: u32, // Size in bytes, not including type and size.
-    pub mytype: u32, // Type of this atom (mapped uri).
+    /**< Size in bytes, not including type and size. */
+    pub size: u32,
+    /**< Type of this atom (mapped URI). */
+    pub mytype: u32,
 }
 
-// compare with
-// http://lv2plug.in/git/cgit.cgi/lv2.git/tree/lv2/lv2plug.in/ns/ext/atom/atom.h
-// Lv2AtomEvent has a union "time", which can be beat or frames. Not implemented
-// doesn't need #[repr(C)]
+/** The header of an atom:Event.  Note this type is NOT an LV2_Atom. */
+#[repr(C)]
 pub struct Lv2AtomEvent {
+    /** RUST_TODO: inconsistent with the C version, see http://lv2plug.in/git/cgit.cgi/lv2.git/tree/lv2/lv2plug in/ns/ext/atom/atom.h Lv2AtomEvent has a union "time", which can be beat or frames. Not implemented. */
     pub time_in_frames: i64,
+    /**< Event body atom header. */
     pub body: LV2_Atom,
 }
 
+/**
+   The body of an atom:Sequence (a sequence of events).
+
+   The unit field is either a URID that described an appropriate time stamp
+   type, or may be 0 where a default stamp type is known.  For
+   LV2_Descriptor::run(), the default stamp type is audio frames.
+
+   The contents of a sequence is a series of LV2_Atom_Event, each aligned
+   to 64-bits, e.g.:
+   <pre>
+   | Event 1 (size 6)                              | Event 2
+   |       |       |       |       |       |       |       |       |
+   | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | | |
+   |FRAMES |SUBFRMS|TYPE   |SIZE   |DATADATADATAPAD|FRAMES |SUBFRMS|...
+   </pre>
+*/
 #[repr(C)]
 pub struct LV2_Atom_Sequence_Body {
-    unit: u32, // uriD of unit of event time stamps.
-    pad: u32, /* Currently unused.
-               * Contents (a series of events) follow here. */
+    /**< URID of unit of event time stamps. */
+    unit: u32,
+    /**< Currently unused. */
+    pad: u32, // Contents (a series of events) follow here.
 }
 
-// An atom:Sequence.
+/// An atom:Sequence.
 #[repr(C)]
 pub struct LV2_Atom_Sequence {
-    pub atom: LV2_Atom, // Atom header.
-    pub body: LV2_Atom_Sequence_Body, // Body.
-}
-
-/** Pad a size to 64 bits. */
-pub fn lv2_atom_pad_size(size: u32) -> (u32) {
-    return (size + 7u32) & (!7u32);
-}
-
-/** Get an iterator pointing to the first event in a Sequence body. */
-pub fn lv2_atom_sequence_begin(body: *const LV2_Atom_Sequence_Body) -> (*const Lv2AtomEvent) {
-    unsafe { return body.offset(1) as *const Lv2AtomEvent }
-}
-
-/** Return an iterator to the element following `i`. */
-pub fn lv2_atom_sequence_next(i: *const Lv2AtomEvent) -> (*const Lv2AtomEvent) {
-    unsafe {
-        let addr_of_first_byte = i as *const u8;
-        let size_in_bytes_1 = mem::size_of::<Lv2AtomEvent>() as isize;
-        let size_in_bytes_2 = lv2_atom_pad_size((*i).body.size) as isize;
-        let j = addr_of_first_byte.offset(size_in_bytes_1 + size_in_bytes_2);
-        return j as *const Lv2AtomEvent;
-    }
-}
-
-/** Return true iff `i` has reached the end of `body`. */
-pub fn lv2_atom_sequence_is_end(body: *const LV2_Atom_Sequence_Body,
-                                size: u32,
-                                i: *const Lv2AtomEvent)
-                                -> (bool) {
-    let addr_of_first_byte = body as *const u8;
-    unsafe { return (i as *const u8) >= addr_of_first_byte.offset(size as isize) }
+    /**< Atom header. */
+    pub atom: LV2_Atom,
+    /**< Body. */
+    pub body: LV2_Atom_Sequence_Body,
 }

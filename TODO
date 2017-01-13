@@ -1,1 +1,0 @@
-*) The slice in connect_port() should have size sample_count. See example "eg-amp". Current connect_port() will panic if ALSA period is larger than 1024 bits.
