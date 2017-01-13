@@ -30,9 +30,9 @@ pub struct LV2Descriptor {
                                    features: *const (*const LV2Feature))
                                    -> LV2Handle,
     pub connect_port: extern "C" fn(handle: LV2Handle, port: u32, data: *mut libc::c_void),
-    pub activate: extern "C" fn(instance: LV2Handle),
+    pub activate: Option<extern "C" fn(instance: LV2Handle)>,
     pub run: extern "C" fn(instance: LV2Handle, n_samples: u32),
-    pub deactivate: extern "C" fn(instance: LV2Handle),
+    pub deactivate: Option<extern "C" fn(instance: LV2Handle)>,
     pub cleanup: extern "C" fn(instance: LV2Handle),
     pub extension_data: extern "C" fn(uri: *const u8) -> (*const libc::c_void),
 }
