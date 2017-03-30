@@ -19,6 +19,9 @@
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
+use std::mem::size_of;
+use libc::{memcmp, c_void};
+
 /** The header of an atom:Atom. */
 #[repr(C)]
 pub struct LV2_Atom {
@@ -68,4 +71,78 @@ pub struct LV2_Atom_Sequence {
     pub atom: LV2_Atom,
     /**< Body. */
     pub body: LV2_Atom_Sequence_Body,
+}
+
+/// Pad a size to 64 bits
+pub fn lv2_atom_pad_size(size: u32) -> u32 {
+    (size + 7) & (!7)
+}
+
+/** Return the total size of `atom`, including the header. */
+pub fn lv2_atom_total_size(atom: &LV2_Atom) -> u32 {
+    size_of::<LV2_Atom>() as u32 + atom.size
+}
+
+/** Return true iff `atom` is null. */
+pub unsafe fn lv2_atom_is_null(atom: *const LV2_Atom) -> bool {
+    atom.is_null() || ((*atom).mytype == 0 && (*atom).size == 0)
+}
+
+/** Return true iff `a` is equal to `b`. */
+pub unsafe fn lv2_atom_equals(a: *const LV2_Atom, b: *const LV2_Atom) -> bool {
+    (a == b) || (((*a).mytype == (*b).mytype) &&
+                 ((*a).size == (*b).size) &&
+                 (memcmp(a.offset(1) as *const c_void, 
+                         b.offset(1) as *const c_void, 
+                         (*a).size as usize) == 0))
+}
+
+
+/** Get an iterator pointing to the first event in a Sequence body. */
+pub unsafe fn lv2_atom_sequence_begin(body: *const LV2_Atom_Sequence_Body) -> *const Lv2AtomEvent {
+    body.offset(1) as *const Lv2AtomEvent
+}
+
+/** Get an iterator pointing to the end of a Sequence body. */
+pub unsafe fn lv2_atom_sequence_end(body: *const LV2_Atom_Sequence_Body,
+                                    size: u32) -> *const Lv2AtomEvent {
+
+    (body as *const u8).offset(lv2_atom_pad_size(size) as isize) as *const Lv2AtomEvent
+}
+
+/** Return true iff `i` has reached the end of `body`. */
+pub unsafe fn lv2_atom_sequence_is_end(body: *const LV2_Atom_Sequence_Body,
+            size: u32, i: *const Lv2AtomEvent) -> bool {
+
+    i as *const u8 >= (body as *const u8).offset(size as isize)
+
+}
+
+
+/** Return an iterator to the element following `i`. */
+pub unsafe fn lv2_atom_sequence_next(i: *const Lv2AtomEvent) -> *const Lv2AtomEvent {
+    let off = size_of::<Lv2AtomEvent>() + lv2_atom_pad_size((*i).body.size) as usize;
+    let ptr = (i as *const u8).offset(off as isize);
+    ptr as *const Lv2AtomEvent
+}
+
+/**
+   Clear all events from `sequence`.
+
+   This simply resets the size field, the other fields are left untouched.
+*/
+pub unsafe fn lv2_atom_sequence_clear(seq: *mut LV2_Atom_Sequence) -> () {
+    (*seq).atom.size = size_of::<LV2_Atom_Sequence_Body>() as u32;
+}
+
+
+pub unsafe fn lv2_atom_sequence_foreach<F>(seq: *const LV2_Atom_Sequence, closure: F) -> () 
+    where F: Fn(*const Lv2AtomEvent) -> () {
+
+    let body = &((*seq).body);
+    let mut it = lv2_atom_sequence_begin(body);
+    while !lv2_atom_sequence_is_end(body, (*seq).atom.size, it) {
+        closure(it);
+        it = lv2_atom_sequence_next(it);
+    }
 }

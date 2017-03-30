@@ -23,6 +23,13 @@ use libc;
 pub type LV2Urid = u32;
 pub type LV2UridMapHandle = *mut libc::c_void;
 
+pub static LV2_URID_URI: &'static str = "http://lv2plug.in/ns/ext/urid";
+pub static LV2_URID_PREFIX: &'static str = "http://lv2plug.in/ns/ext/urid#";
+
+pub static LV2_URID__MAP: &'static str = "http://lv2plug.in/ns/ext/urid#map";
+pub static LV2_URID__UNMAP: &'static str = "http://lv2plug.in/ns/ext/urid#unmap";
+
+
 /**
    URID Map Feature (LV2_URID__map)
 */
