@@ -44,7 +44,8 @@ pub type LV2UIWidget = *mut libc::c_void;
 
    The UI may compare this to NULL, but otherwise MUST NOT interpret it.
 */
-pub type LV2UIController = *const libc::c_void;
+// pub type LV2UIController = *const libc::c_void;
+pub struct LV2UIController(pub *const libc::c_void);
 
 /**
    A host-provided function that sends data to a plugin's input ports.
@@ -288,4 +289,14 @@ pub struct LV2UIExternalUIHost {
    * LV2UI_Descriptor::instantiate()
    */
     pub plugin_human_id: *const libc::c_char,
+}
+
+
+// unsafe impl Send for LV2UIWriteFunction {}
+unsafe impl Send for LV2UIController {}
+impl Copy for LV2UIController { }
+impl Clone for LV2UIController {
+    fn clone(&self) -> LV2UIController {
+        *self
+    }
 }
