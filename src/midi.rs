@@ -127,3 +127,104 @@ impl LV2_Midi_Message_Type {
     }
 }
 	
+#[allow(non_camel_case_types)]	
+pub enum LV2_Midi_Controller {
+	LV2_MIDI_CTL_MSB_BANK             = 0x00,  
+	LV2_MIDI_CTL_MSB_MODWHEEL         = 0x01,  
+	LV2_MIDI_CTL_MSB_BREATH           = 0x02,  
+	LV2_MIDI_CTL_MSB_FOOT             = 0x04,  
+	LV2_MIDI_CTL_MSB_PORTAMENTO_TIME  = 0x05,  
+	LV2_MIDI_CTL_MSB_DATA_ENTRY       = 0x06,  
+	LV2_MIDI_CTL_MSB_MAIN_VOLUME      = 0x07,  
+	LV2_MIDI_CTL_MSB_BALANCE          = 0x08,  
+	LV2_MIDI_CTL_MSB_PAN              = 0x0A,  
+	LV2_MIDI_CTL_MSB_EXPRESSION       = 0x0B,  
+	LV2_MIDI_CTL_MSB_EFFECT1          = 0x0C,  
+	LV2_MIDI_CTL_MSB_EFFECT2          = 0x0D,  
+	LV2_MIDI_CTL_MSB_GENERAL_PURPOSE1 = 0x10,  
+	LV2_MIDI_CTL_MSB_GENERAL_PURPOSE2 = 0x11,  
+	LV2_MIDI_CTL_MSB_GENERAL_PURPOSE3 = 0x12,  
+	LV2_MIDI_CTL_MSB_GENERAL_PURPOSE4 = 0x13,  
+	LV2_MIDI_CTL_LSB_BANK             = 0x20,  
+	LV2_MIDI_CTL_LSB_MODWHEEL         = 0x21,  
+	LV2_MIDI_CTL_LSB_BREATH           = 0x22,  
+	LV2_MIDI_CTL_LSB_FOOT             = 0x24,  
+	LV2_MIDI_CTL_LSB_PORTAMENTO_TIME  = 0x25,  
+	LV2_MIDI_CTL_LSB_DATA_ENTRY       = 0x26,  
+	LV2_MIDI_CTL_LSB_MAIN_VOLUME      = 0x27,  
+	LV2_MIDI_CTL_LSB_BALANCE          = 0x28,  
+	LV2_MIDI_CTL_LSB_PAN              = 0x2A,  
+	LV2_MIDI_CTL_LSB_EXPRESSION       = 0x2B,  
+	LV2_MIDI_CTL_LSB_EFFECT1          = 0x2C,  
+	LV2_MIDI_CTL_LSB_EFFECT2          = 0x2D,  
+	LV2_MIDI_CTL_LSB_GENERAL_PURPOSE1 = 0x30,  
+	LV2_MIDI_CTL_LSB_GENERAL_PURPOSE2 = 0x31,  
+	LV2_MIDI_CTL_LSB_GENERAL_PURPOSE3 = 0x32,  
+	LV2_MIDI_CTL_LSB_GENERAL_PURPOSE4 = 0x33,  
+	LV2_MIDI_CTL_SUSTAIN              = 0x40,  
+	LV2_MIDI_CTL_PORTAMENTO           = 0x41,  
+	LV2_MIDI_CTL_SOSTENUTO            = 0x42,  
+	LV2_MIDI_CTL_SOFT_PEDAL           = 0x43,  
+	LV2_MIDI_CTL_LEGATO_FOOTSWITCH    = 0x44,  
+	LV2_MIDI_CTL_HOLD2                = 0x45,  
+	LV2_MIDI_CTL_SC1_SOUND_VARIATION  = 0x46,  
+	LV2_MIDI_CTL_SC2_TIMBRE           = 0x47,  
+	LV2_MIDI_CTL_SC3_RELEASE_TIME     = 0x48,  
+	LV2_MIDI_CTL_SC4_ATTACK_TIME      = 0x49,  
+	LV2_MIDI_CTL_SC5_BRIGHTNESS       = 0x4A,  
+	LV2_MIDI_CTL_SC6                  = 0x4B,  
+	LV2_MIDI_CTL_SC7                  = 0x4C,  
+	LV2_MIDI_CTL_SC8                  = 0x4D,  
+	LV2_MIDI_CTL_SC9                  = 0x4E,  
+	LV2_MIDI_CTL_SC10                 = 0x4F,  
+	LV2_MIDI_CTL_GENERAL_PURPOSE5     = 0x50,  
+	LV2_MIDI_CTL_GENERAL_PURPOSE6     = 0x51,  
+	LV2_MIDI_CTL_GENERAL_PURPOSE7     = 0x52,  
+	LV2_MIDI_CTL_GENERAL_PURPOSE8     = 0x53,  
+	LV2_MIDI_CTL_PORTAMENTO_CONTROL   = 0x54,  
+	LV2_MIDI_CTL_E1_REVERB_DEPTH      = 0x5B,  
+	LV2_MIDI_CTL_E2_TREMOLO_DEPTH     = 0x5C,  
+	LV2_MIDI_CTL_E3_CHORUS_DEPTH      = 0x5D,  
+	LV2_MIDI_CTL_E4_DETUNE_DEPTH      = 0x5E,  
+	LV2_MIDI_CTL_E5_PHASER_DEPTH      = 0x5F,  
+	LV2_MIDI_CTL_DATA_INCREMENT       = 0x60,  
+	LV2_MIDI_CTL_DATA_DECREMENT       = 0x61,  
+	LV2_MIDI_CTL_NRPN_LSB             = 0x62,  
+	LV2_MIDI_CTL_NRPN_MSB             = 0x63,  
+	LV2_MIDI_CTL_RPN_LSB              = 0x64,  
+	LV2_MIDI_CTL_RPN_MSB              = 0x65,  
+	LV2_MIDI_CTL_ALL_SOUNDS_OFF       = 0x78,  
+	LV2_MIDI_CTL_RESET_CONTROLLERS    = 0x79,  
+	LV2_MIDI_CTL_LOCAL_CONTROL_SWITCH = 0x7A,  
+	LV2_MIDI_CTL_ALL_NOTES_OFF        = 0x7B,  
+	LV2_MIDI_CTL_OMNI_OFF             = 0x7C,  
+	LV2_MIDI_CTL_OMNI_ON              = 0x7D,  
+	LV2_MIDI_CTL_MONO1                = 0x7E,  
+	LV2_MIDI_CTL_MONO2                = 0x7F   
+}
+
+
+pub fn lv2_midi_is_voice_message(msg: &[u8]) -> bool {
+	msg[0] >= 0x80 && msg[0] < 0xF0
+}
+
+pub fn lv2_midi_is_system_message(msg: &[u8]) -> bool {
+	match msg[0] {
+		0xF4 => false,
+		0xF5 => false,
+		0xF7 => false,
+		0xF9 => false,
+		0xFD => false,
+		_ => true
+	}
+}
+
+pub fn lv2_midi_message_type(msg: &[u8]) -> LV2_Midi_Message_Type {
+	if lv2_midi_is_voice_message(msg) {
+		LV2_Midi_Message_Type::from_u8(msg[0] & 0xF0)
+	} else if lv2_midi_is_system_message(msg) {
+		LV2_Midi_Message_Type::from_u8(msg[0])
+	} else {
+		LV2_Midi_Message_Type::LV2_MIDI_MSG_INVALID
+	}
+}

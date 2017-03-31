@@ -19,7 +19,7 @@
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-use std::mem::size_of;
+use std::mem::{size_of, transmute};
 use libc::{memcmp, c_void};
 
 /** The header of an atom:Atom. */
@@ -38,6 +38,16 @@ pub struct Lv2AtomEvent {
     pub time_in_frames: i64,
     /**< Event body atom header. */
     pub body: LV2_Atom,
+}
+
+impl Lv2AtomEvent {
+    pub fn time_as_frames(&self) -> i64 {
+        self.time_in_frames
+    }
+
+    pub fn time_as_beats(&self) -> f64 {
+        unsafe { transmute::<i64, f64>(self.time_in_frames) }
+    }
 }
 
 /**
@@ -64,6 +74,18 @@ pub struct LV2_Atom_Sequence_Body {
     pad: u32, // Contents (a series of events) follow here.
 }
 
+impl LV2_Atom_Sequence_Body {
+    pub unsafe fn foreach<F>(&mut self, size: u32, mut closure: F) -> () 
+        where F: FnMut(*const Lv2AtomEvent) -> () {
+
+        let mut it = lv2_atom_sequence_begin(self);
+        while !lv2_atom_sequence_is_end(self, size, it) {
+            closure(it);
+            it = lv2_atom_sequence_next(it);
+        }
+    }
+}
+
 /// An atom:Sequence.
 #[repr(C)]
 pub struct LV2_Atom_Sequence {
@@ -72,6 +94,26 @@ pub struct LV2_Atom_Sequence {
     /**< Body. */
     pub body: LV2_Atom_Sequence_Body,
 }
+
+
+impl LV2_Atom_Sequence {
+ 
+    pub unsafe fn foreach<F>(&mut self, mut closure: F) -> () 
+        where F: FnMut(*const Lv2AtomEvent) -> () {
+
+        let body = &(self.body);
+        let mut it = lv2_atom_sequence_begin(body);
+        while !lv2_atom_sequence_is_end(body, self.atom.size, it) {
+            closure(it);
+            it = lv2_atom_sequence_next(it);
+        }
+    }
+}
+
+
+
+
+
 
 /// Pad a size to 64 bits
 pub fn lv2_atom_pad_size(size: u32) -> u32 {
@@ -114,8 +156,9 @@ pub unsafe fn lv2_atom_sequence_end(body: *const LV2_Atom_Sequence_Body,
 pub unsafe fn lv2_atom_sequence_is_end(body: *const LV2_Atom_Sequence_Body,
             size: u32, i: *const Lv2AtomEvent) -> bool {
 
-    i as *const u8 >= (body as *const u8).offset(size as isize)
-
+    let result = i as *const u8 >= (body as *const u8).offset(size as isize);
+    println!("lv2_atom_sequence_is_end: {}", result);
+    result
 }
 
 
@@ -123,6 +166,9 @@ pub unsafe fn lv2_atom_sequence_is_end(body: *const LV2_Atom_Sequence_Body,
 pub unsafe fn lv2_atom_sequence_next(i: *const Lv2AtomEvent) -> *const Lv2AtomEvent {
     let off = size_of::<Lv2AtomEvent>() + lv2_atom_pad_size((*i).body.size) as usize;
     let ptr = (i as *const u8).offset(off as isize);
+
+    println!("lv2_atom_sequence_next: off: {} ptr: {:?}", off, ptr);
+
     ptr as *const Lv2AtomEvent
 }
 
@@ -135,14 +181,3 @@ pub unsafe fn lv2_atom_sequence_clear(seq: *mut LV2_Atom_Sequence) -> () {
     (*seq).atom.size = size_of::<LV2_Atom_Sequence_Body>() as u32;
 }
 
-
-pub unsafe fn lv2_atom_sequence_foreach<F>(seq: *const LV2_Atom_Sequence, closure: F) -> () 
-    where F: Fn(*const Lv2AtomEvent) -> () {
-
-    let body = &((*seq).body);
-    let mut it = lv2_atom_sequence_begin(body);
-    while !lv2_atom_sequence_is_end(body, (*seq).atom.size, it) {
-        closure(it);
-        it = lv2_atom_sequence_next(it);
-    }
-}
