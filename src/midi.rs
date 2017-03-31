@@ -203,11 +203,16 @@ pub enum LV2_Midi_Controller {
 	LV2_MIDI_CTL_MONO2                = 0x7F   
 }
 
-
+/**
+   Return true iff `msg` is a MIDI voice message (which has a channel).
+*/
 pub fn lv2_midi_is_voice_message(msg: &[u8]) -> bool {
 	msg[0] >= 0x80 && msg[0] < 0xF0
 }
 
+/**
+   Return true iff `msg` is a MIDI system message (which has no channel).
+*/
 pub fn lv2_midi_is_system_message(msg: &[u8]) -> bool {
 	match msg[0] {
 		0xF4 => false,
@@ -219,6 +224,10 @@ pub fn lv2_midi_is_system_message(msg: &[u8]) -> bool {
 	}
 }
 
+/**
+   Return the type of a MIDI message.
+   @param msg Pointer to the start (status byte) of a MIDI message.
+*/
 pub fn lv2_midi_message_type(msg: &[u8]) -> LV2_Midi_Message_Type {
 	if lv2_midi_is_voice_message(msg) {
 		LV2_Midi_Message_Type::from_u8(msg[0] & 0xF0)
