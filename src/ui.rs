@@ -44,8 +44,7 @@ pub type LV2UIWidget = *mut libc::c_void;
 
    The UI may compare this to NULL, but otherwise MUST NOT interpret it.
 */
-// pub type LV2UIController = *const libc::c_void;
-pub struct LV2UIController(pub *const libc::c_void);
+pub type LV2UIControllerRaw = *const libc::c_void;
 
 /**
    A host-provided function that sends data to a plugin's input ports.
@@ -66,11 +65,11 @@ pub struct LV2UIController(pub *const libc::c_void);
    host, but the host MUST gracefully ignore any protocol it does not
    understand.
 */
-pub type LV2UIWriteFunction = Option<extern "C" fn(controller: LV2UIController,
-                                                   port_index: libc::c_uint,
-                                                   buffer_size: libc::c_uint,
-                                                   port_protocol: libc::c_uint,
-                                                   buffer: *const libc::c_void)>;
+pub type LV2UIWriteFunctionRaw = Option<extern "C" fn(controller: LV2UIControllerRaw,
+                                                      port_index: libc::c_uint,
+                                                      buffer_size: libc::c_uint,
+                                                      port_protocol: libc::c_uint,
+                                                      buffer: *const libc::c_void)>;
 
 /**
    A plugin UI.
@@ -79,7 +78,7 @@ pub type LV2UIWriteFunction = Option<extern "C" fn(controller: LV2UIController,
    function.
 */
 #[repr(C)]
-pub struct LV2UIDescriptor {
+pub struct LV2UIDescriptorRaw {
     /**
 	   The URI for this UI (not for the plugin it controls).
 	*/
@@ -111,14 +110,14 @@ pub struct LV2UIDescriptor {
 	   features are not necessarily the same.
 
 	*/
-    pub instantiate: extern "C" fn(descriptor: *const LV2UIDescriptor,
-                                       plugin_uri: *const libc::c_char,
-                                       bundle_path: *const libc::c_char,
-                                       write_function: LV2UIWriteFunction,
-                                       controller: LV2UIController,
-                                       widget: *mut LV2UIWidget,
-                                       features: *const (*const LV2Feature))
-                                       -> LV2UIHandle,
+    pub instantiate_raw: extern "C" fn(descriptor: *const LV2UIDescriptorRaw,
+                                           plugin_uri: *const libc::c_char,
+                                           bundle_path: *const libc::c_char,
+                                           write_function: LV2UIWriteFunctionRaw,
+                                           controller: LV2UIControllerRaw,
+                                           widget: *mut LV2UIWidget,
+                                           features: *const (*const LV2Feature))
+                                           -> LV2UIHandle,
 
     /**
 	   Destroy the UI.  The host must not try to access the widget after
@@ -277,7 +276,7 @@ pub struct LV2UIExternalUIHost {
    * @param controller Host context associated with plugin UI, as
    *                   supplied to LV2UI_Descriptor::instantiate().
    */
-    pub ui_closed: extern "C" fn(host: LV2UIController) -> libc::c_void,
+    pub ui_closed: extern "C" fn(host: LV2UIControllerRaw) -> libc::c_void,
 
     /**
    * Optional (may be NULL) "user friendly" identifier which the UI
@@ -289,14 +288,4 @@ pub struct LV2UIExternalUIHost {
    * LV2UI_Descriptor::instantiate()
    */
     pub plugin_human_id: *const libc::c_char,
-}
-
-
-// unsafe impl Send for LV2UIWriteFunction {}
-unsafe impl Send for LV2UIController {}
-impl Copy for LV2UIController { }
-impl Clone for LV2UIController {
-    fn clone(&self) -> LV2UIController {
-        *self
-    }
 }
