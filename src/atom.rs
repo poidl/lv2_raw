@@ -21,6 +21,50 @@
 
 use std::mem::{size_of, transmute};
 use libc::{memcmp, c_void};
+use utils::*;
+
+
+pub static LV2_ATOM_URI: &'static [u8] = b"http://lv2plug.in/ns/ext/atom\0";
+pub static LV2_ATOM_PREFIX: &'static [u8] = b"http://lv2plug.in/ns/ext/atom#\0"; 
+
+pub static LV2_MIDI__ACTIVESENSE      : &'static [u8] = b"http://lv2plug.in/ns/ext/midi#ActiveSense\0";
+pub static LV2_MIDI__AFTERTOUCH       : &'static [u8] = b"http://lv2plug.in/ns/ext/midi#Aftertouch\0";
+
+pub static LV2_ATOM__ATOM          : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#Atom\0";
+pub static LV2_ATOM__ATOMPORT      : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#AtomPort\0";
+pub static LV2_ATOM__BLANK         : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#Blank\0";
+pub static LV2_ATOM__BOOL          : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#Bool\0";
+pub static LV2_ATOM__CHUNK         : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#Chunk\0";
+pub static LV2_ATOM__DOUBLE        : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#Double\0";
+pub static LV2_ATOM__EVENT         : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#Event\0";
+pub static LV2_ATOM__FLOAT         : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#Float\0";
+pub static LV2_ATOM__INT           : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#Int\0";
+pub static LV2_ATOM__LITERAL       : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#Literal\0";
+pub static LV2_ATOM__LONG          : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#Long\0";
+pub static LV2_ATOM__NUMBER        : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#Number\0";
+pub static LV2_ATOM__OBJECT        : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#Object\0";
+pub static LV2_ATOM__PATH          : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#Path\0";
+pub static LV2_ATOM__PROPERTY      : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#Property\0";
+pub static LV2_ATOM__RESOURCE      : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#Resource\0";
+pub static LV2_ATOM__SEQUENCE      : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#Sequence\0";
+pub static LV2_ATOM__SOUND         : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#Sound\0";
+pub static LV2_ATOM__STRING        : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#String\0";
+pub static LV2_ATOM__TUPLE         : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#Tuple\0";
+pub static LV2_ATOM__URI           : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#URI\0";
+pub static LV2_ATOM__URID          : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#URID\0";
+pub static LV2_ATOM__VECTOR        : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#Vector\0";
+pub static LV2_ATOM__ATOMTRANSFER  : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#atomTransfer\0";
+pub static LV2_ATOM__BEATTIME      : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#beatTime\0";
+pub static LV2_ATOM__BUFFERTYPE    : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#bufferType\0";
+pub static LV2_ATOM__CHILDTYPE     : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#childType\0";
+pub static LV2_ATOM__EVENTTRANSFER : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#eventTransfer\0";
+pub static LV2_ATOM__FRAMETIME     : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#frameTime\0";
+pub static LV2_ATOM__SUPPORTS      : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#supports\0";
+pub static LV2_ATOM__TIMEUNIT      : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#timeUnit\0";
+
+
+
+
 
 /** The header of an atom:Atom. */
 #[repr(C)]
@@ -30,6 +74,167 @@ pub struct LV2_Atom {
     /**< Type of this atom (mapped URI). */
     pub mytype: u32,
 }
+
+/** An atom:Int or atom:Bool.  May be cast to LV2_Atom. */
+#[repr(C)]
+pub struct LV2_Atom_Int {
+    /**< Atom header. */
+    pub atom: LV2_Atom,
+    /**< Integer value. */
+    pub body: i32
+}
+
+/** An atom:Long.  May be cast to LV2_Atom. */
+#[repr(C)]
+pub struct LV2_Atom_Long {
+    /**< Atom header. */
+    pub atom: LV2_Atom,
+    /**< Integer value. */
+    pub body: i64
+}
+
+/** An atom:Float.  May be cast to LV2_Atom. */
+#[repr(C)]
+pub struct LV2_Atom_Float {
+    /**< Atom header. */
+    pub atom: LV2_Atom,
+    /**< Float value. */
+    pub body: f32
+}
+
+/** An atom:Double.  May be cast to LV2_Atom. */
+#[repr(C)]
+pub struct LV2_Atom_Double {
+    /**< Atom header. */
+    pub atom: LV2_Atom,
+    /**< Double value. */
+    pub body: f64
+}
+
+pub type LV2_Atom_Bool = LV2_Atom_Int;
+
+/** An atom:URID.  May be cast to LV2_Atom. */
+#[repr(C)]
+pub struct LV2_Atom_URID {
+    /**< Atom header. */
+    pub atom: LV2_Atom,
+    /**< URID. */
+    pub body: u32
+}
+
+/** An atom:String.  May be cast to LV2_Atom. */
+#[repr(C)]
+pub struct LV2_Atom_String {
+    /**< Atom header. */
+    pub atom: LV2_Atom
+    /* Contents (a null-terminated UTF-8 string) follow here. */
+}
+
+/** The body of an atom:Literal. */
+#[repr(C)]
+pub struct LV2_Atom_Literal_Body {
+    /**< Datatype URID. */
+    pub datatype: u32,
+    /**< Language URID. */
+    pub lang: u32
+    /* Contents (a null-terminated UTF-8 string) follow here. */
+}
+
+/** An atom:Literal.  May be cast to LV2_Atom. */
+#[repr(C)]
+pub struct LV2_Atom_Literal {
+    /**< Atom header. */
+    pub atom: LV2_Atom,
+    /**< URID. */
+    pub body: LV2_Atom_Literal_Body
+}
+
+/** An atom:Tuple.  May be cast to LV2_Atom. */
+#[repr(C)]
+pub struct LV2_Atom_Tuple {
+    /**< Atom header. */
+    pub atom: LV2_Atom,
+    /* Contents (a series of complete atoms) follow here. */
+}
+
+/** The body of an atom:Vector. */
+#[repr(C)]
+pub struct LV2_Atom_Vector_Body {
+    /**< The size of each element in the vector. */
+    pub child_size: u32,
+    /**< The type of each element in the vector. */
+    pub child_type: u32
+    /* Contents (a series of packed atom bodies) follow here. */
+}
+
+/** An atom:Vector.  May be cast to LV2_Atom. */
+#[repr(C)]
+pub struct LV2_Atom_Vector {
+    /**< Atom header. */
+    pub atom: LV2_Atom,
+    /**< Body. */
+    pub body: LV2_Atom_Vector_Body
+}
+
+/** The body of an atom:Property (e.g. in an atom:Object). */
+#[repr(C)]
+pub struct LV2_Atom_Property_Body {
+    /**< Key (predicate) (mapped URI). */
+    pub key: u32,
+    /**< Context URID (may be, and generally is, 0). */
+    pub context: u32,
+    /**< Value atom header. */
+    pub value: LV2_Atom
+    /* Value atom body follows here. */
+}
+
+/** An atom:Property.  May be cast to LV2_Atom. */
+#[repr(C)]
+pub struct LV2_Atom_Property {
+    /**< Atom header. */
+    pub atom: LV2_Atom,
+    /**< Body. */
+    pub body: LV2_Atom_Property_Body
+}
+
+/** The body of an atom:Object. May be cast to LV2_Atom. */
+#[repr(C)]
+pub struct LV2_Atom_Object_Body {
+    /**< URID, or 0 for blank. */
+    pub id: u32,
+    /**< Type URID (same as rdf:type, for fast dispatch). */
+    pub otype: u32
+    /* Contents (a series of property bodies) follow here. */
+}
+
+/** An atom:Object.  May be cast to LV2_Atom. */
+#[repr(C)]
+pub struct LV2_Atom_Object {
+    /**< Atom header. */
+    pub atom: LV2_Atom,
+    /**< Body. */
+    pub body: LV2_Atom_Object_Body
+}
+
+
+impl LV2_Atom_Object {
+ 
+    pub unsafe fn foreach<F>(&mut self, mut closure: F) -> () 
+        where F: FnMut(*mut LV2_Atom_Property_Body) -> bool {
+
+        let body = &(self.body);
+        let mut it = lv2_atom_object_begin(body);
+        while !lv2_atom_object_is_end(body, self.atom.size, it) {
+            let res = closure(it);
+            if res { break; }
+            it = lv2_atom_object_next(it);
+        }
+    }
+}
+
+
+
+
 
 /** The header of an atom:Event.  Note this type is NOT an LV2_Atom. */
 #[repr(C)]
@@ -113,71 +318,4 @@ impl LV2_Atom_Sequence {
 
 
 
-
-
-/// Pad a size to 64 bits
-pub fn lv2_atom_pad_size(size: u32) -> u32 {
-    (size + 7) & (!7)
-}
-
-/** Return the total size of `atom`, including the header. */
-pub fn lv2_atom_total_size(atom: &LV2_Atom) -> u32 {
-    size_of::<LV2_Atom>() as u32 + atom.size
-}
-
-/** Return true iff `atom` is null. */
-pub unsafe fn lv2_atom_is_null(atom: *const LV2_Atom) -> bool {
-    atom.is_null() || ((*atom).mytype == 0 && (*atom).size == 0)
-}
-
-/** Return true iff `a` is equal to `b`. */
-pub unsafe fn lv2_atom_equals(a: *const LV2_Atom, b: *const LV2_Atom) -> bool {
-    (a == b) || (((*a).mytype == (*b).mytype) &&
-                 ((*a).size == (*b).size) &&
-                 (memcmp(a.offset(1) as *const c_void, 
-                         b.offset(1) as *const c_void, 
-                         (*a).size as usize) == 0))
-}
-
-
-/** Get an iterator pointing to the first event in a Sequence body. */
-pub unsafe fn lv2_atom_sequence_begin(body: *const LV2_Atom_Sequence_Body) -> *const Lv2AtomEvent {
-    body.offset(1) as *const Lv2AtomEvent
-}
-
-/** Get an iterator pointing to the end of a Sequence body. */
-pub unsafe fn lv2_atom_sequence_end(body: *const LV2_Atom_Sequence_Body,
-                                    size: u32) -> *const Lv2AtomEvent {
-
-    (body as *const u8).offset(lv2_atom_pad_size(size) as isize) as *const Lv2AtomEvent
-}
-
-/** Return true iff `i` has reached the end of `body`. */
-pub unsafe fn lv2_atom_sequence_is_end(body: *const LV2_Atom_Sequence_Body,
-            size: u32, i: *const Lv2AtomEvent) -> bool {
-
-    let result = i as *const u8 >= (body as *const u8).offset(size as isize);
-    println!("lv2_atom_sequence_is_end: {}", result);
-    result
-}
-
-
-/** Return an iterator to the element following `i`. */
-pub unsafe fn lv2_atom_sequence_next(i: *const Lv2AtomEvent) -> *const Lv2AtomEvent {
-    let off = size_of::<Lv2AtomEvent>() + lv2_atom_pad_size((*i).body.size) as usize;
-    let ptr = (i as *const u8).offset(off as isize);
-
-    println!("lv2_atom_sequence_next: off: {} ptr: {:?}", off, ptr);
-
-    ptr as *const Lv2AtomEvent
-}
-
-/**
-   Clear all events from `sequence`.
-
-   This simply resets the size field, the other fields are left untouched.
-*/
-pub unsafe fn lv2_atom_sequence_clear(seq: *mut LV2_Atom_Sequence) -> () {
-    (*seq).atom.size = size_of::<LV2_Atom_Sequence_Body>() as u32;
-}
 
