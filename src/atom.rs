@@ -19,10 +19,9 @@
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-use std::mem::{size_of, transmute};
-use libc::{memcmp, c_void};
+use std::mem::transmute;
 use utils::*;
-
+ 
 
 pub static LV2_ATOM_URI: &'static [u8] = b"http://lv2plug.in/ns/ext/atom\0";
 pub static LV2_ATOM_PREFIX: &'static [u8] = b"http://lv2plug.in/ns/ext/atom#\0"; 

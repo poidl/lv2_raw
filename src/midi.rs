@@ -1,7 +1,4 @@
 
-use libc;
-
-#[allow(non_upper_case_globals)]
 
 
 pub static LV2_MIDI_URI: &'static [u8] = b"http://lv2plug.in/ns/ext/midi\0";
@@ -51,156 +48,154 @@ pub static LV2_MIDI__VELOCITY         : &'static [u8] = b"http://lv2plug.in/ns/e
 
 
 
-#[allow(non_camel_case_types)]
-pub enum LV2_Midi_Message_Type {
-	LV2_MIDI_MSG_INVALID          ,  
-	LV2_MIDI_MSG_NOTE_OFF         ,  
-	LV2_MIDI_MSG_NOTE_ON          ,  
-	LV2_MIDI_MSG_NOTE_PRESSURE    ,  
-	LV2_MIDI_MSG_CONTROLLER       ,  
-	LV2_MIDI_MSG_PGM_CHANGE       ,  
-	LV2_MIDI_MSG_CHANNEL_PRESSURE ,  
-	LV2_MIDI_MSG_BENDER           ,  
-	LV2_MIDI_MSG_SYSTEM_EXCLUSIVE ,  
-	LV2_MIDI_MSG_MTC_QUARTER      ,  
-	LV2_MIDI_MSG_SONG_POS         ,  
-	LV2_MIDI_MSG_SONG_SELECT      ,  
-	LV2_MIDI_MSG_TUNE_REQUEST     ,  
-	LV2_MIDI_MSG_CLOCK            ,  
-	LV2_MIDI_MSG_START            ,  
-	LV2_MIDI_MSG_CONTINUE         ,  
-	LV2_MIDI_MSG_STOP             ,  
-	LV2_MIDI_MSG_ACTIVE_SENSE     ,  
-	LV2_MIDI_MSG_RESET            
+pub enum LV2MidiMessageType {
+	LV2MidiMsgInvalid        ,  
+	LV2MidiMsgNoteOf         ,  
+	LV2MidiMsgNoteOn         ,  
+	LV2MidiMsgNotePressure   ,  
+	LV2MidiMsgController     ,  
+	LV2MidiMsgPgmChange      ,  
+	LV2MidiMsgChannelPressure,  
+	LV2MidiMsgBender         ,  
+	LV2MidiMsgSystemExclusive,  
+	LV2MidiMsgMtcQuarter     ,  
+	LV2MidiMsgSongPos        ,  
+	LV2MidiMsgSongSelect     ,  
+	LV2MidiMsgTuneRequest    ,  
+	LV2MidiMsgClock          ,  
+	LV2MidiMsgStart          ,  
+	LV2MidiMsgContinue       ,  
+	LV2MidiMsgStop           ,  
+	LV2MidiMsgActiveSense    ,  
+	LV2MidiMsgReset            
 }
 
 
-impl LV2_Midi_Message_Type {
+impl LV2MidiMessageType {
 
-    pub fn from_u8(x: u8) -> LV2_Midi_Message_Type {
+    pub fn from_u8(x: u8) -> LV2MidiMessageType {
         match x {
-			0    => LV2_Midi_Message_Type::LV2_MIDI_MSG_INVALID          ,
-			0x80 => LV2_Midi_Message_Type::LV2_MIDI_MSG_NOTE_OFF         ,
-			0x90 => LV2_Midi_Message_Type::LV2_MIDI_MSG_NOTE_ON          ,
-			0xA0 => LV2_Midi_Message_Type::LV2_MIDI_MSG_NOTE_PRESSURE    ,
-			0xB0 => LV2_Midi_Message_Type::LV2_MIDI_MSG_CONTROLLER       ,
-			0xC0 => LV2_Midi_Message_Type::LV2_MIDI_MSG_PGM_CHANGE       ,
-			0xD0 => LV2_Midi_Message_Type::LV2_MIDI_MSG_CHANNEL_PRESSURE ,
-			0xE0 => LV2_Midi_Message_Type::LV2_MIDI_MSG_BENDER           ,
-			0xF0 => LV2_Midi_Message_Type::LV2_MIDI_MSG_SYSTEM_EXCLUSIVE ,
-			0xF1 => LV2_Midi_Message_Type::LV2_MIDI_MSG_MTC_QUARTER      ,
-			0xF2 => LV2_Midi_Message_Type::LV2_MIDI_MSG_SONG_POS         ,
-			0xF3 => LV2_Midi_Message_Type::LV2_MIDI_MSG_SONG_SELECT      ,
-			0xF6 => LV2_Midi_Message_Type::LV2_MIDI_MSG_TUNE_REQUEST     ,
-			0xF8 => LV2_Midi_Message_Type::LV2_MIDI_MSG_CLOCK            ,
-			0xFA => LV2_Midi_Message_Type::LV2_MIDI_MSG_START            ,
-			0xFB => LV2_Midi_Message_Type::LV2_MIDI_MSG_CONTINUE         ,
-			0xFC => LV2_Midi_Message_Type::LV2_MIDI_MSG_STOP             ,
-			0xFE => LV2_Midi_Message_Type::LV2_MIDI_MSG_ACTIVE_SENSE     ,
-			0xFF => LV2_Midi_Message_Type::LV2_MIDI_MSG_RESET            ,
-			_ => LV2_Midi_Message_Type::LV2_MIDI_MSG_INVALID
+			0    => LV2MidiMessageType::LV2MidiMsgInvalid        ,
+			0x80 => LV2MidiMessageType::LV2MidiMsgNoteOf         ,
+			0x90 => LV2MidiMessageType::LV2MidiMsgNoteOn         ,
+			0xA0 => LV2MidiMessageType::LV2MidiMsgNotePressure   ,
+			0xB0 => LV2MidiMessageType::LV2MidiMsgController     ,
+			0xC0 => LV2MidiMessageType::LV2MidiMsgPgmChange      ,
+			0xD0 => LV2MidiMessageType::LV2MidiMsgChannelPressure,
+			0xE0 => LV2MidiMessageType::LV2MidiMsgBender         ,
+			0xF0 => LV2MidiMessageType::LV2MidiMsgSystemExclusive,
+			0xF1 => LV2MidiMessageType::LV2MidiMsgMtcQuarter     ,
+			0xF2 => LV2MidiMessageType::LV2MidiMsgSongPos        ,
+			0xF3 => LV2MidiMessageType::LV2MidiMsgSongSelect     ,
+			0xF6 => LV2MidiMessageType::LV2MidiMsgTuneRequest    ,
+			0xF8 => LV2MidiMessageType::LV2MidiMsgClock          ,
+			0xFA => LV2MidiMessageType::LV2MidiMsgStart          ,
+			0xFB => LV2MidiMessageType::LV2MidiMsgContinue       ,
+			0xFC => LV2MidiMessageType::LV2MidiMsgStop           ,
+			0xFE => LV2MidiMessageType::LV2MidiMsgActiveSense    ,
+			0xFF => LV2MidiMessageType::LV2MidiMsgReset          ,
+			_ => LV2MidiMessageType::LV2MidiMsgInvalid
         }
     }
 
     pub fn to_u8(self) -> u8 {
         match self {
-			LV2_Midi_Message_Type::LV2_MIDI_MSG_INVALID          => 0,   
-			LV2_Midi_Message_Type::LV2_MIDI_MSG_NOTE_OFF         => 0x80,
-			LV2_Midi_Message_Type::LV2_MIDI_MSG_NOTE_ON          => 0x90,
-			LV2_Midi_Message_Type::LV2_MIDI_MSG_NOTE_PRESSURE    => 0xA0,
-			LV2_Midi_Message_Type::LV2_MIDI_MSG_CONTROLLER       => 0xB0,
-			LV2_Midi_Message_Type::LV2_MIDI_MSG_PGM_CHANGE       => 0xC0,
-			LV2_Midi_Message_Type::LV2_MIDI_MSG_CHANNEL_PRESSURE => 0xD0,
-			LV2_Midi_Message_Type::LV2_MIDI_MSG_BENDER           => 0xE0,
-			LV2_Midi_Message_Type::LV2_MIDI_MSG_SYSTEM_EXCLUSIVE => 0xF0,
-			LV2_Midi_Message_Type::LV2_MIDI_MSG_MTC_QUARTER      => 0xF1,
-			LV2_Midi_Message_Type::LV2_MIDI_MSG_SONG_POS         => 0xF2,
-			LV2_Midi_Message_Type::LV2_MIDI_MSG_SONG_SELECT      => 0xF3,
-			LV2_Midi_Message_Type::LV2_MIDI_MSG_TUNE_REQUEST     => 0xF6,
-			LV2_Midi_Message_Type::LV2_MIDI_MSG_CLOCK            => 0xF8,
-			LV2_Midi_Message_Type::LV2_MIDI_MSG_START            => 0xFA,
-			LV2_Midi_Message_Type::LV2_MIDI_MSG_CONTINUE         => 0xFB,
-			LV2_Midi_Message_Type::LV2_MIDI_MSG_STOP             => 0xFC,
-			LV2_Midi_Message_Type::LV2_MIDI_MSG_ACTIVE_SENSE     => 0xFE,
-			LV2_Midi_Message_Type::LV2_MIDI_MSG_RESET            => 0xFF 
+			LV2MidiMessageType::LV2MidiMsgInvalid         => 0,   
+			LV2MidiMessageType::LV2MidiMsgNoteOf          => 0x80,
+			LV2MidiMessageType::LV2MidiMsgNoteOn          => 0x90,
+			LV2MidiMessageType::LV2MidiMsgNotePressure    => 0xA0,
+			LV2MidiMessageType::LV2MidiMsgController      => 0xB0,
+			LV2MidiMessageType::LV2MidiMsgPgmChange       => 0xC0,
+			LV2MidiMessageType::LV2MidiMsgChannelPressure => 0xD0,
+			LV2MidiMessageType::LV2MidiMsgBender          => 0xE0,
+			LV2MidiMessageType::LV2MidiMsgSystemExclusive => 0xF0,
+			LV2MidiMessageType::LV2MidiMsgMtcQuarter      => 0xF1,
+			LV2MidiMessageType::LV2MidiMsgSongPos         => 0xF2,
+			LV2MidiMessageType::LV2MidiMsgSongSelect      => 0xF3,
+			LV2MidiMessageType::LV2MidiMsgTuneRequest     => 0xF6,
+			LV2MidiMessageType::LV2MidiMsgClock           => 0xF8,
+			LV2MidiMessageType::LV2MidiMsgStart           => 0xFA,
+			LV2MidiMessageType::LV2MidiMsgContinue        => 0xFB,
+			LV2MidiMessageType::LV2MidiMsgStop            => 0xFC,
+			LV2MidiMessageType::LV2MidiMsgActiveSense     => 0xFE,
+			LV2MidiMessageType::LV2MidiMsgReset           => 0xFF 
 		}
     }
 }
 	
-#[allow(non_camel_case_types)]	
-pub enum LV2_Midi_Controller {
-	LV2_MIDI_CTL_MSB_BANK             = 0x00,  
-	LV2_MIDI_CTL_MSB_MODWHEEL         = 0x01,  
-	LV2_MIDI_CTL_MSB_BREATH           = 0x02,  
-	LV2_MIDI_CTL_MSB_FOOT             = 0x04,  
-	LV2_MIDI_CTL_MSB_PORTAMENTO_TIME  = 0x05,  
-	LV2_MIDI_CTL_MSB_DATA_ENTRY       = 0x06,  
-	LV2_MIDI_CTL_MSB_MAIN_VOLUME      = 0x07,  
-	LV2_MIDI_CTL_MSB_BALANCE          = 0x08,  
-	LV2_MIDI_CTL_MSB_PAN              = 0x0A,  
-	LV2_MIDI_CTL_MSB_EXPRESSION       = 0x0B,  
-	LV2_MIDI_CTL_MSB_EFFECT1          = 0x0C,  
-	LV2_MIDI_CTL_MSB_EFFECT2          = 0x0D,  
-	LV2_MIDI_CTL_MSB_GENERAL_PURPOSE1 = 0x10,  
-	LV2_MIDI_CTL_MSB_GENERAL_PURPOSE2 = 0x11,  
-	LV2_MIDI_CTL_MSB_GENERAL_PURPOSE3 = 0x12,  
-	LV2_MIDI_CTL_MSB_GENERAL_PURPOSE4 = 0x13,  
-	LV2_MIDI_CTL_LSB_BANK             = 0x20,  
-	LV2_MIDI_CTL_LSB_MODWHEEL         = 0x21,  
-	LV2_MIDI_CTL_LSB_BREATH           = 0x22,  
-	LV2_MIDI_CTL_LSB_FOOT             = 0x24,  
-	LV2_MIDI_CTL_LSB_PORTAMENTO_TIME  = 0x25,  
-	LV2_MIDI_CTL_LSB_DATA_ENTRY       = 0x26,  
-	LV2_MIDI_CTL_LSB_MAIN_VOLUME      = 0x27,  
-	LV2_MIDI_CTL_LSB_BALANCE          = 0x28,  
-	LV2_MIDI_CTL_LSB_PAN              = 0x2A,  
-	LV2_MIDI_CTL_LSB_EXPRESSION       = 0x2B,  
-	LV2_MIDI_CTL_LSB_EFFECT1          = 0x2C,  
-	LV2_MIDI_CTL_LSB_EFFECT2          = 0x2D,  
-	LV2_MIDI_CTL_LSB_GENERAL_PURPOSE1 = 0x30,  
-	LV2_MIDI_CTL_LSB_GENERAL_PURPOSE2 = 0x31,  
-	LV2_MIDI_CTL_LSB_GENERAL_PURPOSE3 = 0x32,  
-	LV2_MIDI_CTL_LSB_GENERAL_PURPOSE4 = 0x33,  
-	LV2_MIDI_CTL_SUSTAIN              = 0x40,  
-	LV2_MIDI_CTL_PORTAMENTO           = 0x41,  
-	LV2_MIDI_CTL_SOSTENUTO            = 0x42,  
-	LV2_MIDI_CTL_SOFT_PEDAL           = 0x43,  
-	LV2_MIDI_CTL_LEGATO_FOOTSWITCH    = 0x44,  
-	LV2_MIDI_CTL_HOLD2                = 0x45,  
-	LV2_MIDI_CTL_SC1_SOUND_VARIATION  = 0x46,  
-	LV2_MIDI_CTL_SC2_TIMBRE           = 0x47,  
-	LV2_MIDI_CTL_SC3_RELEASE_TIME     = 0x48,  
-	LV2_MIDI_CTL_SC4_ATTACK_TIME      = 0x49,  
-	LV2_MIDI_CTL_SC5_BRIGHTNESS       = 0x4A,  
-	LV2_MIDI_CTL_SC6                  = 0x4B,  
-	LV2_MIDI_CTL_SC7                  = 0x4C,  
-	LV2_MIDI_CTL_SC8                  = 0x4D,  
-	LV2_MIDI_CTL_SC9                  = 0x4E,  
-	LV2_MIDI_CTL_SC10                 = 0x4F,  
-	LV2_MIDI_CTL_GENERAL_PURPOSE5     = 0x50,  
-	LV2_MIDI_CTL_GENERAL_PURPOSE6     = 0x51,  
-	LV2_MIDI_CTL_GENERAL_PURPOSE7     = 0x52,  
-	LV2_MIDI_CTL_GENERAL_PURPOSE8     = 0x53,  
-	LV2_MIDI_CTL_PORTAMENTO_CONTROL   = 0x54,  
-	LV2_MIDI_CTL_E1_REVERB_DEPTH      = 0x5B,  
-	LV2_MIDI_CTL_E2_TREMOLO_DEPTH     = 0x5C,  
-	LV2_MIDI_CTL_E3_CHORUS_DEPTH      = 0x5D,  
-	LV2_MIDI_CTL_E4_DETUNE_DEPTH      = 0x5E,  
-	LV2_MIDI_CTL_E5_PHASER_DEPTH      = 0x5F,  
-	LV2_MIDI_CTL_DATA_INCREMENT       = 0x60,  
-	LV2_MIDI_CTL_DATA_DECREMENT       = 0x61,  
-	LV2_MIDI_CTL_NRPN_LSB             = 0x62,  
-	LV2_MIDI_CTL_NRPN_MSB             = 0x63,  
-	LV2_MIDI_CTL_RPN_LSB              = 0x64,  
-	LV2_MIDI_CTL_RPN_MSB              = 0x65,  
-	LV2_MIDI_CTL_ALL_SOUNDS_OFF       = 0x78,  
-	LV2_MIDI_CTL_RESET_CONTROLLERS    = 0x79,  
-	LV2_MIDI_CTL_LOCAL_CONTROL_SWITCH = 0x7A,  
-	LV2_MIDI_CTL_ALL_NOTES_OFF        = 0x7B,  
-	LV2_MIDI_CTL_OMNI_OFF             = 0x7C,  
-	LV2_MIDI_CTL_OMNI_ON              = 0x7D,  
-	LV2_MIDI_CTL_MONO1                = 0x7E,  
-	LV2_MIDI_CTL_MONO2                = 0x7F   
+pub enum LV2MidiController {
+	LV2MidiCtlMsbBank             = 0x00,  
+	LV2MidiCtlMsbModwheel         = 0x01,  
+	LV2MidiCtlMsbBreath           = 0x02,  
+	LV2MidiCtlMsbFoot             = 0x04,  
+	LV2MidiCtlMsbPortamentoTime   = 0x05,  
+	LV2MidiCtlMsbDataEntry        = 0x06,  
+	LV2MidiCtlMsbMainVolume       = 0x07,  
+	LV2MidiCtlMsbBalance          = 0x08,  
+	LV2MidiCtlMsbPan              = 0x0A,  
+	LV2MidiCtlMsbExpression       = 0x0B,  
+	LV2MidiCtlMsbEffect1          = 0x0C,  
+	LV2MidiCtlMsbEffect2          = 0x0D,  
+	LV2MidiCtlMsbGeneralPurpose1  = 0x10,  
+	LV2MidiCtlMsbGeneralPurpose2  = 0x11,  
+	LV2MidiCtlMsbGeneralPurpose3  = 0x12,  
+	LV2MidiCtlMsbGeneralPurpose4  = 0x13,  
+	LV2MidiCtlLsbBank             = 0x20,  
+	LV2MidiCtlLsbModwheel         = 0x21,  
+	LV2MidiCtlLsbBreath           = 0x22,  
+	LV2MidiCtlLsbFoot             = 0x24,  
+	LV2MidiCtlLsbPortamentoTime   = 0x25,  
+	LV2MidiCtlLsbDataEtry         = 0x26,  
+	LV2MidiCtlLsbMainVolume       = 0x27,  
+	LV2MidiCtlLsbBalance          = 0x28,  
+	LV2MidiCtlLsbPan              = 0x2A,  
+	LV2MidiCtlLsbExpression       = 0x2B,  
+	LV2MidiCtlLsbEffect1          = 0x2C,  
+	LV2MidiCtlLsbEffect2          = 0x2D,  
+	LV2MidiCtlLsbGeneralPurpose1  = 0x30,  
+	LV2MidiCtlLsbGeneralPurpose2  = 0x31,  
+	LV2MidiCtlLsbGeneralPurpose3  = 0x32,  
+	LV2MidiCtlLsbGeneralPurpose4  = 0x33,  
+	LV2MidiCtlSustain             = 0x40,  
+	LV2MidiCtlPortamento          = 0x41,  
+	LV2MidiCtlSostenuto           = 0x42,  
+	LV2MidiCtlSoftPedal           = 0x43,  
+	LV2MidiCtlLegatoFootswitch    = 0x44,  
+	LV2MidiCtlHold2               = 0x45,  
+	LV2MidiCtlSc1SoundVariation   = 0x46,  
+	LV2MidiCtlSc2Timbre           = 0x47,  
+	LV2MidiCtlSc3ReleaseTime      = 0x48,  
+	LV2MidiCtlSc4AttackTime       = 0x49,  
+	LV2MidiCtlSc5Brightness       = 0x4A,  
+	LV2MidiCtlSc6                 = 0x4B,  
+	LV2MidiCtlSc7                 = 0x4C,  
+	LV2MidiCtlSc8                 = 0x4D,  
+	LV2MidiCtlSc9                 = 0x4E,  
+	LV2MidiCtlSc10                = 0x4F,  
+	LV2MidiCtlGeneralPurpose5     = 0x50,  
+	LV2MidiCtlGeneralPurpose6     = 0x51,  
+	LV2MidiCtlGeneralPurpose7     = 0x52,  
+	LV2MidiCtlGeneralPurpose8     = 0x53,  
+	LV2MidiCtlPortamentoControl   = 0x54,  
+	LV2MidiCtlE1ReverbDepth       = 0x5B,  
+	LV2MidiCtlE2TremoloDepth      = 0x5C,  
+	LV2MidiCtlE3ChorusDepth       = 0x5D,  
+	LV2MidiCtlE4DetuneDepth       = 0x5E,  
+	LV2MidiCtlE5PhaserDepth       = 0x5F,  
+	LV2MidiCtlDataIncrement       = 0x60,  
+	LV2MidiCtlDataDecrement       = 0x61,  
+	LV2MidiCtlNrpnLsb             = 0x62,  
+	LV2MidiCtlNrpnMsb             = 0x63,  
+	LV2MidiCtlRpnLsb              = 0x64,  
+	LV2MidiCtlRpnMsb              = 0x65,  
+	LV2MidiCtlAllSoundsOff        = 0x78,  
+	LV2MidiCtlResetControllers    = 0x79,  
+	LV2MidiCtlLocalControlSwitch  = 0x7A,  
+	LV2MidiCtlAllNotesOff         = 0x7B,  
+	LV2MidiCtlOmniOff             = 0x7C,  
+	LV2MidiCtlOmniOn              = 0x7D,  
+	LV2MidiCtlMono1               = 0x7E,  
+	LV2MidiCtlMono2               = 0x7F   
 }
 
 /**
@@ -228,12 +223,12 @@ pub fn lv2_midi_is_system_message(msg: &[u8]) -> bool {
    Return the type of a MIDI message.
    @param msg Pointer to the start (status byte) of a MIDI message.
 */
-pub fn lv2_midi_message_type(msg: &[u8]) -> LV2_Midi_Message_Type {
+pub fn lv1_midi_message_type(msg: &[u8]) -> LV2MidiMessageType {
 	if lv2_midi_is_voice_message(msg) {
-		LV2_Midi_Message_Type::from_u8(msg[0] & 0xF0)
+		LV2MidiMessageType::from_u8(msg[0] & 0xF0)
 	} else if lv2_midi_is_system_message(msg) {
-		LV2_Midi_Message_Type::from_u8(msg[0])
+		LV2MidiMessageType::from_u8(msg[0])
 	} else {
-		LV2_Midi_Message_Type::LV2_MIDI_MSG_INVALID
+		LV2MidiMessageType::LV2MidiMsgInvalid
 	}
 }

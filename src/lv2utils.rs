@@ -35,7 +35,7 @@ pub unsafe fn lv2_features_data(features: *const *const LV2Feature, curi: *const
 
 
 pub struct FeatureHelper {
-    uri: *const c_char,
+    urid: *const c_char,
     data: *mut *mut c_void,
     required: bool
 }
@@ -44,9 +44,9 @@ pub unsafe fn lv2_features_query(features: *const *const LV2Feature, query: &[Fe
 
     for it in query {
         let mut data = it.data;
-        *data = lv2_features_data(features, it.uri);
+        *data = lv2_features_data(features, it.urid);
         if it.required && (*data).is_null() {
-            return it.uri;
+            return it.urid;
         }
     }
 

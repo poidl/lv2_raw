@@ -2,7 +2,7 @@
 
 use atom::*;
 use std::mem::{size_of};
-use libc::{memcmp, memcpy, c_char, c_void};
+use libc::{memcmp, memcpy, c_void};
 
 /// Pad a size to 64 bits
 pub fn lv2_atom_pad_size(size: u32) -> u32 {
