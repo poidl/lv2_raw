@@ -50,7 +50,7 @@ pub static LV2_MIDI__VELOCITY         : &'static [u8] = b"http://lv2plug.in/ns/e
 
 pub enum LV2MidiMessageType {
 	LV2MidiMsgInvalid        ,  
-	LV2MidiMsgNoteOf         ,  
+	LV2MidiMsgNoteOff        ,  
 	LV2MidiMsgNoteOn         ,  
 	LV2MidiMsgNotePressure   ,  
 	LV2MidiMsgController     ,  
@@ -76,7 +76,7 @@ impl LV2MidiMessageType {
     pub fn from_u8(x: u8) -> LV2MidiMessageType {
         match x {
 			0    => LV2MidiMessageType::LV2MidiMsgInvalid        ,
-			0x80 => LV2MidiMessageType::LV2MidiMsgNoteOf         ,
+			0x80 => LV2MidiMessageType::LV2MidiMsgNoteOff        ,
 			0x90 => LV2MidiMessageType::LV2MidiMsgNoteOn         ,
 			0xA0 => LV2MidiMessageType::LV2MidiMsgNotePressure   ,
 			0xB0 => LV2MidiMessageType::LV2MidiMsgController     ,
@@ -101,7 +101,7 @@ impl LV2MidiMessageType {
     pub fn to_u8(self) -> u8 {
         match self {
 			LV2MidiMessageType::LV2MidiMsgInvalid         => 0,   
-			LV2MidiMessageType::LV2MidiMsgNoteOf          => 0x80,
+			LV2MidiMessageType::LV2MidiMsgNoteOff         => 0x80,
 			LV2MidiMessageType::LV2MidiMsgNoteOn          => 0x90,
 			LV2MidiMessageType::LV2MidiMsgNotePressure    => 0xA0,
 			LV2MidiMessageType::LV2MidiMsgController      => 0xB0,
@@ -223,7 +223,7 @@ pub fn lv2_midi_is_system_message(msg: &[u8]) -> bool {
    Return the type of a MIDI message.
    @param msg Pointer to the start (status byte) of a MIDI message.
 */
-pub fn lv1_midi_message_type(msg: &[u8]) -> LV2MidiMessageType {
+pub fn lv2_midi_message_type(msg: &[u8]) -> LV2MidiMessageType {
 	if lv2_midi_is_voice_message(msg) {
 		LV2MidiMessageType::from_u8(msg[0] & 0xF0)
 	} else if lv2_midi_is_system_message(msg) {
