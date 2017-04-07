@@ -26,9 +26,6 @@ use utils::*;
 pub static LV2_ATOM_URI: &'static [u8] = b"http://lv2plug.in/ns/ext/atom\0";
 pub static LV2_ATOM_PREFIX: &'static [u8] = b"http://lv2plug.in/ns/ext/atom#\0"; 
 
-pub static LV2_MIDI__ACTIVESENSE      : &'static [u8] = b"http://lv2plug.in/ns/ext/midi#ActiveSense\0";
-pub static LV2_MIDI__AFTERTOUCH       : &'static [u8] = b"http://lv2plug.in/ns/ext/midi#Aftertouch\0";
-
 pub static LV2_ATOM__ATOM          : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#Atom\0";
 pub static LV2_ATOM__ATOMPORT      : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#AtomPort\0";
 pub static LV2_ATOM__BLANK         : &'static [u8] = b"http://lv2plug.in/ns/ext/atom#Blank\0";
