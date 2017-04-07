@@ -68,7 +68,7 @@ pub static LV2_ATOM__TIMEUNIT      : &'static [u8] = b"http://lv2plug.in/ns/ext/
 
 /** The header of an atom:Atom. */
 #[repr(C)]
-pub struct LV2_Atom {
+pub struct LV2Atom {
     /**< Size in bytes, not including type and size. */
     pub size: u32,
     /**< Type of this atom (mapped URI). */
@@ -77,62 +77,62 @@ pub struct LV2_Atom {
 
 /** An atom:Int or atom:Bool.  May be cast to LV2_Atom. */
 #[repr(C)]
-pub struct LV2_Atom_Int {
+pub struct LV2AtomInt {
     /**< Atom header. */
-    pub atom: LV2_Atom,
+    pub atom: LV2Atom,
     /**< Integer value. */
     pub body: i32
 }
 
 /** An atom:Long.  May be cast to LV2_Atom. */
 #[repr(C)]
-pub struct LV2_Atom_Long {
+pub struct LV2AtomLong {
     /**< Atom header. */
-    pub atom: LV2_Atom,
+    pub atom: LV2Atom,
     /**< Integer value. */
     pub body: i64
 }
 
 /** An atom:Float.  May be cast to LV2_Atom. */
 #[repr(C)]
-pub struct LV2_Atom_Float {
+pub struct LV2AtomFloat {
     /**< Atom header. */
-    pub atom: LV2_Atom,
+    pub atom: LV2Atom,
     /**< Float value. */
     pub body: f32
 }
 
 /** An atom:Double.  May be cast to LV2_Atom. */
 #[repr(C)]
-pub struct LV2_Atom_Double {
+pub struct LV2AtomDouble {
     /**< Atom header. */
-    pub atom: LV2_Atom,
+    pub atom: LV2Atom,
     /**< Double value. */
     pub body: f64
 }
 
-pub type LV2_Atom_Bool = LV2_Atom_Int;
+pub type LV2AtomBool = LV2AtomInt;
 
 /** An atom:URID.  May be cast to LV2_Atom. */
 #[repr(C)]
-pub struct LV2_Atom_URID {
+pub struct LV2AtomURID {
     /**< Atom header. */
-    pub atom: LV2_Atom,
+    pub atom: LV2Atom,
     /**< URID. */
     pub body: u32
 }
 
 /** An atom:String.  May be cast to LV2_Atom. */
 #[repr(C)]
-pub struct LV2_Atom_String {
+pub struct LV2AtomString {
     /**< Atom header. */
-    pub atom: LV2_Atom
+    pub atom: LV2Atom
     /* Contents (a null-terminated UTF-8 string) follow here. */
 }
 
 /** The body of an atom:Literal. */
 #[repr(C)]
-pub struct LV2_Atom_Literal_Body {
+pub struct LV2AtomLiteralBody {
     /**< Datatype URID. */
     pub datatype: u32,
     /**< Language URID. */
@@ -142,24 +142,24 @@ pub struct LV2_Atom_Literal_Body {
 
 /** An atom:Literal.  May be cast to LV2_Atom. */
 #[repr(C)]
-pub struct LV2_Atom_Literal {
+pub struct LV2AtomLiteral {
     /**< Atom header. */
-    pub atom: LV2_Atom,
+    pub atom: LV2Atom,
     /**< URID. */
-    pub body: LV2_Atom_Literal_Body
+    pub body: LV2AtomLiteralBody
 }
 
 /** An atom:Tuple.  May be cast to LV2_Atom. */
 #[repr(C)]
-pub struct LV2_Atom_Tuple {
+pub struct LV2AtomTuple {
     /**< Atom header. */
-    pub atom: LV2_Atom,
+    pub atom: LV2Atom,
     /* Contents (a series of complete atoms) follow here. */
 }
 
 /** The body of an atom:Vector. */
 #[repr(C)]
-pub struct LV2_Atom_Vector_Body {
+pub struct LV2AtomVectorBody {
     /**< The size of each element in the vector. */
     pub child_size: u32,
     /**< The type of each element in the vector. */
@@ -169,37 +169,37 @@ pub struct LV2_Atom_Vector_Body {
 
 /** An atom:Vector.  May be cast to LV2_Atom. */
 #[repr(C)]
-pub struct LV2_Atom_Vector {
+pub struct LV2AtomVector {
     /**< Atom header. */
-    pub atom: LV2_Atom,
+    pub atom: LV2Atom,
     /**< Body. */
-    pub body: LV2_Atom_Vector_Body
+    pub body: LV2AtomVectorBody
 }
 
 /** The body of an atom:Property (e.g. in an atom:Object). */
 #[repr(C)]
-pub struct LV2_Atom_Property_Body {
+pub struct LV2AtomPropertyBody {
     /**< Key (predicate) (mapped URI). */
     pub key: u32,
     /**< Context URID (may be, and generally is, 0). */
     pub context: u32,
     /**< Value atom header. */
-    pub value: LV2_Atom
+    pub value: LV2Atom
     /* Value atom body follows here. */
 }
 
 /** An atom:Property.  May be cast to LV2_Atom. */
 #[repr(C)]
-pub struct LV2_Atom_Property {
+pub struct LV2AtomProperty {
     /**< Atom header. */
-    pub atom: LV2_Atom,
+    pub atom: LV2Atom,
     /**< Body. */
-    pub body: LV2_Atom_Property_Body
+    pub body: LV2AtomPropertyBody
 }
 
 /** The body of an atom:Object. May be cast to LV2_Atom. */
 #[repr(C)]
-pub struct LV2_Atom_Object_Body {
+pub struct LV2AtomObjectBody {
     /**< URID, or 0 for blank. */
     pub id: u32,
     /**< Type URID (same as rdf:type, for fast dispatch). */
@@ -209,18 +209,18 @@ pub struct LV2_Atom_Object_Body {
 
 /** An atom:Object.  May be cast to LV2_Atom. */
 #[repr(C)]
-pub struct LV2_Atom_Object {
+pub struct LV2AtomObject {
     /**< Atom header. */
-    pub atom: LV2_Atom,
+    pub atom: LV2Atom,
     /**< Body. */
-    pub body: LV2_Atom_Object_Body
+    pub body: LV2AtomObjectBody
 }
 
 
-impl LV2_Atom_Object {
+impl LV2AtomObject {
  
     pub unsafe fn foreach<F>(&mut self, mut closure: F) -> () 
-        where F: FnMut(*mut LV2_Atom_Property_Body) -> bool {
+        where F: FnMut(*mut LV2AtomPropertyBody) -> bool {
 
         let body = &(self.body);
         let mut it = lv2_atom_object_begin(body);
@@ -238,14 +238,14 @@ impl LV2_Atom_Object {
 
 /** The header of an atom:Event.  Note this type is NOT an LV2_Atom. */
 #[repr(C)]
-pub struct Lv2AtomEvent {
+pub struct LV2AtomEvent {
     /** RUST_TODO: inconsistent with the C version, see http://lv2plug.in/git/cgit.cgi/lv2.git/tree/lv2/lv2plug in/ns/ext/atom/atom.h Lv2AtomEvent has a union "time", which can be beat or frames. Not implemented. */
     pub time_in_frames: i64,
     /**< Event body atom header. */
-    pub body: LV2_Atom,
+    pub body: LV2Atom,
 }
 
-impl Lv2AtomEvent {
+impl LV2AtomEvent {
     pub fn time_as_frames(&self) -> i64 {
         self.time_in_frames
     }
@@ -272,16 +272,16 @@ impl Lv2AtomEvent {
    </pre>
 */
 #[repr(C)]
-pub struct LV2_Atom_Sequence_Body {
+pub struct LV2AtomSequenceBody {
     /**< URID of unit of event time stamps. */
     unit: u32,
     /**< Currently unused. */
     pad: u32, // Contents (a series of events) follow here.
 }
 
-impl LV2_Atom_Sequence_Body {
+impl LV2AtomSequenceBody {
     pub unsafe fn foreach<F>(&mut self, size: u32, mut closure: F) -> () 
-        where F: FnMut(*const Lv2AtomEvent) -> () {
+        where F: FnMut(*const LV2AtomEvent) -> () {
 
         let mut it = lv2_atom_sequence_begin(self);
         while !lv2_atom_sequence_is_end(self, size, it) {
@@ -293,18 +293,18 @@ impl LV2_Atom_Sequence_Body {
 
 /// An atom:Sequence.
 #[repr(C)]
-pub struct LV2_Atom_Sequence {
+pub struct LV2AtomSequence {
     /**< Atom header. */
-    pub atom: LV2_Atom,
+    pub atom: LV2Atom,
     /**< Body. */
-    pub body: LV2_Atom_Sequence_Body,
+    pub body: LV2AtomSequenceBody,
 }
 
 
-impl LV2_Atom_Sequence {
+impl LV2AtomSequence {
  
     pub unsafe fn foreach<F>(&mut self, mut closure: F) -> () 
-        where F: FnMut(*const Lv2AtomEvent) -> () {
+        where F: FnMut(*const LV2AtomEvent) -> () {
 
         let body = &(self.body);
         let mut it = lv2_atom_sequence_begin(body);

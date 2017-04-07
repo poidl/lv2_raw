@@ -11,7 +11,7 @@ use std::ffi::*;
    only useful for features with data, and can not detect features that are
    present but have NULL data.
 */
-pub unsafe fn lv2_features_data(features: *const *const LV2Feature, curi: *const c_char) -> *const c_void {
+pub unsafe fn lv2_features_data(features: *const *const LV2Feature, curi: *const c_char) -> *mut c_void {
     
     if !features.is_null() {
         let mut feature = *features;
@@ -30,8 +30,25 @@ pub unsafe fn lv2_features_data(features: *const *const LV2Feature, curi: *const
         }
         
     }
-    0 as *const c_void
+    0 as *mut c_void
 }
 
 
+pub struct FeatureHelper {
+    uri: *const c_char,
+    data: *mut *mut c_void,
+    required: bool
+}
 
+pub unsafe fn lv2_features_query(features: *const *const LV2Feature, query: &[FeatureHelper]) -> *const c_char {
+
+    for it in query {
+        let mut data = it.data;
+        *data = lv2_features_data(features, it.uri);
+        if it.required && (*data).is_null() {
+            return it.uri;
+        }
+    }
+
+    return 0 as *const c_char;
+}
