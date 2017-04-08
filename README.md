@@ -1,7 +1,5 @@
 # Exposes the raw LV2 interface (C language) to Rust
 
-A beginner's programming exercise in Rust.
-
 LV2 docs: http://lv2plug.in/
 
 The documentation of this crate is copied from the original C files, whose
@@ -18,7 +16,7 @@ possible to Rust, declaring e.g.
 
 The original (C language) LV2 package defines contains some "helper" functions, which are
 defined in C-headers, i.e. there is no compiled library file which this crate 
-could link to. These functions are not declared or defined here. Let me know if 
+could link to. These functions are also declared and defined here. Let us know if 
 you think that's not right. See also [this question](http://stackoverflow.com/questions/40944524/how-does-one-design-a-plugin-interface-for-digital-audio-workstation-hosts-in-pu) on stackoverflow.
 
 The [lv2 crate](https://crates.io/crates/lv2) is one attempt to provide a more
