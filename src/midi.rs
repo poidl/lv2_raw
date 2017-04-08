@@ -1,3 +1,20 @@
+// Copyright 2017 Michael Oswald
+
+// Documentation copied from http://lv2plug.in/ns/ext/midi/midi.h
+
+// Copyright text of the original C file:
+
+// Copyright 2012-2016 David Robillard <http://drobilla.net>
+// Permission to use, copy, modify, and/or distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
+// THIS SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+// WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+// MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+// ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+// WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+// ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+// OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
 
@@ -46,8 +63,14 @@ pub static LV2_MIDI__STATUS           : &'static [u8] = b"http://lv2plug.in/ns/e
 pub static LV2_MIDI__STATUSMASK       : &'static [u8] = b"http://lv2plug.in/ns/ext/midi#statusMask\0";
 pub static LV2_MIDI__VELOCITY         : &'static [u8] = b"http://lv2plug.in/ns/ext/midi#velocity\0";
 
+/**
+   MIDI Message Type.
 
-
+   This includes both voice messages (which have a channel) and system messages
+   (which do not), as well as a sentinel value for invalid messages.  To get
+   the type of a message suitable for use in a switch statement, use
+   lv2_midi_get_type() on the status byte.
+*/
 pub enum LV2MidiMessageType {
 	LV2MidiMsgInvalid        ,  
 	LV2MidiMsgNoteOff        ,  
@@ -122,7 +145,10 @@ impl LV2MidiMessageType {
 		}
     }
 }
-	
+
+/**
+   Standard MIDI Controller Numbers.
+*/	
 pub enum LV2MidiController {
 	LV2MidiCtlMsbBank             = 0x00,  
 	LV2MidiCtlMsbModwheel         = 0x01,  
