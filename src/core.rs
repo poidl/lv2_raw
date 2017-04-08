@@ -1,4 +1,4 @@
-// Copyright 2017 Stefan Riha
+// Copyright 2017 Stefan Riha, Artem Popov
 
 // Documentation copied from http://lv2plug.in/ns/lv2core/lv2.h
 
