@@ -1,4 +1,4 @@
-// Copyright 2017 Stefan Riha
+// Copyright 2017 Stefan Riha, Michael Oswald
 
 // Documentation copied from http://lv2plug.in/ns/ext/urid/urid.h
 
