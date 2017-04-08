@@ -46,7 +46,6 @@ pub unsafe fn lv2_atom_sequence_is_end(body: *const LV2AtomSequenceBody,
             size: u32, i: *const LV2AtomEvent) -> bool {
 
     let result = i as *const u8 >= (body as *const u8).offset(size as isize);
-    println!("lv2_atom_sequence_is_end: {}", result);
     result
 }
 
