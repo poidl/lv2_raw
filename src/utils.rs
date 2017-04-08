@@ -55,8 +55,6 @@ pub unsafe fn lv2_atom_sequence_next(i: *const LV2AtomEvent) -> *mut LV2AtomEven
     let off = size_of::<LV2AtomEvent>() + lv2_atom_pad_size((*i).body.size) as usize;
     let ptr = (i as *const u8).offset(off as isize);
 
-    println!("lv2_atom_sequence_next: off: {} ptr: {:?}", off, ptr);
-
     ptr as *mut LV2AtomEvent
 }
 
