@@ -23,3 +23,12 @@ The [lv2 crate](https://crates.io/crates/lv2) is one attempt to provide a more
 idiomatic Rust interface to LV2, and may even contain some non-idiomatic
 "close-to-C" helper functions.
 
+Roadmap:
+
+- Figure out division line between low- and high-level crate
+  - Preliminary goal: provide all functionality of LV2 while keeping it low-level
+- Check if it's possible/desirable to implement Iterator trait for the atom sequences
+- Check if low-level crate functions should be allowed to accept &-references as argument (instead of raw pointers), making them inherently safe. There are three options I can think of:
+  - declaring a `pub fn` and accepting &-references: implies that everything is assumed to be safe a priori
+  - declaring a `pub unsafe fn` and accepting raw pointers: let the crate user worry about guaranteeing for safety (the exposed function can only be used in an `unsafe` block)
+
