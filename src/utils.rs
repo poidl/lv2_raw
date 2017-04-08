@@ -1,3 +1,21 @@
+// Copyright 2017 Michael Oswald
+
+// Documentation copied from http://lv2plug.in/ns/ext/atom/util.h
+
+// Copyright text of the original C file:
+
+// Copyright 2012-2016 David Robillard <http://drobilla.net>
+// Permission to use, copy, modify, and/or distribute this software for any
+// purpose with or without fee is hereby granted, provided that the above
+// copyright notice and this permission notice appear in all copies.
+// THIS SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+// WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+// MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+// ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+// WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+// ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+// OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
 
 
 use atom::*;
@@ -127,7 +145,31 @@ pub struct LV2AtomObjectQuery {
     pub value: *mut *mut LV2Atom
 }
 
+/**
+   Get an object's values for various keys.
 
+   The value pointer of each item in `query` will be set to the location of
+   the corresponding value in `object`.  Every value pointer in `query` MUST
+   be initialised to NULL.  This function reads `object` in a single linear
+   sweep.  By allocating `query` on the stack, objects can be "queried"
+   quickly without allocating any memory.  This function is realtime safe.
+
+   This function can only do "flat" queries, it is not smart enough to match
+   variables in nested objects.
+
+   For example:
+   @code
+   const LV2_Atom* name = NULL;
+   const LV2_Atom* age  = NULL;
+   LV2_Atom_Object_Query q[] = {
+       { urids.eg_name, &name },
+       { urids.eg_age,  &age },
+       LV2_ATOM_OBJECT_QUERY_END
+   };
+   lv2_atom_object_query(obj, q);
+   // name and age are now set to the appropriate values in obj, or NULL.
+   @endcode
+*/
 pub unsafe fn lv2_atom_object_query(obj: *mut LV2AtomObject, 
     query: *mut LV2AtomObjectQuery) -> i32 {
 
@@ -174,6 +216,25 @@ pub struct ObjectHelper {
     pub atom: *mut *mut LV2Atom
 }
 
+/**
+   Variable argument version of lv2_atom_object_query().
+
+   This is nicer-looking in code, but a bit more error-prone since it is not
+   type safe and the argument list must be terminated.
+
+   The arguments should be a series of uint32_t key and const LV2_Atom** value
+   pairs, terminated by a zero key.  The value pointers MUST be initialized to
+   NULL.  For example:
+
+   @code
+   const LV2_Atom* name = NULL;
+   const LV2_Atom* age  = NULL;
+   lv2_atom_object_get(obj,
+                       uris.name_key, &name,
+                       uris.age_key,  &age,
+                       0);
+   @endcode
+*/
 pub unsafe fn lv2_atom_object_get(body: *mut LV2AtomObject, query: &[ObjectHelper]) -> i32 {
     
     let mut matches = 0;
