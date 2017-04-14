@@ -287,6 +287,43 @@ impl LV2AtomSequenceBody {
     }
 }
 
+pub struct LV2AtomSequenceIterator<'a> {
+    pub seq: &'a LV2AtomSequence,
+    pub current: &'a LV2AtomEvent
+}
+
+impl<'a> Iterator for LV2AtomSequenceIterator<'a> {
+    type Item = &'a LV2AtomEvent;
+    fn next(&mut self) -> Option<Self::Item> {
+        unsafe {
+            let body = &self.seq.body;
+            let size = self.seq.atom.size;
+            if !lv2_atom_sequence_is_end(body, size, self.current) {
+                let out = self.current;
+                self.current = &*lv2_atom_sequence_next(self.current);
+                Some(out)
+            } else {
+                None
+            }
+        }
+    }
+}
+
+// perhaps wrong. TODO: understand this: http://stackoverflow.com/questions/41448232/issues-constraining-implementation-lifetimes-on-type-without-lifetime-parameter
+impl<'a> IntoIterator for &'a LV2AtomSequence {
+    type Item = &'a LV2AtomEvent;
+    type IntoIter = LV2AtomSequenceIterator<'a>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        unsafe{
+            LV2AtomSequenceIterator{ 
+                seq: &*self, 
+                current: &*lv2_atom_sequence_begin(&(*self).body)
+            }
+        }
+    }
+}
+
 /// An atom:Sequence.
 #[repr(C)]
 pub struct LV2AtomSequence {
