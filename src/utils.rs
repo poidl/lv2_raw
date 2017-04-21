@@ -20,7 +20,7 @@
 
 use atom::*;
 use std::ptr;
-use std::mem::{size_of};
+use std::mem::size_of;
 use libc::{memcmp, memcpy, c_void};
 
 /// Pad a size to 64 bits
@@ -40,11 +40,11 @@ pub unsafe fn lv2_atom_is_null(atom: *const LV2Atom) -> bool {
 
 /** Return true iff `a` is equal to `b`. */
 pub unsafe fn lv2_atom_equals(a: *const LV2Atom, b: *const LV2Atom) -> bool {
-    (a == b) || (((*a).mytype == (*b).mytype) &&
-                 ((*a).size == (*b).size) &&
-                 (memcmp(a.offset(1) as *const c_void, 
-                         b.offset(1) as *const c_void, 
-                         (*a).size as usize) == 0))
+    (a == b) ||
+    (((*a).mytype == (*b).mytype) && ((*a).size == (*b).size) &&
+     (memcmp(a.offset(1) as *const c_void,
+             b.offset(1) as *const c_void,
+             (*a).size as usize) == 0))
 }
 
 
@@ -55,14 +55,17 @@ pub unsafe fn lv2_atom_sequence_begin(body: *const LV2AtomSequenceBody) -> *mut 
 
 /** Get an iterator pointing to the end of a Sequence body. */
 pub unsafe fn lv2_atom_sequence_end(body: *const LV2AtomSequenceBody,
-                                    size: u32) -> *const LV2AtomEvent {
+                                    size: u32)
+                                    -> *const LV2AtomEvent {
 
     (body as *const u8).offset(lv2_atom_pad_size(size) as isize) as *const LV2AtomEvent
 }
 
 /** Return true iff `i` has reached the end of `body`. */
 pub unsafe fn lv2_atom_sequence_is_end(body: *const LV2AtomSequenceBody,
-            size: u32, i: *const LV2AtomEvent) -> bool {
+                                       size: u32,
+                                       i: *const LV2AtomEvent)
+                                       -> bool {
 
     let result = i as *const u8 >= (body as *const u8).offset(size as isize);
     result
@@ -99,7 +102,9 @@ pub unsafe fn lv2_atom_sequence_clear(seq: *mut LV2AtomSequence) -> () {
    or NULL on failure (insufficient space).
 */
 pub unsafe fn lv2_atom_sequence_append_event(seq: *mut LV2AtomSequence,
-    capacity: u32, event: *const LV2AtomEvent) -> *const LV2AtomEvent {
+                                             capacity: u32,
+                                             event: *const LV2AtomEvent)
+                                             -> *const LV2AtomEvent {
 
     let total_size = size_of::<LV2AtomEvent>() as u32 + (*event).body.size;
 
@@ -108,7 +113,9 @@ pub unsafe fn lv2_atom_sequence_append_event(seq: *mut LV2AtomSequence,
     }
 
     let e = lv2_atom_sequence_end(&(*seq).body, (*seq).atom.size);
-    memcpy(e as *mut c_void, event as *const c_void, total_size as usize);
+    memcpy(e as *mut c_void,
+           event as *const c_void,
+           total_size as usize);
 
     (*seq).atom.size += lv2_atom_pad_size(total_size);
 
@@ -116,15 +123,16 @@ pub unsafe fn lv2_atom_sequence_append_event(seq: *mut LV2AtomSequence,
 }
 
 /** Return a pointer to the first property in `body`. */
-pub unsafe fn lv2_atom_object_begin(body: *const LV2AtomObjectBody) -> 
-    *mut LV2AtomPropertyBody {
-    
+pub unsafe fn lv2_atom_object_begin(body: *const LV2AtomObjectBody) -> *mut LV2AtomPropertyBody {
+
     body.offset(1) as *mut LV2AtomPropertyBody
 }
 
 /** Return true iff `i` has reached the end of `obj`. */
 pub unsafe fn lv2_atom_object_is_end(body: *const LV2AtomObjectBody,
-    size: u32, i: *const LV2AtomPropertyBody) -> bool {
+                                     size: u32,
+                                     i: *const LV2AtomPropertyBody)
+                                     -> bool {
 
     i as *const u8 >= (body as *const u8).offset(size as isize)
 }
@@ -143,7 +151,7 @@ pub struct LV2AtomObjectQuery {
     /**< Key to query (input set by user) */
     pub key: u32,
     /**< Found value (output set by query function) */
-    pub value: *mut *mut LV2Atom
+    pub value: *mut *mut LV2Atom,
 }
 
 /**
@@ -171,8 +179,9 @@ pub struct LV2AtomObjectQuery {
    // name and age are now set to the appropriate values in obj, or NULL.
    @endcode
 */
-pub unsafe fn lv2_atom_object_query(obj: *mut LV2AtomObject, 
-    query: *mut LV2AtomObjectQuery) -> i32 {
+pub unsafe fn lv2_atom_object_query(obj: *mut LV2AtomObject,
+                                    query: *mut LV2AtomObjectQuery)
+                                    -> i32 {
 
     let ref mut object = *obj;
 
@@ -186,24 +195,24 @@ pub unsafe fn lv2_atom_object_query(obj: *mut LV2AtomObject,
     }
 
     {
-        let f = | prop: *mut LV2AtomPropertyBody | -> bool {
-                    let mut q = query;
-                    while (*q).key != 0 {
+        let f = |prop: *mut LV2AtomPropertyBody| -> bool {
+            let mut q = query;
+            while (*q).key != 0 {
 
-                        if ((*q).key == (*prop).key) && (!(*q).value.is_null()) {
-                            let ref mut val = (*prop).value;
-                            *(*q).value = val;
-                            
-                            matches += 1;
-                            if matches == n_queries {
-                                return true;
-                            }
-                            break;
-                        }
-                        q.offset(1);
+                if ((*q).key == (*prop).key) && (!(*q).value.is_null()) {
+                    let ref mut val = (*prop).value;
+                    *(*q).value = val;
+
+                    matches += 1;
+                    if matches == n_queries {
+                        return true;
                     }
-                    false
-                };
+                    break;
+                }
+                q.offset(1);
+            }
+            false
+        };
 
         object.foreach(f);
     }
@@ -214,7 +223,7 @@ pub unsafe fn lv2_atom_object_query(obj: *mut LV2AtomObject,
 
 pub struct ObjectHelper {
     pub key: u32,
-    pub atom: *mut *mut LV2Atom
+    pub atom: *mut *mut LV2Atom,
 }
 
 /**
@@ -237,7 +246,7 @@ pub struct ObjectHelper {
    @endcode
 */
 pub unsafe fn lv2_atom_object_get(body: *mut LV2AtomObject, query: &[ObjectHelper]) -> i32 {
-    
+
     let mut matches = 0;
     let mut n_queries = 0;
 
@@ -249,22 +258,22 @@ pub unsafe fn lv2_atom_object_get(body: *mut LV2AtomObject, query: &[ObjectHelpe
     }
 
     {
-        let f = | prop: *mut LV2AtomPropertyBody| -> bool {
+        let f = |prop: *mut LV2AtomPropertyBody| -> bool {
 
-                for it in query {
-                    let qkey = it.key;
+            for it in query {
+                let qkey = it.key;
 
-                    if qkey == (*prop).key && (*(it.atom)).is_null() {
-                        *(it.atom) = &mut (*prop).value;
-                        matches += 1;
-                        if matches == n_queries {
-                            return matches > 0;
-                        }
-                        break;
+                if qkey == (*prop).key && (*(it.atom)).is_null() {
+                    *(it.atom) = &mut (*prop).value;
+                    matches += 1;
+                    if matches == n_queries {
+                        return matches > 0;
                     }
+                    break;
                 }
-                return true;
-            };
+            }
+            return true;
+        };
 
         (*body).foreach(f);
     }
@@ -273,8 +282,9 @@ pub unsafe fn lv2_atom_object_get(body: *mut LV2AtomObject, query: &[ObjectHelpe
 }
 
 impl LV2AtomSequenceBody {
-    pub unsafe fn foreach<F>(&mut self, size: u32, mut closure: F) -> () 
-        where F: FnMut(*const LV2AtomEvent) -> () {
+    pub unsafe fn foreach<F>(&mut self, size: u32, mut closure: F) -> ()
+        where F: FnMut(*const LV2AtomEvent) -> ()
+    {
 
         let mut it = lv2_atom_sequence_begin(self);
         while !lv2_atom_sequence_is_end(self, size, it) {
@@ -288,7 +298,7 @@ pub struct LV2AtomSequenceIterator<'a> {
     pub seq: &'a LV2AtomSequence,
     pub current: &'a LV2AtomEvent,
     // TODO is this necessary?
-    pub first: bool
+    pub first: bool,
 }
 
 impl<'a> Iterator for LV2AtomSequenceIterator<'a> {
@@ -299,11 +309,13 @@ impl<'a> Iterator for LV2AtomSequenceIterator<'a> {
             let size = self.seq.atom.size;
             // TODO is this necessary?
             if self.first {
+                // set current to first item (current = 1)
                 self.current = &*lv2_atom_sequence_begin(body);
-            } else {
+                Some(self.current)
+            } else if !lv2_atom_sequence_is_end(body, size, self.current) {
+                // if current is neither the first item (null ptr), nor the last item, nor beyond the last item
+                // set current to the next item (current = 2) and return it
                 self.current = &*lv2_atom_sequence_next(self.current);
-            }
-            if !lv2_atom_sequence_is_end(body, size, self.current) {
                 Some(self.current)
             } else {
                 None
@@ -318,12 +330,12 @@ impl<'a> IntoIterator for &'a LV2AtomSequence {
     type IntoIter = LV2AtomSequenceIterator<'a>;
 
     fn into_iter(self) -> Self::IntoIter {
-        unsafe{
-            LV2AtomSequenceIterator{ 
-                seq: &*self, 
+        unsafe {
+            LV2AtomSequenceIterator {
+                seq: &*self,
                 // current: &*lv2_atom_sequence_begin(&(*self).body)
                 current: &*(ptr::null_mut() as *mut LV2AtomEvent),
-                first: true
+                first: true,
             }
         }
     }
