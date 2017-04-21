@@ -298,7 +298,7 @@ pub struct LV2AtomSequenceIterator<'a> {
     pub seq: &'a LV2AtomSequence,
     pub current: &'a LV2AtomEvent,
     // TODO is this necessary?
-    pub first: bool,
+    pub zeroth: bool,
 }
 
 impl<'a> Iterator for LV2AtomSequenceIterator<'a> {
@@ -308,12 +308,12 @@ impl<'a> Iterator for LV2AtomSequenceIterator<'a> {
             let body = &self.seq.body;
             let size = self.seq.atom.size;
             // TODO is this necessary?
-            if self.first {
+            if self.zeroth {
                 // set current to first item (current = 1)
                 self.current = &*lv2_atom_sequence_begin(body);
                 Some(self.current)
             } else if !lv2_atom_sequence_is_end(body, size, self.current) {
-                // if current is neither the first item (null ptr), nor the last item, nor beyond the last item
+                // if current is neither the zeroth item (null ptr), nor the last item, nor beyond the last item
                 // set current to the next item (current = 2) and return it
                 self.current = &*lv2_atom_sequence_next(self.current);
                 Some(self.current)
@@ -335,7 +335,7 @@ impl<'a> IntoIterator for &'a LV2AtomSequence {
                 seq: &*self,
                 // current: &*lv2_atom_sequence_begin(&(*self).body)
                 current: &*(ptr::null_mut() as *mut LV2AtomEvent),
-                first: true,
+                zeroth: true,
             }
         }
     }
