@@ -309,6 +309,7 @@ impl<'a> Iterator for LV2AtomSequenceIterator<'a> {
             let size = self.seq.atom.size;
             // TODO is this necessary?
             if self.zeroth {
+                self.zeroth = false
                 // set current to first item (current = 1)
                 self.current = &*lv2_atom_sequence_begin(body);
                 Some(self.current)
