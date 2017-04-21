@@ -19,6 +19,7 @@
 
 
 use atom::*;
+use std::ptr;
 use std::mem::{size_of};
 use libc::{memcmp, memcpy, c_void};
 
@@ -285,7 +286,9 @@ impl LV2AtomSequenceBody {
 
 pub struct LV2AtomSequenceIterator<'a> {
     pub seq: &'a LV2AtomSequence,
-    pub current: &'a LV2AtomEvent
+    pub current: &'a LV2AtomEvent,
+    // TODO is this necessary?
+    pub first: bool
 }
 
 impl<'a> Iterator for LV2AtomSequenceIterator<'a> {
@@ -294,10 +297,14 @@ impl<'a> Iterator for LV2AtomSequenceIterator<'a> {
         unsafe {
             let body = &self.seq.body;
             let size = self.seq.atom.size;
-            let out = self.current;
-            if !lv2_atom_sequence_is_end(body, size, out) {
+            // TODO is this necessary?
+            if self.first {
+                self.current = &*lv2_atom_sequence_begin(body);
+            } else {
                 self.current = &*lv2_atom_sequence_next(self.current);
-                Some(out)
+            }
+            if !lv2_atom_sequence_is_end(body, size, self.current) {
+                Some(self.current)
             } else {
                 None
             }
@@ -314,7 +321,9 @@ impl<'a> IntoIterator for &'a LV2AtomSequence {
         unsafe{
             LV2AtomSequenceIterator{ 
                 seq: &*self, 
-                current: &*lv2_atom_sequence_begin(&(*self).body)
+                // current: &*lv2_atom_sequence_begin(&(*self).body)
+                current: &*(ptr::null_mut() as *mut LV2AtomEvent),
+                first: true
             }
         }
     }
