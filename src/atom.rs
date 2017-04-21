@@ -298,8 +298,8 @@ impl<'a> Iterator for LV2AtomSequenceIterator<'a> {
         unsafe {
             let body = &self.seq.body;
             let size = self.seq.atom.size;
-            if !lv2_atom_sequence_is_end(body, size, self.current) {
-                let out = self.current;
+            let out = self.current;
+            if !lv2_atom_sequence_is_end(body, size, out) {
                 self.current = &*lv2_atom_sequence_next(self.current);
                 Some(out)
             } else {
