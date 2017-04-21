@@ -20,8 +20,7 @@ could link to. These functions are also declared and defined here. Let us know i
 you think that's not right. See also [this question](http://stackoverflow.com/questions/40944524/how-does-one-design-a-plugin-interface-for-digital-audio-workstation-hosts-in-pu) on stackoverflow.
 
 The [lv2 crate](https://crates.io/crates/lv2) is one attempt to provide a more
-idiomatic Rust interface to LV2, and may even contain some non-idiomatic
-"close-to-C" helper functions.
+idiomatic Rust interface to LV2.
 
 Roadmap:
 
