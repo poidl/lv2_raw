@@ -9,9 +9,11 @@ use lv2_raw::*;
 fn it_works() {
 
     // how much memory must be allocated
-    // size of LV2AtomSequence (includes header and body)
+    // sequence of two events
+    // 1* size of LV2AtomSequence (includes header and body)
     // 2 * (size of event1)
-    // 2 * 1 byte for the atom data content
+    // 2 * 4 for pad
+    // 2 * 4 for u32 data
     const N: usize = 64;
     let s_seq = mem::size_of::<LV2AtomSequence>() as isize;
     let s_ev = mem::size_of::<LV2AtomEvent>() as isize;
