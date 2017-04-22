@@ -270,9 +270,9 @@ impl LV2AtomEvent {
 #[repr(C)]
 pub struct LV2AtomSequenceBody {
     /**< URID of unit of event time stamps. */
-    unit: u32,
+    pub unit: u32,
     /**< Currently unused. */
-    pad: u32, // Contents (a series of events) follow here.
+    pub pad: u32, // Contents (a series of events) follow here.
 }
 
 /// An atom:Sequence.
