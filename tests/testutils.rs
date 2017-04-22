@@ -67,6 +67,7 @@ fn it_works() {
     };
     // event pad  size is 64 bits. use 32 here and pad with an u16
     // then we have 16(that's s_ev)+16+32 = 64
+    // TODO: the padding is not necessary for testing
     let atomdata1 = 11u32;
     let atomdata2 = 22u32;
     let pad = 0u32;

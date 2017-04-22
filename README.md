@@ -26,7 +26,7 @@ Roadmap:
 
 - Figure out division line between low- and high-level crate
   - Preliminary goal: provide all functionality of LV2 while keeping it low-level
-- Write a test for `LV2AtomSequenceIterator`
+- Write a test for `LV2AtomSequenceIterator` (almost finished)
 - Check if low-level crate functions should be allowed to accept &-references as argument (instead of raw pointers), making them inherently safe. Options are:
   - declaring a `pub fn` and accepting &-references: implies that everything is assumed to be safe a priori
   - declaring a `pub unsafe fn` and accepting raw pointers: let the crate user worry about guaranteeing for safety (the exposed function can only be used in an `unsafe` block)
