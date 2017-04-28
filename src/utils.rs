@@ -19,7 +19,6 @@
 
 
 use atom::*;
-use std::ptr;
 use std::mem::size_of;
 use libc::{memcmp, memcpy, c_void};
 
@@ -316,6 +315,7 @@ impl<'a> Iterator for LV2AtomSequenceIterator<'a> {
     }
 }
 
+
 // perhaps wrong. TODO: understand this: http://stackoverflow.com/questions/41448232/issues-constraining-implementation-lifetimes-on-type-without-lifetime-parameter
 impl<'a> IntoIterator for &'a LV2AtomSequence {
     type Item = &'a LV2AtomEvent;
@@ -324,8 +324,8 @@ impl<'a> IntoIterator for &'a LV2AtomSequence {
     fn into_iter(self) -> Self::IntoIter {
         unsafe {
             LV2AtomSequenceIterator {
-                seq: &*self,
-                current: &*lv2_atom_sequence_begin(&(*self).body),
+                seq: self,
+                current: &*lv2_atom_sequence_begin(&self.body as *const LV2AtomSequenceBody),
             }
         }
     }
