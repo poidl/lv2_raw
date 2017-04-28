@@ -94,18 +94,36 @@ fn it_works() {
         let p = &atomdata2 as *const u64 as *const libc::c_void;
         state.append(p, s_atom);
 
-        // let seq = &buf[0] as *const u8 as *const LV2AtomSequence;
+        let truth = [
+            event1.time_in_frames as u64,
+            event1.body.mytype as u64,
+            atomdata1,
+            event2.time_in_frames as u64,
+            event2.body.mytype as u64,
+            atomdata2,
+        ];
+
+        let mut cnt = 0;
+
         let seq = &state.buf[0] as *const u8 as *const LV2AtomSequence;
         for ev in &*seq {
+
             println!{"*************TIME: {}", ev.time_in_frames}
+            assert_eq!(ev.time_in_frames as u64,truth[cnt]);
+
             println!{"*************ATOM.MYTYPE: {}", ev.body.mytype}
+            assert_eq!(ev.body.mytype as u64,truth[cnt+1]);
+
             let atomptr = &ev.body as *const LV2Atom as *const u8;
+            
             let dataptr = atomptr.offset(s_atom_header);
             let data = *(dataptr as *const u64);
             println!{"************ data: {}", data};
+            assert_eq!(data as u64,truth[cnt+2]);
+
+            cnt = cnt + 3;
         }
     }
-    assert_eq!(4, 4);
 }
 
 struct State {
