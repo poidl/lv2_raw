@@ -135,6 +135,8 @@ fn it_works() {
 
             cnt = cnt + 3;
         }
+        // did we really loop throuh *2* events?
+        assert_eq!(cnt,6)
     }
 }
 
