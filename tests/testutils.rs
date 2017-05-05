@@ -113,12 +113,13 @@ fn it_works() {
 
     let mut cnt = 0;
     let state = get_buf();
-
-    let seq = &state.buf[0] as *const u8 as *const LV2AtomSequence;
-
+    
     unsafe {
-
-        for ev in &*seq {
+        // next line basically says
+        //  "let seq = &state.buf[0] as &LV2AtomSequence;"
+        // but that's not allowed by the compiler
+        let seq = &*(&state.buf[0] as *const u8 as *const LV2AtomSequence);
+        for ev in seq {
 
             println!{"*************TIME: {}", ev.time_in_frames}
             assert_eq!(ev.time_in_frames as u64,truth[cnt]);
