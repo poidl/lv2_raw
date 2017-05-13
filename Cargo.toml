@@ -2,10 +2,10 @@
 name = "lv2_raw"
 version = "0.2.0"
 authors = ["poidl <hoitaus@gmail.com>"]
-description = "Exposes the raw LV2 interface (C) to Rust"
+description = "Exposes the raw LV2 interface (C) to Rust. Also attempts to implement some idiomatic Rust concepts (e.g. iterators)."
 
 # These URLs point to more information about the repository.
-documentation = "https://github.com/poidl/lv2_raw"
+documentation = "https://docs.rs/lv2_raw/0.2.0/lv2_raw/"
 homepage = "https://github.com/poidl/lv2_raw"
 repository = "https://github.com/poidl/lv2_raw"
 
