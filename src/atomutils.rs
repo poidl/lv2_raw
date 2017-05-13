@@ -306,11 +306,6 @@ impl LV2AtomSequenceBody {
 ///   useful. The only reason why its a public struct is that the code
 ///   doesn't compile otherwise.
 ///
-/// # Examples
-/// 
-/// ```
-/// let seq_ptr = *const LV2AtomSequence;
-
 pub struct LV2AtomSequenceIterator<'a> {
     pub seq: &'a LV2AtomSequence,
     pub current: &'a LV2AtomEvent,
