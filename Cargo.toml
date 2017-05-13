@@ -24,4 +24,4 @@ keywords = ["lv2"]
 license = "ISC"
 
 [dependencies]
-libc = "0"
+libc = "0.2"

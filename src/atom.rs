@@ -19,8 +19,10 @@
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
+//! Documentation of the corresponding C header files: http://lv2plug.in/ns/ext/atom/.
+
 use std::mem::transmute;
-use utils::*;
+use atomutils::*;
  
 
 pub static LV2_ATOM_URI: &'static [u8] = b"http://lv2plug.in/ns/ext/atom\0";

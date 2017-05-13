@@ -18,6 +18,9 @@
 // ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
+//! Documentation of the corresponding C header files: http://lv2plug.in/ns/ext/time/time.html.
+
+
 /**
    Properties for describing time, see <http://lv2plug.in/ns/ext/time> for
    details.

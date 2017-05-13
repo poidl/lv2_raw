@@ -17,6 +17,8 @@
 // OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
+//! Documentation of the corresponding C header files (part of LV2 Atom): http://lv2plug.in/ns/ext/atom/atom.html.
+
 
 use atom::*;
 use std::mem::size_of;
@@ -292,6 +294,22 @@ impl LV2AtomSequenceBody {
         }
     }
 }
+
+/// An iterator for atom sequences.
+///
+/// This was written by a beginner. Note that
+///
+/// - The iterator may be implemented incorrectly.
+/// - We are not sure whether it is actually advisable to use it in
+///   functions with hard real-time requirements.
+/// - The `struct` `LV2AtomSequenceIterator` is, by itself, probably not
+///   useful. The only reason why its a public struct is that the code
+///   doesn't compile otherwise.
+///
+/// # Examples
+/// 
+/// ```
+/// let seq_ptr = *const LV2AtomSequence;
 
 pub struct LV2AtomSequenceIterator<'a> {
     pub seq: &'a LV2AtomSequence,
