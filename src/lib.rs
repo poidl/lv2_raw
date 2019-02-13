@@ -1,20 +1,20 @@
 // test
 extern crate libc;
 
-pub mod core;
 pub mod atom;
-pub mod ui;
-pub mod urid;
+pub mod atomutils;
+pub mod core;
+pub mod coreutils;
 pub mod midi;
 pub mod time;
-pub mod coreutils;
-pub mod atomutils;
+pub mod ui;
+pub mod urid;
 
-pub use core::*;
 pub use atom::*;
-pub use ui::*;
-pub use urid::*;
+pub use atomutils::*;
+pub use core::*;
+pub use coreutils::*;
 pub use midi::*;
 pub use time::*;
-pub use coreutils::*;
-pub use atomutils::*;
+pub use ui::*;
+pub use urid::*;

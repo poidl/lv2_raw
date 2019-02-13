@@ -23,8 +23,8 @@
 
 //! Documentation of the corresponding C header files: http://lv2plug.in/ns/extensions/ui/ui.html.
 
-use libc;
 use core::*;
+use std::os::raw::*;
 
 /**
    A pointer to UI instance internals.
@@ -32,21 +32,21 @@ use core::*;
    The host may compare this to NULL, but otherwise MUST NOT interpret it.
 */
 
-pub type LV2UIHandle = *mut libc::c_void;
+pub type LV2UIHandle = *mut c_void;
 
 /**
    A pointer to some widget or other type of UI handle.
 
    The actual type is defined by the type of the UI.
 */
-pub type LV2UIWidget = *mut libc::c_void;
+pub type LV2UIWidget = *mut c_void;
 
 /**
    A pointer to a controller provided by the host.
 
    The UI may compare this to NULL, but otherwise MUST NOT interpret it.
 */
-pub type LV2UIControllerRaw = *const libc::c_void;
+pub type LV2UIControllerRaw = *const c_void;
 
 /**
    A host-provided function that sends data to a plugin's input ports.
@@ -67,11 +67,15 @@ pub type LV2UIControllerRaw = *const libc::c_void;
    host, but the host MUST gracefully ignore any protocol it does not
    understand.
 */
-pub type LV2UIWriteFunctionRaw = Option<extern "C" fn(controller: LV2UIControllerRaw,
-                                                      port_index: libc::c_uint,
-                                                      buffer_size: libc::c_uint,
-                                                      port_protocol: libc::c_uint,
-                                                      buffer: *const libc::c_void)>;
+pub type LV2UIWriteFunctionRaw = Option<
+    extern "C" fn(
+        controller: LV2UIControllerRaw,
+        port_index: c_uint,
+        buffer_size: c_uint,
+        port_protocol: c_uint,
+        buffer: *const c_void,
+    ),
+>;
 
 /**
    A plugin UI.
@@ -82,87 +86,89 @@ pub type LV2UIWriteFunctionRaw = Option<extern "C" fn(controller: LV2UIControlle
 #[repr(C)]
 pub struct LV2UIDescriptorRaw {
     /**
-	   The URI for this UI (not for the plugin it controls).
-	*/
-    pub uri: *const libc::c_char,
+       The URI for this UI (not for the plugin it controls).
+    */
+    pub uri: *const c_char,
 
     /**
-	   Create a new UI and return a handle to it.  This function works
-	   similarly to LV2_Descriptor::instantiate().
+       Create a new UI and return a handle to it.  This function works
+       similarly to LV2_Descriptor::instantiate().
 
-	   @param descriptor The descriptor for the UI to instantiate.
+       @param descriptor The descriptor for the UI to instantiate.
 
-	   @param plugin_uri The URI of the plugin that this UI will control.
+       @param plugin_uri The URI of the plugin that this UI will control.
 
-	   @param bundle_path The path to the bundle containing this UI, including
-	   the trailing directory separator.
+       @param bundle_path The path to the bundle containing this UI, including
+       the trailing directory separator.
 
-	   @param write_function A function that the UI can use to send data to the
-	   plugin's input ports.
+       @param write_function A function that the UI can use to send data to the
+       plugin's input ports.
 
-	   @param controller A handle for the UI instance to be passed as the
-	   first parameter of UI methods.
+       @param controller A handle for the UI instance to be passed as the
+       first parameter of UI methods.
 
-	   @param widget (output) widget pointer.  The UI points this at its main
-	   widget, which has the type defined by the UI type in the data file.
+       @param widget (output) widget pointer.  The UI points this at its main
+       widget, which has the type defined by the UI type in the data file.
 
-	   @param features An array of LV2_Feature pointers.  The host must pass
-	   all feature URIs that it and the UI supports and any additional data, as
-	   in LV2_Descriptor::instantiate().  Note that UI features and plugin
-	   features are not necessarily the same.
+       @param features An array of LV2_Feature pointers.  The host must pass
+       all feature URIs that it and the UI supports and any additional data, as
+       in LV2_Descriptor::instantiate().  Note that UI features and plugin
+       features are not necessarily the same.
 
-	*/
-    pub instantiate_raw: extern "C" fn(descriptor: *const LV2UIDescriptorRaw,
-                                           plugin_uri: *const libc::c_char,
-                                           bundle_path: *const libc::c_char,
-                                           write_function: LV2UIWriteFunctionRaw,
-                                           controller: LV2UIControllerRaw,
-                                           widget: *mut LV2UIWidget,
-                                           features: *const (*const LV2Feature))
-                                           -> LV2UIHandle,
+    */
+    pub instantiate_raw: extern "C" fn(
+        descriptor: *const LV2UIDescriptorRaw,
+        plugin_uri: *const c_char,
+        bundle_path: *const c_char,
+        write_function: LV2UIWriteFunctionRaw,
+        controller: LV2UIControllerRaw,
+        widget: *mut LV2UIWidget,
+        features: *const (*const LV2Feature),
+    ) -> LV2UIHandle,
 
     /**
-	   Destroy the UI.  The host must not try to access the widget after
-	   calling this function.
-	*/
+       Destroy the UI.  The host must not try to access the widget after
+       calling this function.
+    */
     pub cleanup: extern "C" fn(LV2UIHandle),
 
     /**
-	   Tell the UI that something interesting has happened at a plugin port.
+       Tell the UI that something interesting has happened at a plugin port.
 
-	   What is "interesting" and how it is written to `buffer` is defined by
-	   `format`, which has the same meaning as in LV2UI_Write_Function().
-	   Format 0 is a special case for lv2:ControlPort, where this function
-	   should be called when the port value changes (but not necessarily for
-	   every change), `buffer_size` must be sizeof(float), and `buffer`
-	   points to a single IEEE-754 float.
+       What is "interesting" and how it is written to `buffer` is defined by
+       `format`, which has the same meaning as in LV2UI_Write_Function().
+       Format 0 is a special case for lv2:ControlPort, where this function
+       should be called when the port value changes (but not necessarily for
+       every change), `buffer_size` must be sizeof(float), and `buffer`
+       points to a single IEEE-754 float.
 
-	   By default, the host should only call this function for lv2:ControlPort
-	   inputs.  However, the UI can request updates for other ports statically
-	   with ui:portNotification or dynamicaly with ui:portSubscribe.
+       By default, the host should only call this function for lv2:ControlPort
+       inputs.  However, the UI can request updates for other ports statically
+       with ui:portNotification or dynamicaly with ui:portSubscribe.
 
-	   The UI MUST NOT retain any reference to `buffer` after this function
-	   returns, it is only valid for the duration of the call.
+       The UI MUST NOT retain any reference to `buffer` after this function
+       returns, it is only valid for the duration of the call.
 
-	   This member may be NULL if the UI is not interested in any port events.
-	*/
-    pub port_event: extern "C" fn(ui: LV2UIHandle,
-                                      port_index: libc::c_uint,
-                                      buffer_size: libc::c_uint,
-                                      format: libc::c_uint,
-                                      buffer: *const libc::c_void),
+       This member may be NULL if the UI is not interested in any port events.
+    */
+    pub port_event: extern "C" fn(
+        ui: LV2UIHandle,
+        port_index: c_uint,
+        buffer_size: c_uint,
+        format: c_uint,
+        buffer: *const c_void,
+    ),
 
     /**
-	   Return a data structure associated with an extension URI, typically an
-	   interface struct with additional function pointers
+       Return a data structure associated with an extension URI, typically an
+       interface struct with additional function pointers
 
-	   This member may be set to NULL if the UI is not interested in supporting
-	   any extensions. This is similar to LV2_Descriptor::extension_data().
+       This member may be set to NULL if the UI is not interested in supporting
+       any extensions. This is similar to LV2_Descriptor::extension_data().
 
-	*/
-    pub extension_data: Option<extern "C" fn(*const libc::c_char) -> *const libc::c_void>,
+    */
+    pub extension_data: Option<extern "C" fn(*const c_char) -> *const c_void>,
 }
-
 
 /**
    UI Idle Interface (LV2_UI__idleInterface)
@@ -173,18 +179,18 @@ pub struct LV2UIDescriptorRaw {
 #[repr(C)]
 pub struct LV2UIIdleInterface {
     /**
-	   Run a single iteration of the UI's idle loop.
+       Run a single iteration of the UI's idle loop.
 
-	   This will be called rapidly in the UI thread at a rate appropriate
-	   for a toolkit main loop.  There are no precise timing guarantees, but
-	   the host should attempt to call idle() at a high enough rate for smooth
-	   animation, at least 30Hz.
+       This will be called rapidly in the UI thread at a rate appropriate
+       for a toolkit main loop.  There are no precise timing guarantees, but
+       the host should attempt to call idle() at a high enough rate for smooth
+       animation, at least 30Hz.
 
-	   @return non-zero if the UI has been closed, in which case the host
-	   should stop calling idle(), and can either completely destroy the UI, or
-	   re-show it and resume calling idle().
-	*/
-    pub idle: extern "C" fn(ui: LV2UIHandle) -> libc::c_int,
+       @return non-zero if the UI has been closed, in which case the host
+       should stop calling idle(), and can either completely destroy the UI, or
+       re-show it and resume calling idle().
+    */
+    pub idle: extern "C" fn(ui: LV2UIHandle) -> c_int,
 }
 
 /**
@@ -203,25 +209,23 @@ pub struct LV2UIIdleInterface {
 #[repr(C)]
 pub struct LV2UIShowInterface {
     /**
-	   Show a window for this UI.
+       Show a window for this UI.
 
-	   The window title MAY have been passed by the host to
-	   LV2UI_Descriptor::instantiate() as an LV2_Options_Option with key
-	   LV2_UI__windowTitle.
+       The window title MAY have been passed by the host to
+       LV2UI_Descriptor::instantiate() as an LV2_Options_Option with key
+       LV2_UI__windowTitle.
 
-	   @return 0 on success, or anything else to stop being called.
-	*/
-    pub show: extern "C" fn(ui: LV2UIHandle) -> libc::c_int,
+       @return 0 on success, or anything else to stop being called.
+    */
+    pub show: extern "C" fn(ui: LV2UIHandle) -> c_int,
 
     /**
-	   Hide the window for this UI.
+       Hide the window for this UI.
 
-	   @return 0 on success, or anything else to stop being called.
-	*/
-    pub hide: extern "C" fn(ui: LV2UIHandle) -> libc::c_int,
+       @return 0 on success, or anything else to stop being called.
+    */
+    pub hide: extern "C" fn(ui: LV2UIHandle) -> c_int,
 }
-
-
 
 // RUST_TODO: The following are deprecated, should not declare this here. Ardour and Qtractor do not implement ui:showInterface
 // http://lists.lv2plug.in/pipermail/devel-lv2plug.in/2016-May/001649.html
@@ -235,25 +239,25 @@ pub struct LV2UIShowInterface {
 #[repr(C)]
 pub struct LV2UIExternalUIWidget {
     /**
-   * Host calls this function regulary. UI library implementing the
-   * callback may do IPC or redraw the UI.
-   *
-   * @param _this_ the UI context
-   */
+     * Host calls this function regulary. UI library implementing the
+     * callback may do IPC or redraw the UI.
+     *
+     * @param _this_ the UI context
+     */
     pub run: Option<extern "C" fn(ui: *const LV2UIExternalUIWidget)>,
 
     /**
-   * Host calls this function to make the plugin UI visible.
-   *
-   * @param _this_ the UI context
-   */
+     * Host calls this function to make the plugin UI visible.
+     *
+     * @param _this_ the UI context
+     */
     pub show: Option<extern "C" fn(ui: *const LV2UIExternalUIWidget)>,
 
     /**
-   * Host calls this function to make the plugin UI invisible again.
-   *
-   * @param _this_ the UI context
-   */
+     * Host calls this function to make the plugin UI invisible again.
+     *
+     * @param _this_ the UI context
+     */
     pub hide: Option<extern "C" fn(ui: *const LV2UIExternalUIWidget)>,
 }
 
@@ -264,30 +268,30 @@ pub struct LV2UIExternalUIWidget {
 #[repr(C)]
 pub struct LV2UIExternalUIHost {
     /**
-   * Callback that plugin UI will call when UI (GUI window) is closed by user.
-   * This callback will be called during execution of LV2_External_UI_Widget::run()
-   * (i.e. not from background thread).
-   *
-   * After this callback is called, UI is defunct. Host must call LV2UI_Descriptor::cleanup().
-   * If host wants to make the UI visible again, the UI must be reinstantiated.
-   *
-   * @note When using the depreated URI LV2_EXTERNAL_UI_DEPRECATED_URI,
-   *       some hosts will not call LV2UI_Descriptor::cleanup() as they should,
-   *       and may call show() again without re-initialization.
-   *
-   * @param controller Host context associated with plugin UI, as
-   *                   supplied to LV2UI_Descriptor::instantiate().
-   */
-    pub ui_closed: extern "C" fn(host: LV2UIControllerRaw) -> libc::c_void,
+     * Callback that plugin UI will call when UI (GUI window) is closed by user.
+     * This callback will be called during execution of LV2_External_UI_Widget::run()
+     * (i.e. not from background thread).
+     *
+     * After this callback is called, UI is defunct. Host must call LV2UI_Descriptor::cleanup().
+     * If host wants to make the UI visible again, the UI must be reinstantiated.
+     *
+     * @note When using the depreated URI LV2_EXTERNAL_UI_DEPRECATED_URI,
+     *       some hosts will not call LV2UI_Descriptor::cleanup() as they should,
+     *       and may call show() again without re-initialization.
+     *
+     * @param controller Host context associated with plugin UI, as
+     *                   supplied to LV2UI_Descriptor::instantiate().
+     */
+    pub ui_closed: extern "C" fn(host: LV2UIControllerRaw) -> c_void,
 
     /**
-   * Optional (may be NULL) "user friendly" identifier which the UI
-   * may display to allow a user to easily associate this particular
-   * UI instance with the correct plugin instance as it is represented
-   * by the host (e.g. "track 1" or "channel 4").
-   *
-   * If supplied by host, the string will be referenced only during
-   * LV2UI_Descriptor::instantiate()
-   */
-    pub plugin_human_id: *const libc::c_char,
+     * Optional (may be NULL) "user friendly" identifier which the UI
+     * may display to allow a user to easily associate this particular
+     * UI instance with the correct plugin instance as it is represented
+     * by the host (e.g. "track 1" or "channel 4").
+     *
+     * If supplied by host, the string will be referenced only during
+     * LV2UI_Descriptor::instantiate()
+     */
+    pub plugin_human_id: *const c_char,
 }
