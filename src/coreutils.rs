@@ -20,7 +20,7 @@
 
 //! Documentation of the corresponding C header files (part of LV2 core): http://lv2plug.in/ns/lv2core/.
 
-use libc::{c_char, c_void};
+use std::os::raw::{c_char, c_void};
 use core::*;
 use std::ffi::*;
 

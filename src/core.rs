@@ -25,7 +25,7 @@
 
 //! Documentation of the corresponding C header files: http://lv2plug.in/ns/lv2core/.
 
-use libc;
+use std::os::raw::{c_char, c_void};
 
 /**
    Plugin Instance Handle.
@@ -34,7 +34,7 @@ use libc;
    compare to NULL (or 0 for C++) but otherwise the host MUST NOT attempt to
    interpret it.
 */
-pub type LV2Handle = *mut libc::c_void;
+pub type LV2Handle = *mut c_void;
 
 /**
    Feature.
@@ -46,20 +46,20 @@ pub type LV2Handle = *mut libc::c_void;
 */
 #[repr(C)]
 pub struct LV2Feature {
-    /**
+	/**
 	   A globally unique, case-sensitive identifier (URI) for this feature.
 
 	   This MUST be a valid URI string as defined by RFC 3986.
 	*/
-    pub uri: *const libc::c_char,
+	pub uri: *const c_char,
 
-    /**
+	/**
 	   Pointer to arbitrary data.
 
 	   The format of this data is defined by the extension which describes the
 	   feature with the given `URI`.
 	*/
-    pub data: *mut libc::c_void,
+	pub data: *mut c_void,
 }
 
 /**
@@ -70,16 +70,16 @@ pub struct LV2Feature {
 */
 #[repr(C)]
 pub struct LV2Descriptor {
-    /**
+	/**
 	   A globally unique, case-sensitive identifier for this plugin.
 
 	   This MUST be a valid URI string as defined by RFC 3986.  All plugins with
 	   the same URI MUST be compatible to some degree, see
 	   http://lv2plug.in/ns/lv2core for details.
 	*/
-    pub uri: *const libc::c_char,
+	pub uri: *const c_char,
 
-    /**
+	/**
 	   Instantiate the plugin.
 
 	   Note that instance initialisation should generally occur in activate()
@@ -107,12 +107,13 @@ pub struct LV2Descriptor {
 	   @return A handle for the new plugin instance, or NULL if instantiation
 	   has failed.
 	*/
-    pub instantiate: extern "C" fn(descriptor: *const LV2Descriptor,
-                                       rate: f64,
-                                       bundle_path: *const libc::c_char,
-                                       features: *const (*const LV2Feature))
-                                       -> LV2Handle,
-    /**
+	pub instantiate: extern "C" fn(
+		descriptor: *const LV2Descriptor,
+		rate: f64,
+		bundle_path: *const c_char,
+		features: *const (*const LV2Feature),
+	) -> LV2Handle,
+	/**
 	   Connect a port on a plugin instance to a memory location.
 
 	   Plugin writers should be aware that the host may elect to use the same
@@ -146,9 +147,9 @@ pub struct LV2Descriptor {
 	   used to read/write data when run() is called. Data present at the time
 	   of the connect_port() call MUST NOT be considered meaningful.
 	*/
-    pub connect_port: extern "C" fn(handle: LV2Handle, port: u32, data: *mut libc::c_void),
+	pub connect_port: extern "C" fn(handle: LV2Handle, port: u32, data: *mut c_void),
 
-    /**
+	/**
 	   Initialise a plugin instance and activate it for use.
 
 	   This is separated from instantiate() to aid real-time support and so
@@ -169,9 +170,9 @@ pub struct LV2Descriptor {
 	   some point in the future. Note that connect_port() may be called before
 	   or after activate().
 	*/
-    pub activate: Option<extern "C" fn(instance: LV2Handle)>,
+	pub activate: Option<extern "C" fn(instance: LV2Handle)>,
 
-    /**
+	/**
 	   Run a plugin instance for a block.
 
 	   Note that if an activate() function exists then it must be called before
@@ -194,9 +195,9 @@ pub struct LV2Descriptor {
 	   @param sample_count The block size (in samples) for which the plugin
 	   instance must run.
 	*/
-    pub run: extern "C" fn(instance: LV2Handle, n_samples: u32),
+	pub run: extern "C" fn(instance: LV2Handle, n_samples: u32),
 
-    /**
+	/**
 	   Deactivate a plugin instance (counterpart to activate()).
 
 	   Hosts MUST deactivate all activated instances after they have been run()
@@ -214,9 +215,9 @@ pub struct LV2Descriptor {
 	   called. Note that connect_port() may be called before or after
 	   deactivate().
 	*/
-    pub deactivate: Option<extern "C" fn(instance: LV2Handle)>,
+	pub deactivate: Option<extern "C" fn(instance: LV2Handle)>,
 
-    /**
+	/**
 	   Clean up a plugin instance (counterpart to instantiate()).
 
 	   Once an instance of a plugin has been finished with it must be deleted
@@ -227,9 +228,9 @@ pub struct LV2Descriptor {
 	   to deactivate() MUST be made before cleanup() is called. Hosts MUST NOT
 	   call cleanup() unless instantiate() was previously called.
 	*/
-    pub cleanup: extern "C" fn(instance: LV2Handle),
+	pub cleanup: extern "C" fn(instance: LV2Handle),
 
-    /**
+	/**
 	   Return additional plugin data defined by some extenion.
 
 	   A typical use of this facility is to return a struct containing function
@@ -242,5 +243,5 @@ pub struct LV2Descriptor {
 
 	   The host is never responsible for freeing the returned value.
 	*/
-    pub extension_data: extern "C" fn(uri: *const u8) -> (*const libc::c_void),
+	pub extension_data: extern "C" fn(uri: *const c_char) -> (*const c_void),
 }
