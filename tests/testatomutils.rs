@@ -1,8 +1,8 @@
 extern crate libc;
 extern crate lv2_raw;
 
-use std::mem;
 use lv2_raw::*;
+use std::mem;
 
 // Need to define constant for buffer allocation, which must be identical
 // to n
@@ -27,11 +27,12 @@ fn get_buf() -> State {
     let s_seq = mem::size_of::<LV2AtomSequence>() as isize;
     let s_ev = mem::size_of::<LV2AtomEvent>() as isize;
     let s_atom = 8 as isize;
-    let n = s_seq + 2*s_ev + 2*s_atom;
+    let n = s_seq + 2 * s_ev + 2 * s_atom;
     if n != N as isize {
-        panic!("Need to adjust buffer size. Size is {}. Buffer is {}.",
-               n,
-               N)
+        panic!(
+            "Need to adjust buffer size. Size is {}. Buffer is {}.",
+            n, N
+        )
     }
     let s_atom_header = mem::size_of::<LV2Atom>() as isize;
     let atom = LV2Atom {
@@ -62,7 +63,7 @@ fn get_buf() -> State {
     };
     let atom_ev2 = LV2Atom {
         size: s_atom as u32,
-        mytype: TYPE2, 
+        mytype: TYPE2,
     };
     let event1 = LV2AtomEvent {
         time_in_frames: TIME1,
@@ -75,13 +76,15 @@ fn get_buf() -> State {
 
     let buf = [1u8; N];
 
-
-    let mut state = State{buf: buf, current: 0};
+    let mut state = State {
+        buf: buf,
+        current: 0,
+    };
 
     let p = &sequence as *const LV2AtomSequence as *const libc::c_void;
     state.append(p, s_seq);
 
-    // Event 1 
+    // Event 1
     let p = &event1 as *const LV2AtomEvent as *const libc::c_void;
     state.append(p, s_ev);
     let p = &ATOMDATA1 as *const u64 as *const libc::c_void;
@@ -94,12 +97,10 @@ fn get_buf() -> State {
     state.append(p, s_atom);
 
     state
-
 }
 
 #[test]
 fn it_works() {
-
     let truth = [
         TIME1 as u64,
         TYPE1 as u64,
@@ -113,37 +114,36 @@ fn it_works() {
 
     let mut cnt = 0;
     let state = get_buf();
-    
+
     unsafe {
         // next line basically says
         //  "let seq = &state.buf[0] as &LV2AtomSequence;"
         // but that's not allowed by the compiler
         let seq = &*(&state.buf[0] as *const u8 as *const LV2AtomSequence);
         for ev in seq {
+            println! {"*************TIME: {}", ev.time_in_frames}
+            assert_eq!(ev.time_in_frames as u64, truth[cnt]);
 
-            println!{"*************TIME: {}", ev.time_in_frames}
-            assert_eq!(ev.time_in_frames as u64,truth[cnt]);
-
-            println!{"*************ATOM.MYTYPE: {}", ev.body.mytype}
-            assert_eq!(ev.body.mytype as u64,truth[cnt+1]);
+            println! {"*************ATOM.MYTYPE: {}", ev.body.mytype}
+            assert_eq!(ev.body.mytype as u64, truth[cnt + 1]);
 
             let atomptr = &ev.body as *const LV2Atom as *const u8;
-            
+
             let dataptr = atomptr.offset(s_atom_header);
             let data = *(dataptr as *const u64);
-            println!{"************ data: {}", data};
-            assert_eq!(data as u64,truth[cnt+2]);
+            println! {"************ data: {}", data};
+            assert_eq!(data as u64, truth[cnt + 2]);
 
             cnt = cnt + 3;
         }
         // did we really loop throuh *2* events?
-        assert_eq!(cnt,6)
+        assert_eq!(cnt, 6)
     }
 }
 
 struct State {
     buf: [u8; N],
-    current: isize
+    current: isize,
 }
 
 impl State {
