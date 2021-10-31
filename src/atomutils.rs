@@ -108,7 +108,7 @@ pub unsafe fn lv2_atom_sequence_append_event(
 ) -> *const LV2AtomEvent {
     let total_size = size_of::<LV2AtomEvent>() as u32 + (*event).body.size;
 
-    if (capacity - (*seq).atom.size) < total_size {
+    if capacity < (*seq).atom.size + total_size {
         return 0 as *const LV2AtomEvent;
     }
 
